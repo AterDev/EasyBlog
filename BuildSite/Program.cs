@@ -1,4 +1,4 @@
 ﻿using BuildSite;
 
-var builder = new HtmlBuilder();
+HtmlBuilder builder = new HtmlBuilder();
 builder.BuildBlogs();

@@ -6,36 +6,35 @@ using System;
 using System.Collections.Generic;
 using ColorCode.Common;
 
-namespace ColorCode.Parsing
+namespace ColorCode.Parsing;
+
+public class Scope
 {
-    public class Scope
+    public Scope(string name,
+                 int index,
+                 int length)
     {
-        public Scope(string name,
-                     int index,
-                     int length)
-        {
-            Guard.ArgNotNullAndNotEmpty(name, "name");
-            
-            Name = name;
-            Index = index;
-            Length = length;
-            Children = new List<Scope>();
-        }
+        Guard.ArgNotNullAndNotEmpty(name, "name");
 
-        public IList<Scope> Children { get; set; }
-        public int Index { get; set; }
-        public int Length { get; set; }
-        public Scope Parent { get; set; }
-        public string Name { get; set; }
+        Name = name;
+        Index = index;
+        Length = length;
+        Children = [];
+    }
 
-        public void AddChild(Scope childScope)
-        {
-            if (childScope.Parent != null)
-                throw new InvalidOperationException("The child scope already has a parent.");
+    public IList<Scope> Children { get; set; }
+    public int Index { get; set; }
+    public int Length { get; set; }
+    public Scope Parent { get; set; }
+    public string Name { get; set; }
 
-            childScope.Parent = this;
+    public void AddChild(Scope childScope)
+    {
+        if (childScope.Parent != null)
+            throw new InvalidOperationException("The child scope already has a parent.");
 
-            Children.Add(childScope);
-        }
+        childScope.Parent = this;
+
+        Children.Add(childScope);
     }
 }

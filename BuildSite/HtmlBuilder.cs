@@ -8,26 +8,26 @@ public class HtmlBuilder
 {
     public void BuildBlogs()
     {
-        var contentPath = Path.Combine(Environment.CurrentDirectory, "..", "Content");
-        var wwwrootPath = Path.Combine(Environment.CurrentDirectory, "..", "src", "wwwroot");
+        string contentPath = Path.Combine(Environment.CurrentDirectory, "..", "Content");
+        string wwwrootPath = Path.Combine(Environment.CurrentDirectory, "..", "src", "wwwroot");
         try
         {
-            var pipeline = new MarkdownPipelineBuilder()
+            MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
                 .Build();
 
 
-            var files = Directory.EnumerateFiles(contentPath, "*.md", SearchOption.AllDirectories)
+            List<string> files = Directory.EnumerateFiles(contentPath, "*.md", SearchOption.AllDirectories)
                 .ToList();
 
             files.ForEach(file =>
                 {
-                    var markdown = File.ReadAllText(file);
-                    var html = Markdig.Markdown.ToHtml(markdown, pipeline);
-                    var relativePath = file.Replace(contentPath, wwwrootPath).Replace(".md", ".html");
+                    string markdown = File.ReadAllText(file);
+                    string html = Markdig.Markdown.ToHtml(markdown, pipeline);
+                    string relativePath = file.Replace(contentPath, wwwrootPath).Replace(".md", ".html");
 
                     html = AddHtmlTags(html);
-                    var dir = Path.GetDirectoryName(relativePath);
+                    string? dir = Path.GetDirectoryName(relativePath);
                     if (!Directory.Exists(dir))
                     {
                         Directory.CreateDirectory(dir);
@@ -44,7 +44,7 @@ public class HtmlBuilder
 
     private void Test()
     {
-        var csharpstring = """
+        string csharpstring = """
             module.exports = {
               content: ['./**/*.{razor,html}'],
               theme: {
@@ -54,9 +54,9 @@ public class HtmlBuilder
             }
 
             """;
-        var formatter = new HtmlClassFormatter();
-        var html = formatter.GetHtmlString(csharpstring, Languages.Typescript);
-        var css = formatter.GetCSSString();
+        HtmlClassFormatter formatter = new HtmlClassFormatter();
+        string html = formatter.GetHtmlString(csharpstring, Languages.Typescript);
+        string css = formatter.GetCSSString();
 
         Console.WriteLine(html);
         Console.WriteLine(css);
@@ -65,7 +65,7 @@ public class HtmlBuilder
 
     private string AddHtmlTags(string content, string title = "")
     {
-        var res = $"""
+        string res = $"""
             <!DOCTYPE html>
             <html>
             <head>

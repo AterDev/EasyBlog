@@ -4,12 +4,11 @@
 
 using System.Collections.Generic;
 
-namespace ColorCode.Common
+namespace ColorCode.Common;
+
+public interface ILanguageRepository
 {
-    public interface ILanguageRepository
-    {
-        IEnumerable<ILanguage> All { get; }
-        ILanguage FindById(string languageId);
-        void Load(ILanguage language);
-    }
+    IEnumerable<ILanguage> All { get; }
+    ILanguage FindById(string languageId);
+    void Load(ILanguage language);
 }

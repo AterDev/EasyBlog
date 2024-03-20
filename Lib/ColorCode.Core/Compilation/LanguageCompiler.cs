@@ -9,138 +9,137 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using ColorCode.Common;
 
-namespace ColorCode.Compilation
+namespace ColorCode.Compilation;
+
+public class LanguageCompiler : ILanguageCompiler
 {
-    public class LanguageCompiler : ILanguageCompiler
+    private static readonly Regex numberOfCapturesRegex = new Regex(@"(?x)(?<!(\\|(?!\\)\(\?))\((?!\?)", RegexOptions.Compiled);
+    private readonly Dictionary<string, CompiledLanguage> compiledLanguages;
+    private readonly ReaderWriterLockSlim compileLock;
+
+    public LanguageCompiler(Dictionary<string, CompiledLanguage> compiledLanguages, ReaderWriterLockSlim compileLock)
     {
-        private static readonly Regex numberOfCapturesRegex = new Regex(@"(?x)(?<!(\\|(?!\\)\(\?))\((?!\?)", RegexOptions.Compiled);
-        private readonly Dictionary<string, CompiledLanguage> compiledLanguages;
-        private readonly ReaderWriterLockSlim compileLock;
+        this.compiledLanguages = compiledLanguages;
+        this.compileLock = compileLock;
+    }
 
-        public LanguageCompiler(Dictionary<string, CompiledLanguage> compiledLanguages, ReaderWriterLockSlim compileLock)
+    public CompiledLanguage Compile(ILanguage language)
+    {
+        Guard.ArgNotNull(language, "language");
+
+        if (string.IsNullOrEmpty(language.Id))
+            throw new ArgumentException("The language identifier must not be null.", "language");
+
+        CompiledLanguage compiledLanguage;
+
+        compileLock.EnterReadLock();
+        try
         {
-            this.compiledLanguages = compiledLanguages;
-            this.compileLock = compileLock;
+            // for performance reasons we should first try with
+            // only a read lock since the majority of the time
+            // it'll be created already and upgradeable lock blocks
+            if (compiledLanguages.ContainsKey(language.Id))
+                return compiledLanguages[language.Id];
+        }
+        finally
+        {
+            compileLock.ExitReadLock();
         }
 
-        public CompiledLanguage Compile(ILanguage language)
+        compileLock.EnterUpgradeableReadLock();
+        try
         {
-            Guard.ArgNotNull(language, "language");
-
-            if (string.IsNullOrEmpty(language.Id))
-                throw new ArgumentException("The language identifier must not be null.", "language");
-
-            CompiledLanguage compiledLanguage;
-
-            compileLock.EnterReadLock();
-            try
+            if (compiledLanguages.ContainsKey(language.Id))
+                compiledLanguage = compiledLanguages[language.Id];
+            else
             {
-                // for performance reasons we should first try with
-                // only a read lock since the majority of the time
-                // it'll be created already and upgradeable lock blocks
-                if (compiledLanguages.ContainsKey(language.Id))
-                    return compiledLanguages[language.Id];
-            }
-            finally
-            {
-                compileLock.ExitReadLock();
-            }
+                compileLock.EnterWriteLock();
 
-            compileLock.EnterUpgradeableReadLock();
-            try
-            {
-                if (compiledLanguages.ContainsKey(language.Id))
-                    compiledLanguage = compiledLanguages[language.Id];
-                else
+                try
                 {
-                    compileLock.EnterWriteLock();
+                    if (string.IsNullOrEmpty(language.Name))
+                        throw new ArgumentException("The language name must not be null or empty.", "language");
 
-                    try
-                    {
-                        if (string.IsNullOrEmpty(language.Name))
-                            throw new ArgumentException("The language name must not be null or empty.", "language");
+                    if (language.Rules == null || language.Rules.Count == 0)
+                        throw new ArgumentException("The language rules collection must not be empty.", "language");
 
-                        if (language.Rules == null || language.Rules.Count == 0)
-                            throw new ArgumentException("The language rules collection must not be empty.", "language");
+                    compiledLanguage = CompileLanguage(language);
 
-                        compiledLanguage = CompileLanguage(language);
-
-                        compiledLanguages.Add(compiledLanguage.Id, compiledLanguage);
-                    }
-                    finally
-                    {
-                        compileLock.ExitWriteLock();
-                    }
+                    compiledLanguages.Add(compiledLanguage.Id, compiledLanguage);
+                }
+                finally
+                {
+                    compileLock.ExitWriteLock();
                 }
             }
-            finally
-            {
-                compileLock.ExitUpgradeableReadLock();
-            }
-
-            return compiledLanguage;
+        }
+        finally
+        {
+            compileLock.ExitUpgradeableReadLock();
         }
 
-        private static CompiledLanguage CompileLanguage(ILanguage language)
+        return compiledLanguage;
+    }
+
+    private static CompiledLanguage CompileLanguage(ILanguage language)
+    {
+        string id = language.Id;
+        string name = language.Name;
+
+        CompileRules(language.Rules, out Regex regex, out IList<string> captures);
+
+        return new CompiledLanguage(id, name, regex, captures);
+    }
+
+    private static void CompileRules(IList<LanguageRule> rules, out Regex regex, out IList<string> captures)
+    {
+        StringBuilder regexBuilder = new StringBuilder();
+        captures = [];
+
+        regexBuilder.AppendLine("(?x)");
+        captures.Add(null);
+
+        CompileRule(rules[0], regexBuilder, captures, true);
+
+        for (int i = 1; i < rules.Count; i++)
+            CompileRule(rules[i], regexBuilder, captures, false);
+
+        regex = new Regex(regexBuilder.ToString());
+    }
+
+    private static void CompileRule(LanguageRule languageRule, StringBuilder regex, ICollection<string> captures, bool isFirstRule)
+    {
+        if (!isFirstRule)
         {
-            string id = language.Id;
-            string name = language.Name;
-
-            CompileRules(language.Rules, out Regex regex, out IList<string> captures);
-
-            return new CompiledLanguage(id, name, regex, captures);
+            regex.AppendLine();
+            regex.AppendLine();
+            regex.AppendLine("|");
+            regex.AppendLine();
         }
 
-        private static void CompileRules(IList<LanguageRule> rules, out Regex regex, out IList<string> captures)
+        regex.AppendFormat("(?-xis)(?m)({0})(?x)", languageRule.Regex);
+
+        int numberOfCaptures = GetNumberOfCaptures(languageRule.Regex);
+
+        for (int i = 0; i <= numberOfCaptures; i++)
         {
-            StringBuilder regexBuilder = new StringBuilder();
-            captures = new List<string>();
+            string scope = null;
 
-            regexBuilder.AppendLine("(?x)");
-            captures.Add(null);
-
-            CompileRule(rules[0], regexBuilder, captures, true);
-
-            for (int i = 1; i < rules.Count; i++)
-                CompileRule(rules[i], regexBuilder, captures, false);
-
-            regex = new Regex(regexBuilder.ToString());
-        }
-
-        private static void CompileRule(LanguageRule languageRule, StringBuilder regex, ICollection<string> captures, bool isFirstRule)
-        {
-            if (!isFirstRule)
+            foreach (int captureIndex in languageRule.Captures.Keys)
             {
-                regex.AppendLine();
-                regex.AppendLine();
-                regex.AppendLine("|");
-                regex.AppendLine();
-            }
-
-            regex.AppendFormat("(?-xis)(?m)({0})(?x)", languageRule.Regex);
-
-            int numberOfCaptures = GetNumberOfCaptures(languageRule.Regex);
-
-            for (int i = 0; i <= numberOfCaptures; i++)
-            {
-                string scope = null;
-
-                foreach (int captureIndex in languageRule.Captures.Keys)
+                if (i == captureIndex)
                 {
-                    if (i == captureIndex)
-                    {
-                        scope = languageRule.Captures[captureIndex];
-                        break;
-                    }
+                    scope = languageRule.Captures[captureIndex];
+                    break;
                 }
-
-                captures.Add(scope);
             }
-        }
 
-        private static int GetNumberOfCaptures(string regex)
-        {
-            return numberOfCapturesRegex.Matches(regex).Count;
+            captures.Add(scope);
         }
+    }
+
+    private static int GetNumberOfCaptures(string regex)
+    {
+        return numberOfCapturesRegex.Matches(regex).Count;
     }
 }
