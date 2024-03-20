@@ -1,22 +1,32 @@
 ﻿using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Text.Unicode;
 using Markdig;
 using Models;
 
 namespace BuildSite;
 
-public class HtmlBuilder
+public partial class HtmlBuilder
 {
     public string ContentPath { get; init; }
     public string DataPath { get; init; }
     public string WwwrootPath { get; init; }
 
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+        ReferenceHandler = ReferenceHandler.IgnoreCycles,
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+        WriteIndented = true
+    };
+
     public HtmlBuilder()
     {
         ContentPath = Path.Combine(Environment.CurrentDirectory, "..", "..", BlogConst.ContentPath);
-        DataPath = Path.Combine(Environment.CurrentDirectory, "..", "..", BlogConst.DataPath);
         WwwrootPath = Path.Combine(Environment.CurrentDirectory, "..", "..", "src", "wwwroot");
+        DataPath = Path.Combine(WwwrootPath, BlogConst.DataPath);
     }
     public void BuildBlogs()
     {
@@ -55,7 +65,7 @@ public class HtmlBuilder
     {
         var rootCatalog = new Catalog { Name = "Root" };
         TraverseDirectory(ContentPath, rootCatalog);
-        string json = JsonSerializer.Serialize(rootCatalog.Children);
+        string json = JsonSerializer.Serialize(rootCatalog, _jsonSerializerOptions);
 
         string blogData = Path.Combine(DataPath, "blogs.json");
         File.WriteAllText(blogData, json, Encoding.UTF8);
@@ -78,17 +88,32 @@ public class HtmlBuilder
         foreach (string filePath in Directory.GetFiles(directoryPath, "*.md"))
         {
             var fileInfo = new FileInfo(filePath);
+            var fileName = Path.GetFileName(filePath);
             var blog = new Blog
             {
                 Title = GetTitleFromMarkdown(File.ReadAllText(filePath)),
-                FileName = Path.GetFileName(filePath),
+                FileName = fileName,
+                Path = string.Empty,
                 PublishTime = DateTimeOffset.Now,
                 CreatedTime = fileInfo.CreationTime,
                 UpdatedTime = fileInfo.LastWriteTime,
                 Catalog = parentCatalog
             };
+            blog.Path = GetFullPath(parentCatalog) + "/" + blog.FileName.Replace(".md", ".html");
+
+            //blog.Path = HttpUtility.UrlEncode(blog.Path);
             parentCatalog.Blogs.Add(blog);
         }
+    }
+
+    public string GetFullPath(Catalog catalog)
+    {
+        var path = catalog.Name;
+        if (catalog.Parent != null)
+        {
+            path = GetFullPath(catalog.Parent) + "/" + path;
+        }
+        return path.Replace("Root", "");
     }
 
     /// <summary>
@@ -99,7 +124,7 @@ public class HtmlBuilder
     private string GetTitleFromMarkdown(string content)
     {
         // 使用正则表达式匹配标题
-        var regex = new Regex(@"^# (.*)$", RegexOptions.Multiline);
+        var regex = TitleRegex();
         var match = regex.Match(content);
         if (match.Success)
         {
@@ -126,4 +151,7 @@ public class HtmlBuilder
             """;
         return res;
     }
+
+    [GeneratedRegex(@"^# (.*)$", RegexOptions.Multiline)]
+    private static partial Regex TitleRegex();
 }

@@ -10,6 +10,11 @@ public class Blog
     public required string Title { get; set; }
 
     /// <summary>
+    /// 路径
+    /// </summary>
+    public required string Path { get; set; }
+
+    /// <summary>
     /// 对应html名称
     /// </summary>
     public required string FileName { get; set; }
