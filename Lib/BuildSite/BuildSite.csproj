@@ -9,13 +9,13 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="ColorCode.HTML" Version="2.0.15" />
 		<PackageReference Include="Markdig" Version="0.36.2" />
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Lib\ColorCode.HTML\ColorCode.HTML.csproj" />
+	  <ProjectReference Include="..\ColorCode.HTML\ColorCode.HTML.csproj" />
+	  <ProjectReference Include="..\Models\Models.csproj" />
 	</ItemGroup>
 
 </Project>

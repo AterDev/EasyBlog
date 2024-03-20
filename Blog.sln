@@ -5,13 +5,15 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog", "src\Blog.csproj", "{5D37DB30-E6E0-48DD-AA1E-15B81B644440}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildSite", "BuildSite\BuildSite.csproj", "{2D0B931E-2C12-40EA-B1F4-DC97D094CA84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildSite", "Lib\BuildSite\BuildSite.csproj", "{2D0B931E-2C12-40EA-B1F4-DC97D094CA84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{6C64B3F9-1311-4A59-955B-14993E318C5A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorCode.HTML", "Lib\ColorCode.HTML\ColorCode.HTML.csproj", "{94E92452-BBC2-4209-B2A9-2A1999C505A1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorCode.Core", "Lib\ColorCode.Core\ColorCode.Core.csproj", "{099CC19B-F9CE-4EC9-8AC0-4EF4D85233D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Lib\Models\Models.csproj", "{F001C22B-9102-4196-BADC-020B1D33C94D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,13 +37,19 @@ Global
 		{099CC19B-F9CE-4EC9-8AC0-4EF4D85233D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{099CC19B-F9CE-4EC9-8AC0-4EF4D85233D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{099CC19B-F9CE-4EC9-8AC0-4EF4D85233D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F001C22B-9102-4196-BADC-020B1D33C94D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F001C22B-9102-4196-BADC-020B1D33C94D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F001C22B-9102-4196-BADC-020B1D33C94D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F001C22B-9102-4196-BADC-020B1D33C94D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{2D0B931E-2C12-40EA-B1F4-DC97D094CA84} = {6C64B3F9-1311-4A59-955B-14993E318C5A}
 		{94E92452-BBC2-4209-B2A9-2A1999C505A1} = {6C64B3F9-1311-4A59-955B-14993E318C5A}
 		{099CC19B-F9CE-4EC9-8AC0-4EF4D85233D5} = {6C64B3F9-1311-4A59-955B-14993E318C5A}
+		{F001C22B-9102-4196-BADC-020B1D33C94D} = {6C64B3F9-1311-4A59-955B-14993E318C5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E7BC8EB-9430-43D5-8B35-A5C911D94494}
