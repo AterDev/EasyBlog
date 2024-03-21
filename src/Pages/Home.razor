@@ -1,4 +1,7 @@
-﻿@page "/"
+﻿@inject HttpClient http
+
+@page "/"
+@using System.Web
 
 <PageTitle>Home</PageTitle>
 
@@ -8,12 +11,47 @@
     <div class="bg-white rounded-lg shadow-md p-4">
         <!-- 博客卡片内容 -->
         <!-- 例如：<a href="#" class="text-xl font-semibold">博客标题</a> -->
+        @* render blogs as card style *@
+        @foreach (var blog in blogs)
+        {
+            <a href="@UrlEncode(blog.Path)" class="block py-2 text-gray-600 hover:text-gray-800">@blog.Title</a>
+
+        }
+
     </div>
 </div>
 <div class="w-1/4">
     <!-- 分类 -->
     <div class="bg-white rounded-lg shadow-md p-4">
         <!-- 分类列表 -->
-        <!-- 例如：<a href="#" class="block mb-2">技术</a> -->
+        @* // render catalogs *@
+        @foreach (var catalog in catalogs)
+        {
+            <a href="#" class="block py-2 text-gray-600 hover:text-gray-800">@catalog.Name</a>
+        }
     </div>
 </div>
+
+
+
+
+@code {
+
+    private List<Blog> blogs = [];
+    private List<Catalog> catalogs = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        var data = await http.GetFromJsonAsync<Catalog>("data/blogs.json");
+
+        catalogs = data?.Children.ToList() ?? [];
+        blogs = data?.GetAllBlogs() ?? [];
+    }
+
+    private string UrlEncode(string path)
+    {
+        Console.WriteLine(path);
+        return "/blogs" + path;
+    }
+
+}

@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
+using System.Web;
 using Markdig;
 using Models;
 
@@ -26,7 +27,7 @@ public partial class HtmlBuilder
     {
         ContentPath = Path.Combine(Environment.CurrentDirectory, "..", "..", BlogConst.ContentPath);
         WwwrootPath = Path.Combine(Environment.CurrentDirectory, "..", "..", "src", "wwwroot");
-        DataPath = Path.Combine(WwwrootPath, "blogs", BlogConst.DataPath);
+        DataPath = Path.Combine(WwwrootPath, BlogConst.DataPath);
     }
     public void BuildBlogs()
     {
@@ -43,7 +44,7 @@ public partial class HtmlBuilder
                 {
                     string markdown = File.ReadAllText(file);
                     string html = Markdown.ToHtml(markdown, pipeline);
-                    string relativePath = file.Replace(ContentPath, WwwrootPath).Replace(".md", ".html");
+                    string relativePath = file.Replace(ContentPath, Path.Combine(WwwrootPath, "blogs")).Replace(".md", ".html");
 
                     html = AddHtmlTags(html);
                     string? dir = Path.GetDirectoryName(relativePath);
@@ -99,7 +100,7 @@ public partial class HtmlBuilder
                 UpdatedTime = fileInfo.LastWriteTime,
                 Catalog = parentCatalog
             };
-            blog.Path = GetFullPath(parentCatalog) + "/" + blog.FileName.Replace(".md", ".html");
+            blog.Path = GetFullPath(parentCatalog) + "/" + HttpUtility.UrlEncode(blog.FileName.Replace(".md", ".html"));
 
             //blog.Path = HttpUtility.UrlEncode(blog.Path);
             parentCatalog.Blogs.Add(blog);
@@ -108,7 +109,7 @@ public partial class HtmlBuilder
 
     public string GetFullPath(Catalog catalog)
     {
-        var path = catalog.Name;
+        var path = HttpUtility.UrlEncode(catalog.Name);
         if (catalog.Parent != null)
         {
             path = GetFullPath(catalog.Parent) + "/" + path;

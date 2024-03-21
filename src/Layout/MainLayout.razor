@@ -2,42 +2,36 @@
 @inject HttpClient http
 
 <div class="bg-gray-900 text-white py-4">
-  <div class="container mx-auto flex items-center justify-between">
-    <a href="#" class="text-2xl font-semibold">@webInfo.Name</a>
-    <div class="flex items-center">
-      <input type="text" placeholder="博客标题" class="px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none">
-      <button class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">搜索</button>
+    <div class="container mx-auto flex items-center justify-between">
+        <a href="#" class="text-2xl font-semibold">@webInfo?.Name</a>
+        <div class="flex items-center">
+            <input type="text" placeholder="博客标题" class="px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none">
+            <button class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">搜索</button>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="container mx-auto mt-8">
-  <div class="flex">
-    @Body
-  </div>
+    <div class="flex">
+        @Body
+    </div>
 </div>
 
 <div class="bg-gray-200 py-4 fixed bottom-0 w-full">
-  <div class="container mx-auto text-center">
-    <p class="text-gray-600">
-      @webInfo.Name
-      <a class="text-blue-600" target="_blank" href="https://github.com/AterDev/blazor-blog">Powered by Ater Blog</a>
-    </p>
-  </div>
+    <div class="container mx-auto text-center">
+        <p class="text-gray-600">
+            @webInfo.Name
+            <a class="text-blue-600" target="_blank" href="https://github.com/AterDev/blazor-blog">Powered by Ater Blog</a>
+        </p>
+    </div>
 </div>
 
 
 @code {
-
-  private WebInfo webInfo = null!;
-
-  private List<Blog> blogs = [];
-
-  protected override async Task OnInitializedAsync()
-  {
-    webInfo = await http.GetFromJsonAsync<WebInfo>("data/webinfo.json") ?? new WebInfo();
-  }
-
-
+    private WebInfo? webInfo = null;
+    protected override async Task OnInitializedAsync()
+    {
+        webInfo = await http.GetFromJsonAsync<WebInfo>("data/webinfo.json") ?? new WebInfo();
+    }
 
 }
