@@ -16,4 +16,18 @@ public class Catalog
     public ICollection<Blog> Blogs { get; set; } = [];
 
     public Catalog? Parent { get; set; }
+
+
+
+    public List<Blog> GetAllBlogs()
+    {
+        var blogs = new List<Blog>();
+
+        blogs.AddRange(Blogs);
+        foreach (var catalog in Children)
+        {
+            blogs.AddRange(catalog.GetAllBlogs());
+        }
+        return blogs;
+    }
 }

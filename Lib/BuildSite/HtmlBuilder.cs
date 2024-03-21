@@ -26,7 +26,7 @@ public partial class HtmlBuilder
     {
         ContentPath = Path.Combine(Environment.CurrentDirectory, "..", "..", BlogConst.ContentPath);
         WwwrootPath = Path.Combine(Environment.CurrentDirectory, "..", "..", "src", "wwwroot");
-        DataPath = Path.Combine(WwwrootPath, BlogConst.DataPath);
+        DataPath = Path.Combine(WwwrootPath, "blogs", BlogConst.DataPath);
     }
     public void BuildBlogs()
     {
