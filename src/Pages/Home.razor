@@ -5,7 +5,7 @@
 
 <div class="w-3/4 pr-4">
     <!-- 博客卡片列表 -->
-    <div class="p-4 bg-white dark:bg-gray-900">
+    <div class="px-3 bg-white dark:bg-gray-900">
         <!-- 博客卡片内容 -->
         @foreach (var blog in blogs)
         {
@@ -25,23 +25,34 @@
     </div>
 </div>
 
-<div class="w-1/4">
+<div class="w-1/4 mt-1">
     <!-- 分类 -->
     <div class="rounded-lg shadow-md p-4 dark:bg-gray-800">
         <!-- lenged titile -->
         <div class="text-xl font-semibold dark:text-gray-300">分类</div>
 
+        <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(null,null)">
+            全部 [@allBlogs.Count]
+        </span>
         @foreach (var catalog in catalogs)
         {
-            <a href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">@catalog.Name [@catalog.Blogs.Count]</a>
+            <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(catalog.Name,null)">
+                @catalog.Name [@catalog.Blogs.Count]
+            </span>
         }
     </div>
     <div class="rounded-lg shadow-md p-4 dark:bg-gray-800 mt-2">
         <!-- lenged titile -->
         <div class="text-xl font-semibold dark:text-gray-300">存档</div>
-        @foreach (var date in date)
+
+        <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(null,null)">
+            全部 [@allBlogs.Count]
+        </span>
+        @foreach (var date in dates)
         {
-            <a href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">@date.ToString("yyyy-MM-dd")</a>
+            <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(null,date)">
+                @date.ToString("yyyy-MM-dd") [@GetCountByDate(date)]
+            </span>
         }
     </div>
 </div>
@@ -53,7 +64,7 @@
     private List<Blog> blogs = [];
     private List<Catalog> catalogs = [];
 
-    List<DateTimeOffset> date = [];
+    List<DateTimeOffset> dates = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,20 +75,36 @@
         blogs = allBlogs?.OrderByDescending(b => b.PublishTime).Take(50).ToList() ?? [];
         webInfo = await http.GetFromJsonAsync<WebInfo>("data/webinfo.json") ?? new WebInfo();
 
-        date = allBlogs!.Select(b => b.PublishTime)
+        dates = allBlogs!.Select(b => b.PublishTime)
             .OrderByDescending(b => b)
             .DistinctBy(b => b.Date)
             .ToList();
     }
 
+    private int GetCountByDate(DateTimeOffset date)
+    {
+        return allBlogs.Count(b => b.PublishTime.Date == date.Date);
+    }
+
     /// <summary>
     /// 筛选博客
     /// </summary>
-    private void FilterBlogs()
+    private void FilterBlogs(string? catalogName, DateTimeOffset? date)
     {
-
+        if (catalogName != null)
+        {
+            var catalog = catalogs.FirstOrDefault(c => c.Name == catalogName);
+            blogs = catalog?.Blogs.ToList() ?? [];
+        }
+        else if (date != null)
+        {
+            blogs = allBlogs.Where(b => b.PublishTime.Date == date.Value.Date).ToList();
+        }
+        else
+        {
+            blogs = allBlogs;
+        }
     }
-
 
     private string UrlEncode(string path)
     {
