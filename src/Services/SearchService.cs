@@ -2,10 +2,10 @@
 
 public class SearchService
 {
-    public Action<string>? OnSearch;
+    public Action<string?> OnSearch = null!;
 
-    public void SearchAsync(string? key)
+    public void Search(string? key)
     {
-        OnSearch?.Invoke(key);
+        OnSearch.Invoke(key);
     }
 }

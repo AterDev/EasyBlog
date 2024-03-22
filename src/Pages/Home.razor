@@ -66,14 +66,15 @@
     private List<Catalog> catalogs = [];
 
     List<DateTimeOffset> dates = [];
+    public string? SearchText { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         var data = await http.GetFromJsonAsync<Catalog>("data/blogs.json");
 
         catalogs = data?.Children.ToList() ?? [];
-        allBlogs = data?.GetAllBlogs() ?? [];
-        blogs = allBlogs?.OrderByDescending(b => b.PublishTime).Take(50).ToList() ?? [];
+        allBlogs = data?.GetAllBlogs().OrderByDescending(b => b.PublishTime).ToList() ?? [];
+        blogs = allBlogs?.Take(50).ToList() ?? [];
         webInfo = await http.GetFromJsonAsync<WebInfo>("data/webinfo.json") ?? new WebInfo();
 
         dates = allBlogs!.Select(b => b.PublishTime)
@@ -97,8 +98,9 @@
         }
         else
         {
-            blogs = allBlogs.Where(b => b.Title.Contains(key)).ToList();
+            blogs = allBlogs.Where(b => b.Title.ToLower().Contains(key.ToLower())).ToList();
         }
+
         StateHasChanged();
     }
 

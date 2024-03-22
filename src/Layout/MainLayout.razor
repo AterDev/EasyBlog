@@ -8,7 +8,7 @@
     <div class="container mx-auto flex items-center justify-between">
         <a href="#" class="text-2xl font-semibold">@webInfo?.Name</a>
         <div class="flex items-center">
-            <input type="text" @bind="SearchText" placeholder="博客标题" class="px-4 py-2 rounded-lg dark:bg-gray-800 text-white focus:outline-none">
+            <input type="text" @bind="SearchText" placeholder="博客标题" class="px-4 py-2 rounded-lg dark:bg-gray-800 text-white focus:outline-none" @onkeydown="KeyDown">
             <button class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg" @onclick="Search">
                 搜索
             </button>
@@ -43,7 +43,15 @@
 
     private void Search()
     {
-            searchService.SearchAsync(SearchText);
+        searchService.Search(SearchText);
+    }
+
+    private void KeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key.Equals("Enter"))
+        {
+            Search();
+        }
     }
 
 }
