@@ -3,55 +3,90 @@
 @page "/"
 @using System.Web
 
-<PageTitle>Home</PageTitle>
-
-
 <div class="w-3/4 pr-4">
     <!-- 博客卡片列表 -->
-    <div class="bg-white rounded-lg shadow-md p-4">
+    <div class="p-4 bg-white dark:bg-gray-900">
         <!-- 博客卡片内容 -->
-        <!-- 例如：<a href="#" class="text-xl font-semibold">博客标题</a> -->
-        @* render blogs as card style *@
         @foreach (var blog in blogs)
         {
-            <a href="@UrlEncode(blog.Path)" class="block py-2 text-gray-600 hover:text-gray-800">@blog.Title</a>
-
+            <div class="w-100 rounded overflow-hidden shadow-lg dark:bg-gray-800 my-2">
+                <div class="px-6 py-3">
+                    <div class="font-bold text-xl mb-2">
+                        <a href="@UrlEncode(blog.Path)" target="_blank" class="block text-lg py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">📑 @blog.Title</a>
+                    </div>
+                    <p class="text-gray-700 text-base dark:text-gray-300">
+                        👨‍💻 @webInfo?.AuthorName
+                        &nbsp;&nbsp;
+                        ⏱️ @FormatDatetime(blog.PublishTime)
+                    </p>
+                </div>
+            </div>
         }
-
     </div>
 </div>
+
 <div class="w-1/4">
     <!-- 分类 -->
-    <div class="bg-white rounded-lg shadow-md p-4">
-        <!-- 分类列表 -->
-        @* // render catalogs *@
+    <div class="rounded-lg shadow-md p-4 dark:bg-gray-800">
+        <!-- lenged titile -->
+        <div class="text-xl font-semibold dark:text-gray-300">分类</div>
+
         @foreach (var catalog in catalogs)
         {
-            <a href="#" class="block py-2 text-gray-600 hover:text-gray-800">@catalog.Name</a>
+            <a href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">@catalog.Name [@catalog.Blogs.Count]</a>
+        }
+    </div>
+    <div class="rounded-lg shadow-md p-4 dark:bg-gray-800 mt-2">
+        <!-- lenged titile -->
+        <div class="text-xl font-semibold dark:text-gray-300">存档</div>
+        @foreach (var date in date)
+        {
+            <a href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">@date.ToString("yyyy-MM-dd")</a>
         }
     </div>
 </div>
-
-
 
 
 @code {
-
+    private WebInfo? webInfo = null;
+    private List<Blog> allBlogs = [];
     private List<Blog> blogs = [];
     private List<Catalog> catalogs = [];
+
+    List<DateTimeOffset> date = [];
 
     protected override async Task OnInitializedAsync()
     {
         var data = await http.GetFromJsonAsync<Catalog>("data/blogs.json");
 
         catalogs = data?.Children.ToList() ?? [];
-        blogs = data?.GetAllBlogs() ?? [];
+        allBlogs = data?.GetAllBlogs() ?? [];
+        blogs = allBlogs?.OrderByDescending(b => b.PublishTime).Take(50).ToList() ?? [];
+        webInfo = await http.GetFromJsonAsync<WebInfo>("data/webinfo.json") ?? new WebInfo();
+
+        date = allBlogs!.Select(b => b.PublishTime)
+            .OrderByDescending(b => b)
+            .DistinctBy(b => b.Date)
+            .ToList();
     }
+
+    /// <summary>
+    /// 筛选博客
+    /// </summary>
+    private void FilterBlogs()
+    {
+
+    }
+
 
     private string UrlEncode(string path)
     {
-        Console.WriteLine(path);
         return "/blogs" + path;
     }
 
+    private string FormatDatetime(DateTimeOffset dateTime)
+    {
+        TimeSpan timeDifference = DateTimeOffset.Now - dateTime;
+        return timeDifference.Humanize();
+    }
 }

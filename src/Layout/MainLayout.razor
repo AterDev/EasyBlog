@@ -1,11 +1,13 @@
 ﻿@inherits LayoutComponentBase
 @inject HttpClient http
 
-<div class="bg-gray-900 text-white py-4">
+<PageTitle>@webInfo?.Name 的博客</PageTitle>
+
+<div class="text-white py-4 dark:bg-gray-900">
     <div class="container mx-auto flex items-center justify-between">
         <a href="#" class="text-2xl font-semibold">@webInfo?.Name</a>
         <div class="flex items-center">
-            <input type="text" placeholder="博客标题" class="px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none">
+            <input type="text" placeholder="博客标题" class="px-4 py-2 rounded-lg dark:bg-gray-800 text-white focus:outline-none">
             <button class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">搜索</button>
         </div>
     </div>
@@ -17,15 +19,14 @@
     </div>
 </div>
 
-<div class="bg-gray-200 py-4 fixed bottom-0 w-full">
+<div class="dark:bg-gray-800 py-4 fixed bottom-0 w-full">
     <div class="container mx-auto text-center">
-        <p class="text-gray-600">
-            @webInfo.Name
+        <p class="text-gray-600 dark:text-gray-300">
+            @webInfo?.Name
             <a class="text-blue-600" target="_blank" href="https://github.com/AterDev/blazor-blog">Powered by Ater Blog</a>
         </p>
     </div>
 </div>
-
 
 @code {
     private WebInfo? webInfo = null;
