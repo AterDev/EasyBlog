@@ -1,4 +1,5 @@
 ﻿@inject HttpClient http
+@inject SearchService searchService
 
 @page "/"
 @using System.Web
@@ -79,11 +80,26 @@
             .OrderByDescending(b => b)
             .DistinctBy(b => b.Date)
             .ToList();
+
+        searchService.OnSearch = Search;
     }
 
     private int GetCountByDate(DateTimeOffset date)
     {
         return allBlogs.Count(b => b.PublishTime.Date == date.Date);
+    }
+
+    private void Search(string? key)
+    {
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            blogs = allBlogs;
+        }
+        else
+        {
+            blogs = allBlogs.Where(b => b.Title.Contains(key)).ToList();
+        }
+        StateHasChanged();
     }
 
     /// <summary>
