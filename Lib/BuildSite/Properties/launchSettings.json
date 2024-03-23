@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "BuildSite": {
+      "commandName": "Project",
+      "workingDirectory": "./",
+      "remoteDebugEnabled": false
+    }
+  }
+}

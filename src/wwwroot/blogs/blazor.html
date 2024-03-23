@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/markdown.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/markdown.css">
   <title></title>
 </head>
 <body>
@@ -14,88 +14,157 @@
 <p>安装</p>
 <p><code>npx tailwindcss init</code></p>
 <p>配置 tailwind.config.js</p>
-<pre><code class="language-typescript">module.exports = {
-  content: ['./**/*.{razor,html}'],
+<div class="language-typescript"><pre>
+<span class="keyword">module</span>.exports = {
+  content: [<span class="string">&#39;./**/*.{razor,html}&#39;</span>],
   theme: {
     extend: {},
   },
   plugins: [],
 }
-</code></pre>
+
+
+</pre></div>
 <p>创建一个开发时使用的app.css，并引入基础组件</p>
-<pre><code class="language-csharp">
-using System.Text;
-using Markdig;
-using Markdown.ColorCode;
-using Markdown.ColorCode.CSharpToColoredHtml;
+<div class="language-csharp"><pre>
 
-namespace BuildSite;
+<span class="keyword">using</span> System.Text;
+<span class="keyword">using</span> Markdig;
+<span class="keyword">using</span> Markdown.ColorCode;
+<span class="keyword">using</span> Markdown.ColorCode.CSharpToColoredHtml;
 
-public class HtmlBuilder
+<span class="keyword">namespace</span> BuildSite;
+
+<span class="keyword">public</span> <span class="keyword">class</span> HtmlBuilder
 {
-    public void BuildBlogs()
+    <span class="keyword">public</span> <span class="keyword">void</span> BuildBlogs()
     {
-        var contentPath = Path.Combine(Environment.CurrentDirectory, &quot;..&quot;, &quot;Content&quot;);
-        var wwwrootPath = Path.Combine(Environment.CurrentDirectory, &quot;..&quot;, &quot;src&quot;, &quot;wwwroot&quot;);
-        try
+        <span class="keyword">var</span> contentPath = Path.Combine(Environment.CurrentDirectory, <span class="string">&quot;..&quot;</span>, <span class="string">&quot;Content&quot;</span>);
+        <span class="keyword">var</span> wwwrootPath = Path.Combine(Environment.CurrentDirectory, <span class="string">&quot;..&quot;</span>, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;wwwroot&quot;</span>);
+        <span class="keyword">try</span>
         {
-            var pipeline = new MarkdownPipelineBuilder()
+            <span class="keyword">var</span> pipeline = <span class="keyword">new</span> MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
                 .UseColorCodeWithCSharpToColoredHtml(HtmlFormatterType.CssWithCSharpToColoredHtml)
                 .Build();
 
 
-            var files = Directory.EnumerateFiles(contentPath, &quot;*.md&quot;, SearchOption.AllDirectories)
+            <span class="keyword">var</span> files = Directory.EnumerateFiles(contentPath, <span class="string">&quot;*.md&quot;</span>, SearchOption.AllDirectories)
                 .ToList();
 
             files.ForEach(file =&gt;
                 {
-                    var markdown = File.ReadAllText(file);
-                    var html = Markdig.Markdown.ToHtml(markdown, pipeline);
-                    var relativePath = file.Replace(contentPath, wwwrootPath).Replace(&quot;.md&quot;, &quot;.html&quot;);
+                    <span class="keyword">var</span> markdown = File.ReadAllText(file);
+                    <span class="keyword">var</span> html = Markdig.Markdown.ToHtml(markdown, pipeline);
+                    <span class="keyword">var</span> relativePath = file.Replace(contentPath, wwwrootPath).Replace(<span class="string">&quot;.md&quot;</span>, <span class="string">&quot;.html&quot;</span>);
 
                     html = AddHtmlTags(html);
-                    var dir = Path.GetDirectoryName(relativePath);
-                    if (!Directory.Exists(dir))
+                    <span class="keyword">var</span> dir = Path.GetDirectoryName(relativePath);
+                    <span class="keyword">if</span> (!Directory.Exists(dir))
                     {
                         Directory.CreateDirectory(dir);
                     }
                     File.WriteAllText(relativePath, html, Encoding.UTF8);
                 });
         }
-        catch (Exception e)
+        <span class="keyword">catch</span> (Exception e)
         {
             Console.WriteLine(e.ToString());
-            throw;
+            <span class="keyword">throw</span>;
         }
     }
 
-    private string AddHtmlTags(string content, string title = &quot;&quot;)
+    <span class="keyword">private</span> <span class="keyword">string</span> AddHtmlTags(<span class="keyword">string</span> content, <span class="keyword">string</span> title = <span class="string">&quot;&quot;</span>)
     {
-        var res = $&quot;&quot;&quot;
+        <span class="keyword">var</span> res = $<span class="string">&quot;&quot;</span>&quot;
             &lt;!DOCTYPE html&gt;
             &lt;html&gt;
             &lt;head&gt;
-              &lt;meta charset=&quot;UTF-8&quot;&gt;
-              &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-              &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot;&gt;
+              &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;
+              &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;
+              &lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/app.css&quot;</span>&gt;
               &lt;title&gt;{title}&lt;/title&gt;
             &lt;/head&gt;
             &lt;body&gt;
             {content}
             &lt;/body&gt;
             &lt;/html&gt;
-            &quot;&quot;&quot;;
-        return res;
+            <span class="string">&quot;&quot;</span>&quot;;
+        <span class="keyword">return</span> res;
     }
 }
 
-</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
 <h2 id="css">Css</h2>
-<pre><code class="language-css">@tailwind base;
+<div class="language-css"><pre>
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
-</code></pre>
+
+
+</pre></div>
 <p>开启监测模式，并设置输出路径</p>
 <p><code>npx tailwindcss -i ./wwwroot/css/input.css -o ./wwwroot/css/output.css --watch</code></p>
 <h2 id="fluentui">使用FluentUI</h2>

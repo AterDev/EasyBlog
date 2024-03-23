@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -184,7 +183,7 @@ public class HtmlClassFormatter : CodeColorizerBase
 
     private void WriteHeaderDivStart(ILanguage language)
     {
-        WriteElementStart("div", language.CssClassName);
+        WriteElementStart("div", "language-" + language.CssClassName);
     }
 
     private void WriteElementStart(string elementName)
@@ -195,7 +194,7 @@ public class HtmlClassFormatter : CodeColorizerBase
     private void WriteElementStart(string elementName, string cssClassName)
     {
         Writer.Write("<{0}", elementName);
-        if (!String.IsNullOrEmpty(cssClassName))
+        if (!string.IsNullOrEmpty(cssClassName))
         {
             Writer.Write(" class=\"{0}\"", cssClassName);
         }

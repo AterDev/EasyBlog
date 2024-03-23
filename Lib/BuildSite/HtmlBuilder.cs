@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
 using System.Web;
+using BuildSite.MarkdownExtension;
 using Markdig;
 using Models;
 
@@ -35,10 +36,11 @@ public partial class HtmlBuilder
         {
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
+                .UseBetterCodeBlock()
                 .Build();
 
             List<string> files = Directory.EnumerateFiles(ContentPath, "*.md", SearchOption.AllDirectories)
-                .ToList();
+            .ToList();
 
             files.ForEach(file =>
                 {
@@ -52,6 +54,7 @@ public partial class HtmlBuilder
                     {
                         Directory.CreateDirectory(dir!);
                     }
+
                     File.WriteAllText(relativePath, html, Encoding.UTF8);
                 });
         }
@@ -95,7 +98,7 @@ public partial class HtmlBuilder
                 Title = GetTitleFromMarkdown(File.ReadAllText(filePath)),
                 FileName = fileName,
                 Path = string.Empty,
-                PublishTime = DateTimeOffset.Now,
+                PublishTime = fileInfo.LastWriteTime,
                 CreatedTime = fileInfo.CreationTime,
                 UpdatedTime = fileInfo.LastWriteTime,
                 Catalog = parentCatalog
@@ -141,8 +144,8 @@ public partial class HtmlBuilder
             <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <link rel="stylesheet" href="css/app.css">
-              <link rel="stylesheet" href="css/markdown.css">
+              <link rel="stylesheet" href="/css/app.css">
+              <link rel="stylesheet" href="/css/markdown.css">
               <title>{title}</title>
             </head>
             <body>
