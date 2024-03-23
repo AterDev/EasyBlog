@@ -1,3 +1,128 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* styles for the markdown */
+.container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+h1 {
+    @apply text-4xl font-semibold text-gray-900 my-8;
+}
+
+h2 {
+    @apply text-3xl text-gray-900 my-6;
+}
+
+h3 {
+    @apply text-2xl text-gray-800 my-4;
+}
+
+h4 {
+    @apply text-xl text-gray-800 my-2;
+}
+h5{
+    @apply text-lg text-gray-700 my-1;
+}
+
+table {
+    @apply w-full whitespace-nowrap;
+}
+
+    table th {
+        @apply px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider;
+    }
+
+    table td {
+        @apply px-6 py-4 whitespace-nowrap border-b border-gray-200;
+    }
+
+
+code {
+    @apply text-sm font-mono bg-gray-100 rounded-md p-1 mx-1;
+}
+
+.markdown-alert {
+    @apply rounded-md py-2 px-4 my-2 border-l-4;
+}
+
+.markdown-alert-important {
+    @apply bg-violet-50 border-l-violet-600;
+}
+
+    .markdown-alert-important > .markdown-alert-title {
+        @apply text-violet-600;
+    }
+
+    .markdown-alert-important svg {
+        @apply fill-violet-600;
+    }
+
+
+
+.markdown-alert-warning {
+    @apply bg-amber-50 border-l-amber-600;
+}
+
+    .markdown-alert-warning > .markdown-alert-title {
+        @apply text-amber-600;
+    }
+
+    .markdown-alert-warning svg {
+        @apply fill-amber-600;
+    }
+
+.markdown-alert-caution {
+    @apply bg-red-50 border-l-red-600;
+}
+
+    .markdown-alert-caution > .markdown-alert-title {
+        @apply text-red-600;
+    }
+
+    .markdown-alert-caution svg {
+        @apply fill-red-600;
+    }
+
+
+.markdown-alert-tip {
+    @apply bg-green-50 border-l-green-600;
+}
+
+    .markdown-alert-tip > .markdown-alert-title {
+        @apply text-green-600;
+    }
+
+    .markdown-alert-tip svg {
+        @apply fill-green-600;
+    }
+
+.markdown-alert-note {
+    @apply bg-blue-50 border-l-blue-600;
+}
+
+    .markdown-alert-note > .markdown-alert-title {
+        @apply text-blue-600;
+    }
+
+    .markdown-alert-note svg {
+        @apply fill-blue-600;
+    }
+
+.markdown-alert-title {
+    display: flex;
+    @apply font-semibold;
+    align-items: center;
+}
+
+    .markdown-alert-title svg {
+        margin-right: 5px;
+    }
+
+p {
+    @apply mb-2 text-gray-700 leading-relaxed;
+}
+
+
+/* styles for the markdown */

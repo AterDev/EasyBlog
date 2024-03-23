@@ -146,7 +146,7 @@ public partial class HtmlBuilder
               <link rel="stylesheet" href="/css/markdown.css">
               <title>{title}</title>
             </head>
-            <body>
+            <body class="container mx-auto px-4 sm:px-6 lg:px-8">
             {content}
             </body>
             </html>

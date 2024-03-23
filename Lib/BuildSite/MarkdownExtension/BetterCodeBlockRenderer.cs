@@ -21,9 +21,6 @@ internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
             _underlyingRenderer.Write(renderer, obj);
             return;
         }
-
-        var attributes = obj.TryGetAttributes() ?? new HtmlAttributes();
-
         var languageString = fencedCodeBlock.Info?.Replace(parser.InfoPrefix!, string.Empty);
         var language = Languages.FindById(languageString);
         if (language == null)
