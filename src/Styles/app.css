@@ -78,7 +78,7 @@ code {
 
 .markdown-alert-warning {
     @apply bg-amber-50 border-l-amber-600;
-    @apply dark:bg-amber-900 dark:border-l-amber-400;
+    @apply dark:bg-amber-950 dark:border-l-amber-400;
 }
 
     .markdown-alert-warning > .markdown-alert-title {
@@ -93,7 +93,7 @@ code {
 
 .markdown-alert-caution {
     @apply bg-red-50 border-l-red-600;
-    @apply dark:bg-red-900 dark:border-l-red-400;
+    @apply dark:bg-red-950 dark:border-l-red-400;
 }
 
     .markdown-alert-caution > .markdown-alert-title {
@@ -109,7 +109,7 @@ code {
 
 .markdown-alert-tip {
     @apply bg-green-50 border-l-green-600;
-    @apply dark:bg-green-900 dark:border-l-green-400;
+    @apply dark:bg-green-950 dark:border-l-green-400;
 }
 
     .markdown-alert-tip > .markdown-alert-title {
@@ -124,7 +124,7 @@ code {
 
 .markdown-alert-note {
     @apply bg-blue-50 border-l-blue-600;
-    @apply dark:bg-blue-900 dark:border-l-blue-400;
+    @apply dark:bg-blue-950 dark:border-l-blue-400;
 }
 
     .markdown-alert-note > .markdown-alert-title {
