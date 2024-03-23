@@ -38,7 +38,6 @@
 </ol>
 <p>代码示例：</p>
 <div class="language-csharp"><pre>
-
 <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">async</span> Task&lt;PageList&lt;DiscussItemDto&gt;&gt; FilterAsync(DiscussFilterDto filter)
 {
     <span class="comment">// 根据实际业务构建筛选条件</span>
@@ -52,8 +51,6 @@
     }
     <span class="keyword">return</span> <span class="keyword">await</span> Query.FilterAsync&lt;DiscussItemDto&gt;(Queryable, filter.PageIndex, filter.PageSize);
 }
-
-
 
 </pre></div>
 <h3 id="section-6">新增实体</h3>
@@ -90,10 +87,6 @@
         <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">base</span>.UpdateAsync(entity, dto);
     }
 
-
-
-
-
 </pre></div>
 <h3 id="section-8">详情查询</h3>
 <p><code>Manager</code>提供了默认的详情查询方法，可直接传递查询条件.</p>
@@ -107,8 +100,6 @@
         .Include(g =&gt; g.Environment)
         .FirstOrDefaultAsync(g =&gt; g.Id == id);
 }
-
-
 
 </pre></div>
 <h3 id="section-9">删除处理</h3>
@@ -125,13 +116,6 @@
     }
     <span class="keyword">return</span> <span class="keyword">await</span> DeleteAsync(resource);
 }
-
-
-
-
-
-
-
 
 </pre></div>
 <h2 id="section-10">在控制器中调用业务逻辑</h2>

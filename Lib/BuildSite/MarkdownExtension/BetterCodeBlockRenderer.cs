@@ -44,7 +44,8 @@ internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
         var str = new StringBuilder();
         foreach (var line in obj.Lines.Lines)
         {
-            str.AppendLine(line.Slice.ToString());
+            if (!string.IsNullOrWhiteSpace(line.Slice.ToString().Trim()))
+                str.AppendLine(line.Slice.ToString());
         }
         return str.ToString();
     }

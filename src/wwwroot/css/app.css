@@ -620,6 +620,10 @@ video {
   display: flex;
 }
 
+.table {
+  display: table;
+}
+
 .h-screen {
   height: 100vh;
 }
@@ -813,4 +817,3 @@ video {
     color: rgb(243 244 246 / var(--tw-text-opacity));
   }
 }
-

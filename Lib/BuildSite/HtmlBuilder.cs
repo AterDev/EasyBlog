@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
-using System.Web;
 using BuildSite.MarkdownExtension;
 using Markdig;
 using Models;
@@ -95,7 +94,7 @@ public partial class HtmlBuilder
             var fileName = Path.GetFileName(filePath);
             var blog = new Blog
             {
-                Title = GetTitleFromMarkdown(File.ReadAllText(filePath)),
+                Title = Path.GetFileNameWithoutExtension(filePath),
                 FileName = fileName,
                 Path = string.Empty,
                 PublishTime = fileInfo.LastWriteTime,
@@ -103,16 +102,15 @@ public partial class HtmlBuilder
                 UpdatedTime = fileInfo.LastWriteTime,
                 Catalog = parentCatalog
             };
-            blog.Path = GetFullPath(parentCatalog) + "/" + HttpUtility.UrlEncode(blog.FileName.Replace(".md", ".html"));
+            blog.Path = GetFullPath(parentCatalog) + "/" + Uri.EscapeDataString(blog.FileName.Replace(".md", ".html"));
 
-            //blog.Path = HttpUtility.UrlEncode(blog.Path);
             parentCatalog.Blogs.Add(blog);
         }
     }
 
     public string GetFullPath(Catalog catalog)
     {
-        var path = HttpUtility.UrlEncode(catalog.Name);
+        var path = Uri.EscapeDataString(catalog.Name);
         if (catalog.Parent != null)
         {
             path = GetFullPath(catalog.Parent) + "/" + path;

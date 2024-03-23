@@ -23,18 +23,14 @@
   plugins: [],
 }
 
-
 </pre></div>
 <p>创建一个开发时使用的app.css，并引入基础组件</p>
 <div class="language-csharp"><pre>
-
 <span class="keyword">using</span> System.Text;
 <span class="keyword">using</span> Markdig;
 <span class="keyword">using</span> Markdown.ColorCode;
 <span class="keyword">using</span> Markdown.ColorCode.CSharpToColoredHtml;
-
 <span class="keyword">namespace</span> BuildSite;
-
 <span class="keyword">public</span> <span class="keyword">class</span> HtmlBuilder
 {
     <span class="keyword">public</span> <span class="keyword">void</span> BuildBlogs()
@@ -47,17 +43,13 @@
                 .UseAdvancedExtensions()
                 .UseColorCodeWithCSharpToColoredHtml(HtmlFormatterType.CssWithCSharpToColoredHtml)
                 .Build();
-
-
             <span class="keyword">var</span> files = Directory.EnumerateFiles(contentPath, <span class="string">&quot;*.md&quot;</span>, SearchOption.AllDirectories)
                 .ToList();
-
             files.ForEach(file =&gt;
                 {
                     <span class="keyword">var</span> markdown = File.ReadAllText(file);
                     <span class="keyword">var</span> html = Markdig.Markdown.ToHtml(markdown, pipeline);
                     <span class="keyword">var</span> relativePath = file.Replace(contentPath, wwwrootPath).Replace(<span class="string">&quot;.md&quot;</span>, <span class="string">&quot;.html&quot;</span>);
-
                     html = AddHtmlTags(html);
                     <span class="keyword">var</span> dir = Path.GetDirectoryName(relativePath);
                     <span class="keyword">if</span> (!Directory.Exists(dir))
@@ -73,7 +65,6 @@
             <span class="keyword">throw</span>;
         }
     }
-
     <span class="keyword">private</span> <span class="keyword">string</span> AddHtmlTags(<span class="keyword">string</span> content, <span class="keyword">string</span> title = <span class="string">&quot;&quot;</span>)
     {
         <span class="keyword">var</span> res = $<span class="string">&quot;&quot;</span>&quot;
@@ -94,75 +85,12 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </pre></div>
 <h2 id="css">Css</h2>
 <div class="language-css"><pre>
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 </pre></div>
 <p>开启监测模式，并设置输出路径</p>
