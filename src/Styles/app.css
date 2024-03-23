@@ -8,39 +8,53 @@
 }
 
 h1 {
-    @apply text-4xl font-semibold text-gray-900 my-8;
+    @apply text-5xl font-semibold text-gray-900 my-8;
+    @apply dark:text-gray-100;
 }
 
 h2 {
-    @apply text-3xl text-gray-900 my-6;
+    @apply text-4xl text-gray-900 mt-8 mb-6;
+    @apply dark:text-gray-200;
 }
 
 h3 {
-    @apply text-2xl text-gray-800 my-4;
+    @apply text-3xl text-gray-800 mt-6 mb-4;
+    @apply dark:text-gray-300;
 }
 
 h4 {
-    @apply text-xl text-gray-800 my-2;
+    @apply text-2xl text-gray-800 mt-4 mb-2;
+    @apply dark:text-gray-400;
 }
-h5{
-    @apply text-lg text-gray-700 my-1;
+
+h5 {
+    @apply text-2xl text-gray-700 my-1;
+    @apply dark:text-gray-500;
+}
+
+li {
+    @apply text-gray-700 list-disc ml-8 my-2;
+    @apply dark:text-gray-300;
 }
 
 table {
     @apply w-full whitespace-nowrap;
+    @apply dark:bg-gray-800;
 }
 
     table th {
         @apply px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider;
+        @apply dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200;
     }
 
     table td {
         @apply px-6 py-4 whitespace-nowrap border-b border-gray-200;
+        @apply dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300;
     }
-
 
 code {
     @apply text-sm font-mono bg-gray-100 rounded-md p-1 mx-1;
+    @apply dark:bg-neutral-700 dark:text-gray-200;
 }
 
 .markdown-alert {
@@ -49,66 +63,80 @@ code {
 
 .markdown-alert-important {
     @apply bg-violet-50 border-l-violet-600;
+    @apply dark:bg-violet-900 dark:border-l-violet-400;
 }
 
     .markdown-alert-important > .markdown-alert-title {
         @apply text-violet-600;
+        @apply dark:text-violet-200;
     }
 
     .markdown-alert-important svg {
         @apply fill-violet-600;
+        @apply dark:fill-violet-200;
     }
-
-
 
 .markdown-alert-warning {
     @apply bg-amber-50 border-l-amber-600;
+    @apply dark:bg-amber-900 dark:border-l-amber-400;
 }
 
     .markdown-alert-warning > .markdown-alert-title {
         @apply text-amber-600;
+        @apply dark:text-amber-200;
     }
 
     .markdown-alert-warning svg {
         @apply fill-amber-600;
+        @apply dark:fill-amber-200;
     }
 
 .markdown-alert-caution {
     @apply bg-red-50 border-l-red-600;
+    @apply dark:bg-red-900 dark:border-l-red-400;
 }
 
     .markdown-alert-caution > .markdown-alert-title {
         @apply text-red-600;
+        @apply dark:text-red-200;
     }
 
     .markdown-alert-caution svg {
         @apply fill-red-600;
+        @apply dark:fill-red-200;
     }
 
 
 .markdown-alert-tip {
     @apply bg-green-50 border-l-green-600;
+    @apply dark:bg-green-900 dark:border-l-green-400;
 }
 
     .markdown-alert-tip > .markdown-alert-title {
         @apply text-green-600;
+        @apply dark:text-green-200;
     }
 
     .markdown-alert-tip svg {
         @apply fill-green-600;
+        @apply dark:fill-green-200;
     }
 
 .markdown-alert-note {
     @apply bg-blue-50 border-l-blue-600;
+    @apply dark:bg-blue-900 dark:border-l-blue-400;
 }
 
     .markdown-alert-note > .markdown-alert-title {
         @apply text-blue-600;
+        @apply dark:text-blue-200;
     }
 
     .markdown-alert-note svg {
         @apply fill-blue-600;
+        @apply dark:fill-blue-200;
     }
+
 
 .markdown-alert-title {
     display: flex;
@@ -122,7 +150,5 @@ code {
 
 p {
     @apply mb-2 text-gray-700 leading-relaxed;
+    @apply dark:text-gray-300;
 }
-
-
-/* styles for the markdown */

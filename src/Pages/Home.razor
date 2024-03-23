@@ -6,16 +6,16 @@
 
 <div class="w-3/4 pr-4">
     <!-- 博客卡片列表 -->
-    <div class="px-3 bg-white dark:bg-gray-900">
+    <div class="px-3 bg-white dark:bg-neutral-900">
         <!-- 博客卡片内容 -->
         @foreach (var blog in blogs)
         {
-            <div class="w-100 rounded overflow-hidden shadow-lg dark:bg-gray-800 my-2">
+            <div class="w-100 rounded overflow-hidden shadow-lg dark:bg-neutral-800 my-2">
                 <div class="px-6 py-3">
                     <div class="font-bold text-xl mb-2">
-                        <a href="@UrlEncode(blog.Path)" target="_blank" class="block text-lg py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">📑 @blog.Title</a>
+                        <a href="@UrlEncode(blog.Path)" target="_blank" class="block text-lg py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100">📑 @blog.Title</a>
                     </div>
-                    <p class="text-gray-700 text-base dark:text-gray-300">
+                    <p class="text-neutral-700 text-base dark:text-neutral-300">
                         👨‍💻 @webInfo?.AuthorName
                         &nbsp;&nbsp;
                         ⏱️ @FormatDatetime(blog.PublishTime) ago
@@ -28,30 +28,30 @@
 
 <div class="w-1/4 mt-1">
     <!-- 分类 -->
-    <div class="rounded-lg shadow-md p-4 dark:bg-gray-800">
+    <div class="rounded-lg shadow-md p-4 dark:bg-neutral-800">
         <!-- lenged titile -->
-        <div class="text-xl font-semibold dark:text-gray-300">分类</div>
+        <div class="text-xl font-semibold dark:text-neutral-300">分类</div>
 
-        <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(null,null)">
+        <span href="#" class="text-lg block py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100" @onclick="e=>FilterBlogs(null,null)">
             全部 [@allBlogs.Count]
         </span>
         @foreach (var catalog in catalogs)
         {
-            <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(catalog.Name,null)">
+            <span href="#" class="text-lg block py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100" @onclick="e=>FilterBlogs(catalog.Name,null)">
                 @catalog.Name [@catalog.Blogs.Count]
             </span>
         }
     </div>
-    <div class="rounded-lg shadow-md p-4 dark:bg-gray-800 mt-2">
+    <div class="rounded-lg shadow-md p-4 dark:bg-neutral-800 mt-2">
         <!-- lenged titile -->
-        <div class="text-xl font-semibold dark:text-gray-300">存档</div>
+        <div class="text-xl font-semibold dark:text-neutral-300">存档</div>
 
-        <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(null,null)">
+        <span href="#" class="text-lg block py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100" @onclick="e=>FilterBlogs(null,null)">
             全部 [@allBlogs.Count]
         </span>
         @foreach (var date in dates)
         {
-            <span href="#" class="text-lg block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100" @onclick="e=>FilterBlogs(null,date)">
+            <span href="#" class="text-lg block py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100" @onclick="e=>FilterBlogs(null,date)">
                 @date.ToString("yyyy-MM-dd") [@GetCountByDate(date)]
             </span>
         }
