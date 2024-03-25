@@ -4,9 +4,11 @@
 
 ## 使用Github Page部署
 
-### Fork本仓库
+### Fork并配置GitHub Page
 
-点击Fork按钮，并创建自己的仓库。
+1. 点击`Fork`按钮，并创建自己的仓库。
+2. 进入自己的仓库，点击`Actions`，启用workflows。
+3. 点击`Settings`，找到Pages配置，在Build and deployment 选项中选择`GitHub Actions`.
 
 ### 修改 base href
 
@@ -26,6 +28,10 @@
 
 > [!IMPORTANT]
 > 注意，尾部的`/`是必需的。
+>
+> 如果你配置了自定义域名，并且没有使用子目录，请将BaseHref设置为`/`。
+
+修改后提交代码，GitHub会触发Action自动构建。
 
 ### 编写博客
 
