@@ -1,8 +1,6 @@
 # Blazor-blog
 
-如果你想拥有一个免费的博客，那么这是你的一个选择。
-
-借助`github pages`和`dotnet blazor`，你可以拥有一个自定义的个人博客。
+借助`GitHub Page`和`.NET Blazor`，你可以在5分钟内免费拥有个人博客。
 
 ## 使用Github Page部署
 
@@ -14,7 +12,7 @@
 
 当你使用Github Page或使用ISS子应用部署时，需要调整base href。
 
-你只需要修改根目录下的`webinfo.json`文件中的`BaseHref`值即可。
+你只需要修改根目录下的`webinfo.json`文件中的`BaseHref`值即可，通常是你的项目名称或子目录名。
 如:
 
 ```json
@@ -26,44 +24,45 @@
 }
 ```
 
-注意，尾部的`/`是必需的。
-
-> [!NOTE]
-> 可以查看[官方文档](https://learn.microsoft.com/zh-cn/aspnet/core/blazor/host-and-deploy/?view=aspnetcore-3.1&tabs=visual-studio#configure-the-app-base-path)来了解更多部署内容。
->
+> [!IMPORTANT]
+> 注意，尾部的`/`是必需的。
 
 ### 编写博客
 
-请使用任何你习惯的markdown编辑器，来编写博客，唯一的要求，是你需要将博客内容放到`Content`目录下。
+请使用任何你习惯的markdown编辑器编写博客,唯一的要求是将博客内容放到`Content`目录下。你可以在该目录下创建多级目录。
 
 ### 发布博客
 
-你只需要正常提交代码即可，github action会自动构建并最终发布你的博客，发布成功后可打开您的 github page 查看。
+你只需要正常提交代码即可，github action会自动构建并最终发布你的博客，发布成功后可打开您的 GitHub Page 查看。
 
 ## 部署到其他服务
 
 如果你不使用Github Page，那么你也可以轻松的部署到其他应用。核心的步骤只需要两步。
 
-### 生成静态站点
+### 构建Blazor项目
 
-`BuildSite`项目是用来将markdown转换成html的，请在根目录执行
+我们使用`Blazor WASM`来开发前端静态网站，所以，你只需要使用`dotnet publish`命令将网站发布成静态文件即可，在根目录下执行:
 
-```pwsh
- dotnet run --project .\Lib\BuildSite\
+```dotnetcli
+dotnet publish ./src/ -c Release -o ./_site
 ```
 
-运行后，会生成相关的数据和html文件到`Blog`项目下的`wwwroot`中。
+### 生成静态内容
 
-### 发布静态站点
+`BuildSite`项目是用来将markdown转换成html的，请在根目录执行:
 
-我们使用`Blazor WASM`来开发前端静态网站，所以，你只需要使用`dotnet publish`命令将网站发布成静态文件即可。
+```pwsh
+ dotnet run --project .\Lib\BuildSite\ .\Content .\_site Production
+```
+
+在根目录下，你会看到`_site`目录。
 
 ### 上传到你的服务器
 
-将生成的静态文件复制到你的服务器即可。
+将`_site\wwwroot`中的所有文件复制到你的服务器即可。
 
 > [!TIP]
-> 根目录下的`publishToLocal.ps1`脚本可以自动生成和发布，发布的内容将在根目录下`_site`目录中。
+> 根目录下的`publishToLocal.ps1`脚本可以自动完成构建和生成的操作，最终内容将在根目录下`_site`目录中。
 >
 > 如果你使用自动化部署，可参考.github/workflows中的脚本。
 
@@ -78,3 +77,22 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
 ### 自定义博客样式
 
 `wwwroot/css`目录下的`markdown.css`文件，是用来定义博客页中的样式，你可以通过修改该文件来自定义自己想要的样式。
+
+## 🎊功能列表
+
+## 基础功能说明
+
+- [x] 博客主页
+- [x] 博客的分类和搜索
+- [x] 博客详情页基础内容展示
+
+## 生成工具
+
+- [x] 生成分类和博客信息
+- [x] 生成md对应的html文件
+
+## 待添加和完善功能
+
+- [ ] 博客页的TOC内容生成
+- [ ] C#代码片段的加强
+- [x] 博客详情页的darkMode样式
