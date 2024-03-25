@@ -1,10 +1,26 @@
 ﻿using BuildSite;
 
-var builder = new HtmlBuilder();
-builder.BuildBlogs();
-builder.BuildData();
 
-if (args.Length > 0 && args[0].Equals("production", StringComparison.OrdinalIgnoreCase))
+var input = args[0] ?? "./";
+var output = args[1] ?? "./_site";
+var environment = args[2] ?? "Development";
+
+
+var builder = new HtmlBuilder(input, output);
+
+try
 {
-    builder.BuildBaseHref();
+    builder.BuildBlogs();
+    builder.BuildData();
+
+
+    if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
+    {
+        builder.BuildBaseHref();
+    }
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+    Console.WriteLine("请尝试在根目录下运行本项目");
 }

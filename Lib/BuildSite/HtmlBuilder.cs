@@ -13,8 +13,8 @@ namespace BuildSite;
 public partial class HtmlBuilder
 {
     public string ContentPath { get; init; }
+    public string Output { get; init; }
     public string DataPath { get; init; }
-    public string WwwrootPath { get; init; }
     public string BaseUrl { get; set; } = "/";
 
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
@@ -24,11 +24,11 @@ public partial class HtmlBuilder
         WriteIndented = true
     };
 
-    public HtmlBuilder()
+    public HtmlBuilder(string input, string output)
     {
-        ContentPath = Path.Combine(Environment.CurrentDirectory, BlogConst.ContentPath);
-        WwwrootPath = Path.Combine(Environment.CurrentDirectory, "src", "wwwroot");
-        DataPath = Path.Combine(WwwrootPath, BlogConst.DataPath);
+        Output = Path.Combine(output, "wwwroot");
+        ContentPath = input;
+        DataPath = Path.Combine(Output, BlogConst.DataPath);
     }
     public void BuildBlogs()
     {
@@ -48,7 +48,7 @@ public partial class HtmlBuilder
                 {
                     string markdown = File.ReadAllText(file);
                     string html = Markdown.ToHtml(markdown, pipeline);
-                    string relativePath = file.Replace(ContentPath, Path.Combine(WwwrootPath, "blogs")).Replace(".md", ".html");
+                    string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs")).Replace(".md", ".html");
 
                     html = AddHtmlTags(html);
                     string? dir = Path.GetDirectoryName(relativePath);
@@ -96,7 +96,7 @@ public partial class HtmlBuilder
         var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
         var content = File.ReadAllText(webInfoPath);
         var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
-        var indexPath = Path.Combine(WwwrootPath, "index.html");
+        var indexPath = Path.Combine(Output, "index.html");
         var indexContent = File.ReadAllText(indexPath);
         indexContent = indexContent.Replace("<base href=\"/\" />", $"<base href=\"{webInfo?.BaseHref}\" />");
 
