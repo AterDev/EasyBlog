@@ -43,7 +43,7 @@ public class Json : ILanguage
             return
                        [
                            new LanguageRule(
-                               $@"[,\{{]\s*({Regex_String})\s*:",
+                               $@"[,\{{]\s*(""\w*"")\s*:",
                                new Dictionary<int, string>
                                    {
                                        {1, ScopeName.JsonKey}
