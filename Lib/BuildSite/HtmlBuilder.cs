@@ -68,6 +68,14 @@ public partial class HtmlBuilder
 
     public void BuildData()
     {
+        // copy webinfo.json
+        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
+        if (File.Exists(webInfoPath))
+        {
+            File.Copy(webInfoPath, Path.Combine(DataPath, "webinfo.json"), true);
+        }
+
+        // blogs
         var rootCatalog = new Catalog { Name = "Root" };
         TraverseDirectory(ContentPath, rootCatalog);
         string json = JsonSerializer.Serialize(rootCatalog, _jsonSerializerOptions);
@@ -78,6 +86,22 @@ public partial class HtmlBuilder
         }
         string blogData = Path.Combine(DataPath, "blogs.json");
         File.WriteAllText(blogData, json, Encoding.UTF8);
+    }
+
+    /// <summary>
+    /// 处理index.html中的base href
+    /// </summary>
+    public void BuildBaseHref()
+    {
+        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
+        var content = File.ReadAllText(webInfoPath);
+        var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
+        var indexPath = Path.Combine(WwwrootPath, "index.html");
+        var indexContent = File.ReadAllText(indexPath);
+        indexContent = indexContent.Replace("<base href=\"/\" />", $"<base href=\"{webInfo?.BaseHref}\" />");
+
+        Console.WriteLine($"✍️ Using {webInfo.BaseHref} as base href!");
+        File.WriteAllText(indexPath, indexContent, Encoding.UTF8);
     }
 
     private void TraverseDirectory(string directoryPath, Catalog parentCatalog)

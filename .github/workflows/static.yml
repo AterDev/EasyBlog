@@ -39,7 +39,7 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - run: dotnet run --project ./Lib/BuildSite
+      - run: dotnet run --project ./Lib/BuildSite production
       - run: dotnet publish ./src -c Release -o ./_site
 
       - name: Upload artifact
