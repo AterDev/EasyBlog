@@ -124,18 +124,12 @@ public partial class HtmlBuilder
     }
     private string GetBaseUrl()
     {
-        var indexPath = Path.Combine(WwwrootPath, "index.html");
-        if (File.Exists(indexPath))
+        var webInfoPath = Path.Combine(DataPath, "webinfo.json");
+        if (File.Exists(webInfoPath))
         {
-            // get base tag content
-            var content = File.ReadAllText(indexPath);
-            var regex = new Regex(@"<base href=""(.*)"" />");
-            var match = regex.Match(content);
-            if (match.Success)
-            {
-                return match.Groups[1].Value;
-            }
-
+            var content = File.ReadAllText(webInfoPath);
+            var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
+            return webInfo?.BaseHref ?? "/";
         }
         return "/";
     }
@@ -164,8 +158,8 @@ public partial class HtmlBuilder
             <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <link rel="stylesheet" href="{BaseUrl}css/app.css">
-              <link rel="stylesheet" href="{BaseUrl}css/markdown.css">
+              <link rel="stylesheet" href="../css/app.css">
+              <link rel="stylesheet" href="../css/markdown.css">
               <title>{title}</title>
             </head>
             <body class="container mx-auto px-4 sm:px-6 lg:px-8 dark:bg-neutral-900 pb-4">

@@ -17,4 +17,6 @@ public class WebInfo
     /// 作者名称
     /// </summary>
     public string AuthorName { get; set; } = "Ater";
+
+    public string BaseHref { get; set; } = "/";
 }
