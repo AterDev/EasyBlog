@@ -1,8 +1,7 @@
 $location = Get-Location
 
 # 生成内容
-Set-Location  ./Lib/BuildSite
-dotnet run
+dotnet run --project ./Lib/BuildSite
 
 # 发布blazor
 Set-Location $location
