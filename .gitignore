@@ -5,6 +5,8 @@
 
 # User-specific files
 _site/
+src/wwwroot/blogs/
+src/wwwroot/data/
 *.rsuser
 *.suo
 *.user

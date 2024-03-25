@@ -10,8 +10,26 @@
 
 点击Fork按钮，并创建自己的仓库。
 
-修改 base
+### 修改 base href
 
+当你使用Github Page或使用ISS子应用部署时，需要调整base href。
+
+该文件位于`Blog/wwwroot/index.html`。
+
+请将该值调整成你的子目录名称，如`/blazor-blog/`，请注意，尾部的`/`是必需的。
+
+```html
+<base href="/blazor-blog/" />
+```
+
+如果你使用自定义域名，且没有子目录，则将该值保持为`/`。
+
+```html
+<base href="/" />
+```
+
+> [!NOTE]
+> 可以查看[官方文档](https://learn.microsoft.com/zh-cn/aspnet/core/blazor/host-and-deploy/?view=aspnetcore-3.1&tabs=visual-studio#configure-the-app-base-path)来了解更多内容。
 
 ## 自定义
 

@@ -15,6 +15,7 @@ public partial class HtmlBuilder
     public string ContentPath { get; init; }
     public string DataPath { get; init; }
     public string WwwrootPath { get; init; }
+    public string BaseUrl { get; set; } = "/";
 
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
@@ -31,16 +32,18 @@ public partial class HtmlBuilder
     }
     public void BuildBlogs()
     {
+        BaseUrl = GetBaseUrl();
+        // 配置markdown管道
+        MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseBetterCodeBlock()
+            .Build();
+
+        // 读取所有要处理的md文件
+        List<string> files = Directory.EnumerateFiles(ContentPath, "*.md", SearchOption.AllDirectories)
+            .ToList();
         try
         {
-            MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .UseBetterCodeBlock()
-                .Build();
-
-            List<string> files = Directory.EnumerateFiles(ContentPath, "*.md", SearchOption.AllDirectories)
-            .ToList();
-
             files.ForEach(file =>
                 {
                     string markdown = File.ReadAllText(file);
@@ -57,9 +60,8 @@ public partial class HtmlBuilder
                     File.WriteAllText(relativePath, html, Encoding.UTF8);
                 });
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine(e.ToString());
             throw;
         }
     }
@@ -70,12 +72,15 @@ public partial class HtmlBuilder
         TraverseDirectory(ContentPath, rootCatalog);
         string json = JsonSerializer.Serialize(rootCatalog, _jsonSerializerOptions);
 
+        if (!Directory.Exists(DataPath))
+        {
+            Directory.CreateDirectory(DataPath);
+        }
         string blogData = Path.Combine(DataPath, "blogs.json");
         File.WriteAllText(blogData, json, Encoding.UTF8);
     }
 
-
-    public void TraverseDirectory(string directoryPath, Catalog parentCatalog)
+    private void TraverseDirectory(string directoryPath, Catalog parentCatalog)
     {
         foreach (string subDirectoryPath in Directory.GetDirectories(directoryPath))
         {
@@ -108,7 +113,7 @@ public partial class HtmlBuilder
         }
     }
 
-    public string GetFullPath(Catalog catalog)
+    private string GetFullPath(Catalog catalog)
     {
         var path = Uri.EscapeDataString(catalog.Name);
         if (catalog.Parent != null)
@@ -116,6 +121,23 @@ public partial class HtmlBuilder
             path = GetFullPath(catalog.Parent) + "/" + path;
         }
         return path.Replace("Root", "");
+    }
+    private string GetBaseUrl()
+    {
+        var indexPath = Path.Combine(WwwrootPath, "index.html");
+        if (File.Exists(indexPath))
+        {
+            // get base tag content
+            var content = File.ReadAllText(indexPath);
+            var regex = new Regex(@"<base href=""(.*)"" />");
+            var match = regex.Match(content);
+            if (match.Success)
+            {
+                return match.Groups[1].Value;
+            }
+
+        }
+        return "/";
     }
 
     /// <summary>
@@ -142,6 +164,7 @@ public partial class HtmlBuilder
             <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <base href="{BaseUrl}" />
               <link rel="stylesheet" href="/css/app.css">
               <link rel="stylesheet" href="/css/markdown.css">
               <title>{title}</title>
