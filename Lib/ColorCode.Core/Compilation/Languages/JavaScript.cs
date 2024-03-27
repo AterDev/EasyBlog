@@ -74,14 +74,11 @@ public class JavaScript : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "js":
-                return true;
-
-            default:
-                return false;
-        }
+            "js" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

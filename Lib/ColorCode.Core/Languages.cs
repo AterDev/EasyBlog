@@ -52,6 +52,11 @@ public static class Languages
         Load<Fortran>();
         Load<Python>();
         Load<MatLab>();
+        Load<Yml>();
+        Load<Bash>();
+        Load<Ini>();
+        Load<Docker>();
+        Load<SimpleText>();
     }
 
     /// <summary>

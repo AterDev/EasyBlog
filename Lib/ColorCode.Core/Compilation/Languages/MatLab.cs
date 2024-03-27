@@ -89,20 +89,13 @@ public class MatLab : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "m":
-                return true;
-
-            case "mat":
-                return true;
-
-            case "matlab":
-                return true;
-
-            default:
-                return false;
-        }
+            "m" => true,
+            "mat" => true,
+            "matlab" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

@@ -133,15 +133,11 @@ public class Xml : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "xaml":
-            case "axml":
-                return true;
-
-            default:
-                return false;
-        }
+            "xaml" or "axml" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

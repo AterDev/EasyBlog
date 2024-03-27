@@ -68,15 +68,11 @@ public class Cpp : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "c++":
-            case "c":
-                return true;
-
-            default:
-                return false;
-        }
+            "c++" or "c" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

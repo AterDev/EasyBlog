@@ -2,7 +2,8 @@
   "profiles": {
     "BuildSite": {
       "commandName": "Project",
-      "workingDirectory": "./",
+      "commandLineArgs": "./Content ./_site Production",
+      "workingDirectory": "../../",
       "remoteDebugEnabled": false
     }
   }

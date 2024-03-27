@@ -31,4 +31,9 @@ public static class LanguageId
     public const string Fortran = "fortran";
     public const string Python = "python";
     public const string MatLab = "matlab";
+    public const string Yml = "yml";
+    public const string Bash = "bash";
+    public const string Ini = "ini";
+    public const string Docker = "docker";
+    public const string SimpleText = "simpletext";
 }

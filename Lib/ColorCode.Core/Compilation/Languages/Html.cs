@@ -127,14 +127,11 @@ public class Html : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "htm":
-                return true;
-
-            default:
-                return false;
-        }
+            "htm" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

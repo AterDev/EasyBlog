@@ -1,9 +1,9 @@
 ﻿using BuildSite;
 
 
-var input = args[0] ?? "./";
-var output = args[1] ?? "./_site";
-var environment = args[2] ?? "Development";
+var input = args.FirstOrDefault() ?? "./";
+var output = args.Skip(1).FirstOrDefault() ?? "./_site";
+var environment = args.Skip(2).FirstOrDefault() ?? "Development";
 
 
 var builder = new HtmlBuilder(input, output);

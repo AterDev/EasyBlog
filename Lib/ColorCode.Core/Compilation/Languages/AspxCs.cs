@@ -125,16 +125,11 @@ public class AspxCs : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "aspx-cs":
-            case "aspx (cs)":
-            case "aspx(cs)":
-                return true;
-
-            default:
-                return false;
-        }
+            "aspx-cs" or "aspx (cs)" or "aspx(cs)" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

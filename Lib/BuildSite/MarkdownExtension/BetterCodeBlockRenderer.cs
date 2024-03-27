@@ -29,9 +29,10 @@ internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
             return;
         }
 
-        var code = GetCode(obj);
+        var code = GetCode(obj).Trim();
 
         var formatter = new HtmlClassFormatter();
+
         var html = formatter.GetHtmlString(code, language);
         renderer.WriteLine(html);
     }

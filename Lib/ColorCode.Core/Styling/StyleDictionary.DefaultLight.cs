@@ -315,6 +315,11 @@ public partial class StyleDictionary
                 {
                     ReferenceName = "specialChar"
                 },
+                new Style(ScopeName.Variable)
+                {
+                    Foreground = OrangeRed,
+                    ReferenceName = "variable"
+                },
             ];
         }
     }

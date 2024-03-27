@@ -145,15 +145,10 @@ public class PowerShell : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "posh":
-            case "ps1":
-            case "pwsh":
-                return true;
-
-            default:
-                return false;
-        }
+            "posh" or "ps1" or "pwsh" => true,
+            _ => false,
+        };
     }
 }

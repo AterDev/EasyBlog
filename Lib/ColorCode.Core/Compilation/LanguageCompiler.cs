@@ -66,6 +66,7 @@ public class LanguageCompiler : ILanguageCompiler
                     compiledLanguage = CompileLanguage(language);
 
                     compiledLanguages.Add(compiledLanguage.Id, compiledLanguage);
+
                 }
                 finally
                 {

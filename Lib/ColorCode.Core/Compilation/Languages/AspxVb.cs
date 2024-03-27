@@ -137,16 +137,11 @@ public class AspxVb : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "aspx-vb":
-            case "aspx (vb.net)":
-            case "aspx(vb.net)":
-                return true;
-
-            default:
-                return false;
-        }
+            "aspx-vb" or "aspx (vb.net)" or "aspx(vb.net)" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

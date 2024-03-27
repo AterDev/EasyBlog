@@ -74,18 +74,11 @@ public class VbDotNet : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "vb.net":
-            case "vbnet":
-            case "vb":
-            case "visualbasic":
-            case "visual basic":
-                return true;
-
-            default:
-                return false;
-        }
+            "vb.net" or "vbnet" or "vb" or "visualbasic" or "visual basic" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

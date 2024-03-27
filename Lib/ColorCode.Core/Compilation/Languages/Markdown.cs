@@ -161,15 +161,11 @@ public class Markdown : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "md":
-            case "markdown":
-                return true;
-
-            default:
-                return false;
-        }
+            "md" or "markdown" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

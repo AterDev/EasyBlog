@@ -213,14 +213,11 @@ public class Fortran : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "fortran":
-                return true;
-
-            default:
-                return false;
-        }
+            "fortran" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

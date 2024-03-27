@@ -81,16 +81,11 @@ public class Php : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "php3":
-            case "php4":
-            case "php5":
-                return true;
-
-            default:
-                return false;
-        }
+            "php3" or "php4" or "php5" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

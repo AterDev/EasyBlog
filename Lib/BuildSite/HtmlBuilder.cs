@@ -27,7 +27,7 @@ public partial class HtmlBuilder
     public HtmlBuilder(string input, string output)
     {
         Output = Path.Combine(output, "wwwroot");
-        ContentPath = input;
+        ContentPath = input.EndsWith(Path.DirectorySeparatorChar) ? input[0..^1] : input;
         DataPath = Path.Combine(Output, BlogConst.DataPath);
     }
     public void BuildBlogs()
@@ -44,21 +44,22 @@ public partial class HtmlBuilder
             .ToList();
         try
         {
-            files.ForEach(file =>
+            foreach (var file in files)
+            {
+                string markdown = File.ReadAllText(file);
+                string html = Markdown.ToHtml(markdown, pipeline);
+                string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs")).Replace(".md", ".html");
+
+                html = AddHtmlTags(html);
+                string? dir = Path.GetDirectoryName(relativePath);
+
+                if (!Directory.Exists(dir))
                 {
-                    string markdown = File.ReadAllText(file);
-                    string html = Markdown.ToHtml(markdown, pipeline);
-                    string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs")).Replace(".md", ".html");
+                    Directory.CreateDirectory(dir!);
+                }
 
-                    html = AddHtmlTags(html);
-                    string? dir = Path.GetDirectoryName(relativePath);
-                    if (!Directory.Exists(dir))
-                    {
-                        Directory.CreateDirectory(dir!);
-                    }
-
-                    File.WriteAllText(relativePath, html, Encoding.UTF8);
-                });
+                File.WriteAllText(relativePath, html, Encoding.UTF8);
+            }
         }
         catch (Exception)
         {
@@ -100,7 +101,7 @@ public partial class HtmlBuilder
         var indexContent = File.ReadAllText(indexPath);
         indexContent = indexContent.Replace("<base href=\"/\" />", $"<base href=\"{webInfo?.BaseHref}\" />");
 
-        Console.WriteLine($"✍️ Using {webInfo.BaseHref} as base href!");
+        Console.WriteLine($"✍️ Using {webInfo?.BaseHref} as base href!");
         File.WriteAllText(indexPath, indexContent, Encoding.UTF8);
     }
 

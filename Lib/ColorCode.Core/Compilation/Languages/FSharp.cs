@@ -112,16 +112,11 @@ public class FSharp : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "fs":
-            case "f#":
-            case "fsharp":
-                return true;
-
-            default:
-                return false;
-        }
+            "fs" or "f#" or "fsharp" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

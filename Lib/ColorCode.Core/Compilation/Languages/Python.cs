@@ -121,17 +121,12 @@ public class Python : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "py":
-                return true;
-
-            case "python":
-                return true;
-
-            default:
-                return false;
-        }
+            "py" => true,
+            "python" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

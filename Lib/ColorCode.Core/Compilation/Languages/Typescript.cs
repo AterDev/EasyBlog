@@ -74,14 +74,11 @@ public class Typescript : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "ts":
-                return true;
-
-            default:
-                return false;
-        }
+            "ts" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

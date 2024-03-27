@@ -253,14 +253,11 @@ public class Haskell : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "hs":
-                return true;
-
-            default:
-                return false;
-        }
+            "hs" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()

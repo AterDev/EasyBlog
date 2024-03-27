@@ -228,15 +228,11 @@ public class Koka : ILanguage
 
     public bool HasAlias(string lang)
     {
-        switch (lang.ToLower())
+        return lang.ToLower() switch
         {
-            case "kk":
-            case "kki":
-                return true;
-
-            default:
-                return false;
-        }
+            "kk" or "kki" => true,
+            _ => false,
+        };
     }
 
     public override string ToString()
