@@ -10,9 +10,8 @@ var builder = new HtmlBuilder(input, output);
 
 try
 {
-    builder.BuildBlogs();
     builder.BuildData();
-
+    builder.BuildBlogs();
 
     if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
     {
