@@ -1,3 +1,4 @@
+
 // after loading the page, add event for search button
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('searchBtn').addEventListener('click', function () {
@@ -33,7 +34,7 @@ let catalogs = [];
 
 let webInfo;
 
-fetch('/data/blogs.json')
+fetch(baseUrl+'data/blogs.json')
     .then(res => res.json()).then(data => {
         allBlogs = getAllBlogs(data).sort((a, b) => {
             return new Date(b.PublishTime) - new Date(a.PublishTime);
@@ -42,7 +43,7 @@ fetch('/data/blogs.json')
         catalogs = data.Children;
     });
 
-fetch('/data/webinfo.json')
+fetch(baseUrl+'data/webinfo.json')
     .then(res => res.json()).then(data => {
         webInfo = data;
     });

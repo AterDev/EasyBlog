@@ -1,6 +1,6 @@
 {
-  "Name": "Blazor Blog",
-  "Description": "Blazor Blog - Powered by Ater Blog",
+  "Name": "My Blog",
+  "Description": "Blog - Powered by Ater Blog",
   "AuthorName": "NilTor",
   "BaseHref": "/blazor-blog/"
 }

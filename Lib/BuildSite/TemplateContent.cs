@@ -4,7 +4,6 @@ internal class TemplateContent
     public const string IndexCntent = """
         <!DOCTYPE html>
         <html>
-
         <head>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,13 +12,14 @@ internal class TemplateContent
           <link rel="stylesheet" href="@{BaseUrl}css/app.css" />
           <link rel="stylesheet" href="@{BaseUrl}css/markdown.css" />
           <link rel="icon" type="image/png" href="favicon.png" />
+          <script>const baseUrl = '@{BaseUrl}';</script>
           <script src="@{BaseUrl}js/index.js"></script>
         </head>
 
         <body class="dark:bg-neutral-900">
           <div class="text-white py-4 bg-gray-600 dark:bg-neutral-800">
             <div class="container mx-auto flex items-center justify-between">
-              <a href="#" class="text-2xl font-semibold">@{Name}</a>
+              <a href="@{BaseUrl}" class="text-2xl font-semibold hidden sm:block">@{Name}</a>
               <span class="hidden sm:block">@{Description}</span>
               <div class="flex items-center">
                 <input id="searchText" placeholder="博客标题" class="px-4 py-2 border border-gray-600 rounded-lg dark:bg-neutral-800 text-white focus:outline-none" />
