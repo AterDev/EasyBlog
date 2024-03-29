@@ -104,6 +104,14 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
 
 ### 自定义博客展示页
 
+博客页内容模板位于`Lib\BuildSite\template\blog.html.tpl`，其中包括以下变量：
+|模板变量  |说明  |
+|---------|---------|
+|@{BaseUrl}   |  基础路径       |
+|@{Title} |      页面标题  |
+|@{content} |    博客内容     |
+|@{toc} |   二级标题TOC    |
+
 关于博客展示页的内容，你可以通过`WebApp/css/markdown.css`来修改样式，以及`WebApp/js/markdown.js`来定义逻辑。
 
 ### 自定义代码高亮
