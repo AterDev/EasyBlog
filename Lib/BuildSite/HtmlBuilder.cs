@@ -386,7 +386,7 @@ public partial class HtmlBuilder
     }
     private string BuildBlogPath(string path)
     {
-        return "./blogs" + path;
+        return BaseUrl + "blogs" + path;
     }
 
 }
