@@ -1,4 +1,8 @@
 ﻿
+.copy-icon {
+    cursor: pointer;
+}
+
 h1 {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -488,20 +492,8 @@ div[class*="language-"] {
     font-size: 14px;
     text-shadow: none;
     font-family: 'Cascadia Code PL', 'Cascadia Code', 'Consolas', Menlo, Monaco, 'Courier New', Courier, monospace;
-    direction: ltr;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    line-height: 1.5;
-    -o-tab-size: 4;
-    tab-size: 4;
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
     padding: 0.5em 1em;
-    margin: .5em 0;
+    margin: 0;
     overflow: auto;
     background: #222224;
     border-radius: 4px;
