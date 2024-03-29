@@ -8,10 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="template\blog.html.tpl" />
     <None Remove="template\index.html.tpl" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="template\blog.html.tpl" />
     <EmbeddedResource Include="template\index.html.tpl" />
   </ItemGroup>
 
