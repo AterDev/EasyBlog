@@ -1,46 +1,47 @@
 ﻿<!DOCTYPE html>
 <html>
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ater Blog</title>
-  <base href="/" />
-  <link rel="stylesheet" href="/css/app.css" />
-  <link rel="stylesheet" href="/css/markdown.css" />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <script src="/js/index.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Blog</title>
+    <meta name="description" content="🗽to be a human" />
+    <base href="/" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/markdown.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <script>const baseUrl = '/';</script>
+    <script src="/js/index.js"></script>
 </head>
 
 <body class="dark:bg-neutral-900">
-  <div class="text-white py-4 bg-gray-600 dark:bg-neutral-800">
+    <div class="text-white py-4 bg-gray-600 dark:bg-neutral-800">
     <div class="container mx-auto flex items-center justify-between">
-      <a href="#" class="text-2xl font-semibold">Blazor Blog</a>
-      <span class="hidden sm:block">Blazor Blog - Powered by Ater Blog</span>
-      <div class="flex items-center">
+        <a href="/" class="text-2xl font-semibold hidden sm:block">My Blog</a>
+        <span class="hidden sm:block">🗽to be a human</span>
+        <div class="flex items-center">
         <input id="searchText" placeholder="博客标题" class="px-4 py-2 border border-gray-600 rounded-lg dark:bg-neutral-800 text-white focus:outline-none" />
         <button id="searchBtn" class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
-          搜索
+            搜索
         </button>
-      </div>
+        </div>
     </div>
-  </div>
+    </div>
 
-  <div class="container mx-auto mt-2">
+    <div class="container mx-auto mt-2">
     <div class="flex">
-      <div class="sm:w-3/4 sm:pr-4 w-full">
+        <div class="sm:w-3/4 sm:pr-4 w-full">
         <!-- 博客卡片列表 -->
         <div class="px-3 bg-white dark:bg-neutral-900" id="blogList">
             <!-- 博客卡片内容 -->
             <div class="w-100 rounded overflow-hidden shadow-lg dark:bg-neutral-800 my-2">
     <div class="px-6 py-3">
         <div class="font-bold text-xl mb-2">
-            <a href = "./blogs/introduction.html" target="_blank" class="block text-lg py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100">📑 introduction</a>
+            <a href = "/blogs/introduction.html" target="_blank" class="block text-lg py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100">📑 introduction</a>
         </div>
         <p class="text-neutral-700 text-base dark:text-neutral-300">
             👨‍💻 NilTor
             &nbsp;&nbsp;
-            ⏱️ 3 days
+            ⏱️ 4 days
         </p>
     </div>
 </div>
@@ -68,15 +69,15 @@
 
     </div>
     </div>
-  </div>
-
-  <div class="dark:bg-neutral-800 py-4 fixed bottom-0 w-full bg-gray-200">
-    <div class="container mx-auto text-center">
-      <p class="text-neutral-600 dark:text-neutral-300">
-        Blazor Blog
-        <a class="text-blue-600" target="_blank" href="https://github.com/AterDev/blazor-blog">Powered by Ater Blog</a>
-      </p>
     </div>
-  </div>
+
+    <div class="dark:bg-neutral-800 py-4 fixed bottom-0 w-full bg-gray-200">
+    <div class="container mx-auto text-center">
+        <p class="text-neutral-600 dark:text-neutral-300">
+        My Blog
+        <a class="text-blue-600" target="_blank" href="https://github.com/AterDev/blazor-blog">Powered by Ater Blog</a>
+        </p>
+    </div>
+    </div>
 </body>
 </html>

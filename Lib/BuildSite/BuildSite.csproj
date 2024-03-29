@@ -7,6 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="template\index.html.tpl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="template\index.html.tpl" />
+  </ItemGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="Markdig" Version="0.36.2" />

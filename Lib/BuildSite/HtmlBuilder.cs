@@ -114,7 +114,7 @@ public partial class HtmlBuilder
     public void BuildIndex()
     {
         var indexPath = Path.Combine(Output, "index.html");
-        var indexHtml = TemplateContent.IndexCntent;
+        var indexHtml = TemplateHelper.GetTplContent("index.html");
         var webInfoPath = Path.Combine(DataPath, "webinfo.json");
         var content = File.ReadAllText(webInfoPath);
         var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
@@ -388,5 +388,7 @@ public partial class HtmlBuilder
     {
         return BaseUrl + "blogs" + path;
     }
+
+
 
 }

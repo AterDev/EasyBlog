@@ -54,7 +54,6 @@ function search(key) {
     } else {
         blogs = allBlogs.filter(blog => blog.Title.toLowerCase().includes(key));
     }
-    console.log(blogs);
     renderBlogs();
 }
 
