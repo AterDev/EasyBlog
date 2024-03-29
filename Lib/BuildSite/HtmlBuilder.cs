@@ -184,7 +184,7 @@ public partial class HtmlBuilder
     }
     public void EnableBaseUrl()
     {
-        var webInfoPath = Path.Combine(DataPath, "webinfo.json");
+        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
         if (File.Exists(webInfoPath))
         {
             var content = File.ReadAllText(webInfoPath);
@@ -205,7 +205,7 @@ public partial class HtmlBuilder
         var match = regex.Match(content);
         if (match.Success)
         {
-            return match.Groups[1].Value;
+            return match.Groups[1].Value.Trim();
         }
         return "";
     }
