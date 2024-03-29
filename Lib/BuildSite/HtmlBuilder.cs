@@ -34,7 +34,6 @@ public partial class HtmlBuilder
 
     public void BuildWebSite()
     {
-        GetBaseUrl();
         BuildData();
         BuildBlogs();
         BuildIndex();
@@ -87,6 +86,11 @@ public partial class HtmlBuilder
     /// </summary>
     public void BuildData()
     {
+        if (!Directory.Exists(DataPath))
+        {
+            Directory.CreateDirectory(DataPath);
+        }
+
         // copy webinfo.json
         var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
         if (File.Exists(webInfoPath))
@@ -99,10 +103,7 @@ public partial class HtmlBuilder
         TraverseDirectory(ContentPath, rootCatalog);
         string json = JsonSerializer.Serialize(rootCatalog, _jsonSerializerOptions);
 
-        if (!Directory.Exists(DataPath))
-        {
-            Directory.CreateDirectory(DataPath);
-        }
+
         string blogData = Path.Combine(DataPath, "blogs.json");
         File.WriteAllText(blogData, json, Encoding.UTF8);
     }
@@ -181,7 +182,7 @@ public partial class HtmlBuilder
         }
         return path.Replace("Root", "");
     }
-    private void GetBaseUrl()
+    public void EnableBaseUrl()
     {
         var webInfoPath = Path.Combine(DataPath, "webinfo.json");
         if (File.Exists(webInfoPath))

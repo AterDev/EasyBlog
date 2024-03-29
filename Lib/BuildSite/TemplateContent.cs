@@ -13,7 +13,7 @@ internal class TemplateContent
           <link rel="stylesheet" href="@{BaseUrl}css/app.css" />
           <link rel="stylesheet" href="@{BaseUrl}css/markdown.css" />
           <link rel="icon" type="image/png" href="favicon.png" />
-          <script src="./js/index.js"></script>
+          <script src="@{BaseUrl}js/index.js"></script>
         </head>
 
         <body class="dark:bg-neutral-900">
