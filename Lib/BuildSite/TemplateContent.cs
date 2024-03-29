@@ -10,8 +10,8 @@ internal class TemplateContent
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <title>Ater Blog</title>
           <base href="/" />
-          <link rel="stylesheet" href="css/app.css" />
-          <link rel="stylesheet" href="css/markdown.css" />
+          <link rel="stylesheet" href="@{BaseUrl}css/app.css" />
+          <link rel="stylesheet" href="@{BaseUrl}css/markdown.css" />
           <link rel="icon" type="image/png" href="favicon.png" />
           <script src="./js/index.js"></script>
         </head>

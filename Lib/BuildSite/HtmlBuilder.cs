@@ -34,6 +34,7 @@ public partial class HtmlBuilder
 
     public void BuildWebSite()
     {
+        GetBaseUrl();
         BuildData();
         BuildBlogs();
         BuildIndex();
@@ -44,7 +45,6 @@ public partial class HtmlBuilder
     /// </summary>
     public void BuildBlogs()
     {
-        BaseUrl = GetBaseUrl();
         // 配置markdown管道
         MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
             .UseAutoIdentifiers(Markdig.Extensions.AutoIdentifiers.AutoIdentifierOptions.GitHub)
@@ -127,28 +127,13 @@ public partial class HtmlBuilder
             var siderBarHtml = GenSiderBar(rootCatalog);
 
             indexHtml = indexHtml.Replace("@{Name}", webInfo.Name)
+                .Replace("@{BaseUrl}", BaseUrl)
                 .Replace("@{Description}", webInfo.Description)
                 .Replace("@{blogList}", blogHtml)
                 .Replace("@{siderbar}", siderBarHtml);
 
             File.WriteAllText(indexPath, indexHtml, Encoding.UTF8);
         }
-    }
-
-    /// <summary>
-    /// 处理index.html中的base href
-    /// </summary>
-    public void BuildBaseHref()
-    {
-        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
-        var content = File.ReadAllText(webInfoPath);
-        var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
-        var indexPath = Path.Combine(Output, "index.html");
-        var indexContent = File.ReadAllText(indexPath);
-        indexContent = indexContent.Replace("<base href=\"/\" />", $"<base href=\"{webInfo?.BaseHref}\" />");
-
-        Console.WriteLine($"✍️ Using {webInfo?.BaseHref} as base href!");
-        File.WriteAllText(indexPath, indexContent, Encoding.UTF8);
     }
 
     private void TraverseDirectory(string directoryPath, Catalog parentCatalog)
@@ -196,16 +181,15 @@ public partial class HtmlBuilder
         }
         return path.Replace("Root", "");
     }
-    private string GetBaseUrl()
+    private void GetBaseUrl()
     {
         var webInfoPath = Path.Combine(DataPath, "webinfo.json");
         if (File.Exists(webInfoPath))
         {
             var content = File.ReadAllText(webInfoPath);
             var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
-            return webInfo?.BaseHref ?? "/";
+            BaseUrl = webInfo?.BaseHref ?? "/";
         }
-        return "/";
     }
 
     /// <summary>

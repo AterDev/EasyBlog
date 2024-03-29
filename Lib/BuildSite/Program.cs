@@ -5,17 +5,11 @@ var input = args.FirstOrDefault() ?? "./";
 var output = args.Skip(1).FirstOrDefault() ?? "./_site";
 var environment = args.Skip(2).FirstOrDefault() ?? "Development";
 
-
 var builder = new HtmlBuilder(input, output);
 
 try
 {
     builder.BuildWebSite();
-
-    if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
-    {
-        //builder.BuildBaseHref();
-    }
 }
 catch (Exception e)
 {
