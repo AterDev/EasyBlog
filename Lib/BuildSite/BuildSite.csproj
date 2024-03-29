@@ -10,6 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Markdig" Version="0.36.2" />
+		<PackageReference Include="Humanizer.Core" Version="2.14.1" />
 	</ItemGroup>
 
 

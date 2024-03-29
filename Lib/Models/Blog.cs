@@ -32,6 +32,8 @@ public class Blog
     /// </summary>
     public DateTimeOffset? UpdatedTime { get; set; }
 
+    public string? DisplayDate { get; set; }
+
     public Catalog? Catalog { get; set; }
 
 }

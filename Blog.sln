@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog", "src\Blog.csproj", "{5D37DB30-E6E0-48DD-AA1E-15B81B644440}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildSite", "Lib\BuildSite\BuildSite.csproj", "{2D0B931E-2C12-40EA-B1F4-DC97D094CA84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{6C64B3F9-1311-4A59-955B-14993E318C5A}"
@@ -13,7 +11,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorCode.HTML", "Lib\Color
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorCode.Core", "Lib\ColorCode.Core\ColorCode.Core.csproj", "{099CC19B-F9CE-4EC9-8AC0-4EF4D85233D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Lib\Models\Models.csproj", "{F001C22B-9102-4196-BADC-020B1D33C94D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Lib\Models\Models.csproj", "{F001C22B-9102-4196-BADC-020B1D33C94D}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebApp", "WebApp\", "{88FA9E3A-1956-497C-AE7B-48B292E94A9B}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_62388"
+		Debug.AspNetCompiler.PhysicalPath = "WebApp\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62388\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_62388"
+		Release.AspNetCompiler.PhysicalPath = "WebApp\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62388\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "62388"
+		SlnRelativePath = "WebApp\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D37DB30-E6E0-48DD-AA1E-15B81B644440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D37DB30-E6E0-48DD-AA1E-15B81B644440}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D37DB30-E6E0-48DD-AA1E-15B81B644440}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D37DB30-E6E0-48DD-AA1E-15B81B644440}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2D0B931E-2C12-40EA-B1F4-DC97D094CA84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2D0B931E-2C12-40EA-B1F4-DC97D094CA84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D0B931E-2C12-40EA-B1F4-DC97D094CA84}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,6 +56,10 @@ Global
 		{F001C22B-9102-4196-BADC-020B1D33C94D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F001C22B-9102-4196-BADC-020B1D33C94D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F001C22B-9102-4196-BADC-020B1D33C94D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88FA9E3A-1956-497C-AE7B-48B292E94A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88FA9E3A-1956-497C-AE7B-48B292E94A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88FA9E3A-1956-497C-AE7B-48B292E94A9B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{88FA9E3A-1956-497C-AE7B-48B292E94A9B}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -38,14 +38,13 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-      - run: dotnet publish ./src -c Release -o ./_site
-      - run: dotnet run --project ./Lib/BuildSite ./Content ./_site Production
+      - run: dotnet run --project ./Lib/BuildSite ./Content ./WebApp Production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
         with:
-          path: '_site/wwwroot'
+          path: 'WebApp/'
           
       - name: Deploy to GitHub Pages
         id: deployment

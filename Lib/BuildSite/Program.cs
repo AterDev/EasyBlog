@@ -10,12 +10,11 @@ var builder = new HtmlBuilder(input, output);
 
 try
 {
-    builder.BuildData();
-    builder.BuildBlogs();
+    builder.BuildWebSite();
 
     if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
     {
-        builder.BuildBaseHref();
+        //builder.BuildBaseHref();
     }
 }
 catch (Exception e)
