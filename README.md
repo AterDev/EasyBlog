@@ -1,6 +1,10 @@
-# Blazor-blog
+# Blog
 
-借助`GitHub Page`和`.NET Blazor`，你可以在5分钟内免费拥有个人博客。
+本博客系统通过构建工具生成`纯静态`的博客网站，借助`GitHub Pages`，你可以在5分钟内免费拥有个人博客。 它具有以下特点
+
+- 使用markdown格式来编写博客内容
+- 基于git代码管理来存储你的博客
+- 使用CI工具来自动化部署你的博客站点
 
 ## 使用Github Page部署
 
@@ -10,24 +14,23 @@
 2. 进入自己的仓库，点击`Actions`，启用workflows。
 3. 点击`Settings`，找到Pages配置，在Build and deployment 选项中选择`GitHub Actions`.
 
-### 修改 base href
+### 配置
 
-当你使用Github Page或使用IIS子应用部署时，需要调整base href。
-
-你只需要修改根目录下的`webinfo.json`文件中的`BaseHref`值即可，通常是你的项目名称或子目录名。
-如:
+你可以通过根目录下的`webinfo.json`，对博客基础信息进行配置，如下所示：
 
 ```json
 {
-  "Name": "Niltor Blog",
-  "Description": "My Blog - Powered by Ater Blog",
-  "AuthorName": "Ater",
-  "BaseHref": "/blazor-blog/"
+  "Name": "Niltor Blog", // 博客名称，显示在主页顶部导航
+  "Description": "🗽 for freedom",// 说明，显示在主页顶部中间
+  "AuthorName": "Ater", // 作者名称，显示在博客列表
+  "BaseHref": "/blazor-blog/" // 子目录
 }
 ```
 
+当你使用Github Page或使用IIS子应用部署时，需要调整`BaseHref`。通常是你的**项目名称**或**子目录名**。
+
 > [!IMPORTANT]
-> 注意，尾部的`/`是必需的。
+> 注意，`BaseHref`尾部的`/`是必需的。
 >
 > 如果你配置了自定义域名，并且没有使用子目录，请将BaseHref设置为`/`。
 
@@ -45,30 +48,22 @@
 
 如果你不使用Github Page，那么你也可以轻松的部署到其他服务。核心的步骤只需要两步。
 
-### 构建Blazor项目
-
-我们使用`Blazor WASM`来开发前端静态网站，所以，你只需要使用`dotnet publish`命令将网站发布成静态文件即可，在根目录下执行:
-
-```dotnetcli
-dotnet publish ./src/ -c Release -o ./_site
-```
-
 ### 生成静态内容
 
 `BuildSite`项目是用来将markdown转换成html的，请在根目录执行:
 
 ```pwsh
- dotnet run --project .\Lib\BuildSite\ .\Content .\_site Production
+ dotnet run --project .\Lib\BuildSite\ .\Content .\WebApp Production
 ```
 
-在根目录下，你会看到`_site`目录。
+在根目录下，你会看到`WebApp`目录。
 
 ### 上传到你的服务器
 
-将`_site\wwwroot`中的所有文件复制到你的服务器即可。
+将`WebApp`中的所有文件复制到你的服务器即可。
 
 > [!TIP]
-> 根目录下的`publishToLocal.ps1`脚本可以自动完成构建和生成的操作，最终内容将在根目录下`_site`目录中。
+> 根目录下的`publishToLocal.ps1`脚本可以自动完成构建和生成的操作，最终内容将在根目录下`WebApp`目录中。
 >
 > 如果你使用自动化部署，可参考.github/workflows中的脚本。
 
@@ -76,10 +71,44 @@ dotnet publish ./src/ -c Release -o ./_site
 
 fork之后，你将拥有所有的自定义权限，因为所有的源代码都已经在你自己的仓库中。
 
-仓库主要包含两个核心项目，一个是`BuildSite`，该项目是用来生成数据文件的，其中包括将markdown文件转换成html文件。
+核心项目为`BuildSite`，该项目是用来生成数据文件的，其中包括将markdown文件转换成html文件。
 
-`Blog`项目是一个Blazor WASM项目，默认包含了博客的主页定义。你可以自由的添加和修改其他的功能。
+你需要准备以下内容以便进行二次开发
 
-### 自定义博客样式
+- .NET SDK 8.0，以便运行 `BuildSite`项目
+- tailwindcss，生成css样式内容
+- http-server，用来启动本地静态内容，以便调试
 
-`wwwroot/css`目录下的`markdown.css`文件，是用来定义博客页中的样式，你可以通过修改该文件来自定义自己想要的样式。
+### 自定义主页内容
+
+主页内容模板位于`Lib\BuildSite\template\index.html.tpl`，其中包括以下变量：
+
+|模板变量  |说明  |
+|---------|---------|
+|@{BaseUrl}   |  基础路径       |
+|@{Name} |       博客名称  |
+|@{Description} |    描述     |
+|@{blogList} |    博客列表     |
+|@{siderbar} |    侧边栏内容:分类和存档    |
+
+你可以按照自己的想法修改主页的布局和样式。
+
+> [!NOTE]
+> 请注意标签中的`id`属性，`js`脚本将依赖于这些id标识，如果你修改了这些标识，同时要修改`js`脚本。
+
+主页内容包括博客的搜索和分类筛选功能，其功能代码在`WebApp\js\index.js`中。
+
+关于博客列表和分类列表的自定义，你可以参考`BuildSite`项目中`HtmlBuilder.cs`文件中的`GenBlogListHtml`和`GenSiderBar`方法。
+
+后续我们会提供更灵活的自定义方式。
+
+### 自定义博客展示页
+
+关于博客展示页的内容，你可以通过`WebApp/css/markdown.css`来修改样式，以及`WebApp/js/markdown.js`来定义逻辑。
+
+### 自定义代码高亮
+
+本项目使用`ColorCode`来格式化markdown中的代码内容，`ColorCode`使用正则来匹配代码内容。如果你需要对代码高亮进行定义，你需要：
+
+- 添加或修改正则规则，你将在`ColorCode.Core/Compilation/Languages`目录下找到相应的语言定义，如果不存在，你可以添加新的语言支持。
+- 如果是新添加的语言，需要在`ColorCode.Core/Languages.cs`中加载该语言。
