@@ -1,30 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
   const languageDivs = document.querySelectorAll('div[class^="language-"]');
 
-
-  // ÎªÃ¿¸ö´úÂëÆ¬¶ÎÌí¼Ó¸´ÖÆÍ¼±ê
+  const copyContent = `&#128203;copy code`;
+  // ä¸ºæ¯ä¸ªä»£ç ç‰‡æ®µæ·»åŠ å¤åˆ¶å›¾æ ‡
   languageDivs.forEach(languageDiv => {
+    const language = languageDiv.className.split(' ')[0].split('-')[1];
+
     const codeActionBar = document.createElement('div');
     codeActionBar.classList.add('code-action-bar', 'flex', 'justify-between');
 
-    codeActionBar.innerHTML = `<span></span><span class="copy-icon">&#128203;</span>`;
+    codeActionBar.innerHTML = `<span>${language}</span><span class="copy-icon">${copyContent}</span>`;
     languageDiv.parentNode.insertBefore(codeActionBar, languageDiv);
 
     const copyIcon = codeActionBar.querySelector('.copy-icon');
-    // µã»÷¸´ÖÆÍ¼±êÊ±¸´ÖÆ´úÂëÆ¬¶Îµ½¼ôÌù°å
+    // ç‚¹å‡»å¤åˆ¶å›¾æ ‡æ—¶å¤åˆ¶ä»£ç ç‰‡æ®µåˆ°å‰ªè´´æ¿
     copyIcon.addEventListener('click', () => {
-      // ¸´ÖÆ´úÂëÆ¬¶ÎµÄÄÚÈÝµ½¼ôÌù°å
+      // å¤åˆ¶ä»£ç ç‰‡æ®µçš„å†…å®¹åˆ°å‰ªè´´æ¿
       // get pre tag element innertext from codeSnippet
       const textToCopy = languageDiv.querySelector('pre').innerText;
       navigator.clipboard.writeText(textToCopy)
         .then(() => {
-          // ¸´ÖÆ³É¹¦ºó½«Í¼±ê¸ü¸ÄÎª¶ÔºÅ
-          copyIcon.innerHTML = '&#10003;';
+          // å¤åˆ¶æˆåŠŸåŽå°†å›¾æ ‡æ›´æ”¹ä¸ºå¯¹å·
+          copyIcon.innerHTML = '&#10003 copied!';
 
-          // 2Ãëºó»Ö¸´Í¼±êÎªÔ­Ê¼×´Ì¬
+          // 2ç§’åŽæ¢å¤å›¾æ ‡ä¸ºåŽŸå§‹çŠ¶æ€
           setTimeout(() => {
-            copyIcon.innerHTML = '&#128203;';
-          }, 2000);
+            copyIcon.innerHTML = copyContent;
+          }, 1500);
         })
         .catch(err => {
           console.error('Failed to copy: ', err);

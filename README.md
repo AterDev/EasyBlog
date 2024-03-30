@@ -79,6 +79,16 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
 - tailwindcss，生成css样式内容
 - http-server，用来启动本地静态内容，以便调试
 
+### 运行项目
+
+1. 预览项目
+   1. 打开终端，在`WebApp`目录下执行`http-server`，然后在浏览器中打开`http://127.0.0.1:8080`。
+2. 生成静态内容。
+   1. 在根目录下执行`dotnet run --project ./Lib/BuildSite ./Content ./WebApp`，以生成最新的静态内容。
+   2. 或者在
+
+如果你使用`tailwindcss`，请在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`
+
 ### 自定义主页内容
 
 主页内容模板位于`Lib\BuildSite\template\index.html.tpl`，其中包括以下变量：
