@@ -31,9 +31,6 @@ public class Blog
     /// 更新时间
     /// </summary>
     public DateTimeOffset? UpdatedTime { get; set; }
-
-    public string? DisplayDate { get; set; }
-
     public Catalog? Catalog { get; set; }
 
 }

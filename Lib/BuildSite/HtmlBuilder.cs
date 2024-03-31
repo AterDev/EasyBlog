@@ -4,9 +4,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
+
 using BuildSite.MarkdownExtension;
+
 using Humanizer;
+
 using Markdig;
+
 using Models;
 
 namespace BuildSite;
@@ -165,8 +169,6 @@ public partial class HtmlBuilder
                 Catalog = parentCatalog
             };
 
-            blog.DisplayDate = FormatDatetime(blog.UpdatedTime.Value);
-
             blog.Path = GetFullPath(parentCatalog) + "/" + Uri.EscapeDataString(blog.FileName.Replace(".md", ".html"));
 
             parentCatalog.Blogs.Add(blog);
@@ -271,7 +273,7 @@ public partial class HtmlBuilder
                            <p class="text-neutral-700 text-base dark:text-neutral-300">
                                👨‍💻 {webInfo?.AuthorName}
                                &nbsp;&nbsp;
-                               ⏱️ {blog.DisplayDate}
+                               ⏱️ {blog.PublishTime.ToString("yyyy-MM-dd")}
                            </p>
                        </div>
                    </div>
