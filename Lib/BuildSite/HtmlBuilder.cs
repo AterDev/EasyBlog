@@ -50,8 +50,13 @@ public partial class HtmlBuilder
     {
         // 配置markdown管道
         MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
+            .UsePipeTables()
             .UseAutoIdentifiers(Markdig.Extensions.AutoIdentifiers.AutoIdentifierOptions.GitHub)
-            .UseAdvancedExtensions()
+            .UseTaskLists()
+            .UseAlertBlocks()
+            .UseEmojiAndSmiley()
+            .UseMathematics()
+            .UseMediaLinks()
             .UseBetterCodeBlock()
             .Build();
 
@@ -214,10 +219,10 @@ public partial class HtmlBuilder
     private string AddHtmlTags(string content, string title = "", string toc = "")
     {
         var tplContent = TemplateHelper.GetTplContent("blog.html");
-        tplContent = tplContent.Replace("@{content}", content)
-            .Replace("@{Title}", title)
+        tplContent = tplContent.Replace("@{Title}", title)
             .Replace("@{BaseUrl}", BaseUrl)
-            .Replace("@{toc}", toc);
+            .Replace("@{toc}", toc)
+            .Replace("@{content}", content);
         return tplContent;
     }
 

@@ -2,7 +2,7 @@
     background-color: #222224;
     padding: 4px 12px;
     border-bottom: 1px solid rgb(75, 75, 75);
-    border-radius: 5px 5px 0 0 ;
+    border-radius: 5px 5px 0 0;
     color: #8ac8d3;
 }
 
@@ -130,6 +130,7 @@ li {
 table {
     width: 100%;
     white-space: nowrap;
+    margin: 8px 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -145,26 +146,24 @@ table th {
     border-color: rgb(229 231 235 / var(--tw-border-opacity));
     --tw-bg-opacity: 1;
     background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding: 1rem;
     text-align: left;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 500;
     text-transform: uppercase;
     line-height: 1rem;
     letter-spacing: 0.05em;
     --tw-text-opacity: 1;
     color: rgb(107 114 128 / var(--tw-text-opacity));
+    font-weight: bold;
 }
 
 @media (prefers-color-scheme: dark) {
     table th {
         --tw-border-opacity: 1;
-        border-color: rgb(55 65 81 / var(--tw-border-opacity));
+        border-color: rgb(60 60 60 / var(--tw-border-opacity));
         --tw-bg-opacity: 1;
-        background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+        background-color: rgb(32 32 32 / var(--tw-bg-opacity));
         --tw-text-opacity: 1;
         color: rgb(229 231 235 / var(--tw-text-opacity));
     }
@@ -175,18 +174,15 @@ table td {
     border-bottom-width: 1px;
     --tw-border-opacity: 1;
     border-color: rgb(229 231 235 / var(--tw-border-opacity));
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 0.5rem 1rem;
 }
 
 @media (prefers-color-scheme: dark) {
     table td {
         --tw-border-opacity: 1;
-        border-color: rgb(55 65 81 / var(--tw-border-opacity));
+        border-color: rgb(50 50 50 / var(--tw-border-opacity));
         --tw-bg-opacity: 1;
-        background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+        background-color: rgb(23 23 23 / var(--tw-bg-opacity));
         --tw-text-opacity: 1;
         color: rgb(209 213 219 / var(--tw-text-opacity));
     }
