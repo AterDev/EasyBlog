@@ -16,7 +16,6 @@
         </div>
         <div class="w-1/4 mt-1 hidden sm:flex">
             <div class="toc-block sticky top-2">
-                <p class="text-lg">导航</p>
                 @{toc}
             </div>
         </div>
