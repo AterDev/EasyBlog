@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+  // support mermaind
+  if (mermaid) {
+    mermaid.initialize({ startOnLoad: true });
+  }
+
   const languageDivs = document.querySelectorAll('div[class^="language-"]');
 
   const copyContent = `&#128203;copy code`;
@@ -34,5 +40,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
   });
+
+  var nomnomlDivs = document.querySelectorAll('.nomnoml');
+  if (nomnomlDivs.length > 0) {
+    const nomnomlDiv = nomnomlDivs[0];
+    const content = nomnomlDiv.textContent;
+    nomnomlDiv.innerHTML = '';
+
+    const canvas = document.createElement('canvas');
+    nomnoml.draw(canvas, content);
+    nomnomlDiv.appendChild(canvas);
+  }
 
 });

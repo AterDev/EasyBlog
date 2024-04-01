@@ -48,6 +48,9 @@ public partial class HtmlBuilder
         MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
             .UseAlertBlocks()
             .UseFigures()
+            .UseCitations()
+            .UseFigures()
+            .UseEmphasisExtras()
             .UseMathematics()
             .UseMediaLinks()
             .UseListExtras()
@@ -247,9 +250,31 @@ public partial class HtmlBuilder
     }
     private string AddHtmlTags(string content, string title = "", string toc = "")
     {
+        string extensionHead = "";
+        if (content.Contains("<div class=\"mermaid\">"))
+        {
+            extensionHead += "<script src=\"https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js\"></script>" + Environment.NewLine;
+        }
+        if (content.Contains("<div class=\"math\">"))
+        {
+            extensionHead += """
+                <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+                <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+                
+                """;
+        }
+        if (content.Contains("<div class=\"nomnoml\">"))
+        {
+            extensionHead += """
+                <script src="//unpkg.com/graphre/dist/graphre.js"></script>
+                <script src="//unpkg.com/nomnoml/dist/nomnoml.js"></script>
+                """;
+        }
+
         var tplContent = TemplateHelper.GetTplContent("blog.html");
         tplContent = tplContent.Replace("@{Title}", title)
             .Replace("@{BaseUrl}", BaseUrl)
+            .Replace("@{ExtensionHead}", extensionHead)
             .Replace("@{toc}", toc)
             .Replace("@{content}", content);
         return tplContent;

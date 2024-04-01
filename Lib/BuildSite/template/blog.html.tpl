@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="@{BaseUrl}favicon.png" />
     <script src="@{BaseUrl}js/markdown.js"></script>
     <title>@{Title}</title>
+    @{ExtensionHead}
 </head>
 <body class="container mx-auto px-4 sm:px-6 lg:px-8 dark:bg-neutral-900 pb-4">
     <div class="flex mt-2">
