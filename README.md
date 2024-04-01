@@ -7,6 +7,8 @@
 - 基于git代码管理来存储你的博客
 - 使用CI工具来自动化部署你的博客站点
 
+效果展示：[NilTor's Blog](https://blog.dusi.dev/)
+
 ## 🎖️功能
 
 - 主页博客列表，支持搜索和分类和存档筛选
@@ -14,6 +16,7 @@
 - 随系统变化的Light和Dark主题
 - 移动端的自适应显示
 - TOC支持
+- mermaid,nomnoml,Math的渲染支持
 - 代码高亮及复制支持
 
 ## 使用Github Page部署
@@ -66,7 +69,7 @@
  dotnet run --project .\Lib\BuildSite\ .\Content .\WebApp Production
 ```
 
-在根目录下，你会看到`WebApp`目录。
+其中`.\Content`是你的markdown存储目录，`.\WebApp`是生成的静态站点目录。
 
 ### 上传到你的服务器
 
@@ -95,9 +98,10 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
    1. 打开终端，在`WebApp`目录下执行`http-server`，然后在浏览器中打开`http://127.0.0.1:8080`。
 2. 生成静态内容。
    1. 在根目录下执行`dotnet run --project ./Lib/BuildSite ./Content ./WebApp`，以生成最新的静态内容。
-   2. 或者在
+   2. 或者直接运行根目录下的`build.ps1`脚本。
+3. 刷新浏览器，可看到最新生成的内容。
 
-如果你使用`tailwindcss`，请在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`
+> 如果你使用`tailwindcss`，请在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`
 
 ### 自定义主页内容
 
@@ -141,3 +145,6 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
 
 - 添加或修改正则规则，你将在`ColorCode.Core/Compilation/Languages`目录下找到相应的语言定义，如果不存在，你可以添加新的语言支持。
 - 如果是新添加的语言，需要在`ColorCode.Core/Languages.cs`中加载该语言。
+
+> [!IMPORTANT]
+> 如果你修改了`BuildSite`项目上中的代码，需要重新生成静态网站，才能看到最新效果。
