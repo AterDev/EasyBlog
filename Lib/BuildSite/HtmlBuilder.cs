@@ -126,6 +126,9 @@ public partial class HtmlBuilder
             Console.WriteLine("✅ copy webinfo.json!");
         }
 
+        ProcessHelper.RunCommand("git", "log -2 ", out string output);
+        Console.WriteLine("test git:" + output);
+
         // blogs
         var rootCatalog = new Catalog { Name = "Root" };
         TraverseDirectory(ContentPath, rootCatalog);
