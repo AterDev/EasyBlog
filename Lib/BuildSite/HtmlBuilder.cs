@@ -126,9 +126,8 @@ public partial class HtmlBuilder
             Console.WriteLine("✅ copy webinfo.json!");
         }
 
-        ProcessHelper.RunCommand("git", "pull --all", out string _);
-        ProcessHelper.RunCommand("git", "log -2 ", out string output);
-        Console.WriteLine("test git:" + output);
+        // 获取git历史信息
+        ProcessHelper.RunCommand("git", "fetch --depth=1000", out string _);
 
         // blogs
         var rootCatalog = new Catalog { Name = "Root" };
