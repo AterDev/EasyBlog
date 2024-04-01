@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-
   // support mermaind
-  if (mermaid) {
+  if (typeof mermaid !== 'undefined') {
     mermaid.initialize({ startOnLoad: true });
   }
 
