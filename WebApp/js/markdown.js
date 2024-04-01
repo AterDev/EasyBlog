@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
           // 2秒后恢复图标为原始状态
           setTimeout(() => {
             copyIcon.innerHTML = copyContent;
-          }, 1500);
+          }, 1000);
         })
         .catch(err => {
           console.error('Failed to copy: ', err);
