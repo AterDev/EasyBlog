@@ -188,14 +188,16 @@ public partial class HtmlBuilder
         {
             var fileInfo = new FileInfo(filePath);
             var fileName = Path.GetFileName(filePath);
+            var gitAddTime = GetCreatedTime(filePath);
+            var gitUpdateTime = GetUpdatedTime(filePath);
             var blog = new Blog
             {
                 Title = Path.GetFileNameWithoutExtension(filePath),
                 FileName = fileName,
                 Path = string.Empty,
-                PublishTime = GetUpdatedTime(filePath) ?? fileInfo.LastWriteTime,
-                CreatedTime = GetCreatedTime(filePath) ?? fileInfo.CreationTime,
-                UpdatedTime = GetUpdatedTime(filePath) ?? fileInfo.LastWriteTime,
+                PublishTime = gitUpdateTime ?? gitAddTime ?? fileInfo.LastWriteTime,
+                CreatedTime = gitAddTime ?? fileInfo.CreationTime,
+                UpdatedTime = gitUpdateTime ?? fileInfo.LastWriteTime,
                 Catalog = parentCatalog
             };
 
