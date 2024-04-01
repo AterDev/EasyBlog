@@ -337,6 +337,17 @@ public partial class StyleDictionary
                     Foreground = Teal,
                     ReferenceName = "variable"
                 },
+                new Style(ScopeName.Function)
+                {
+                    Foreground = Teal,
+                    ReferenceName = "function"
+                },
+                new Style(ScopeName.Symbol)
+                {
+                    Foreground = VSDarkKeyword,
+                    ReferenceName = "symbol"
+                }
+
             ];
         }
     }
