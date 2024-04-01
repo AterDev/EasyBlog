@@ -61,6 +61,10 @@ public partial class HtmlBuilder
         // 读取所有要处理的md文件
         List<string> files = Directory.EnumerateFiles(ContentPath, "*.md", SearchOption.AllDirectories)
             .ToList();
+        // 复制其他非md文件
+        List<string> otherFiles = Directory.EnumerateFiles(ContentPath, "*", SearchOption.AllDirectories)
+            .Where(f => !f.EndsWith(".md"))
+            .ToList();
         try
         {
             foreach (var file in files)
@@ -81,9 +85,24 @@ public partial class HtmlBuilder
 
                 File.WriteAllText(relativePath, html, Encoding.UTF8);
             }
+            Console.WriteLine("✅ generate blog html!");
+            foreach (var file in otherFiles)
+            {
+                string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs"));
+                string? dir = Path.GetDirectoryName(relativePath);
+
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir!);
+                }
+
+                File.Copy(file, relativePath, true);
+            }
+            Console.WriteLine("✅ copy blog other files!");
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine("HtmlBuilder:BuildBlogs:" + e.Message);
             throw;
         }
     }
@@ -103,6 +122,8 @@ public partial class HtmlBuilder
         if (File.Exists(webInfoPath))
         {
             File.Copy(webInfoPath, Path.Combine(DataPath, "webinfo.json"), true);
+
+            Console.WriteLine("✅ copy webinfo.json!");
         }
 
         // blogs
@@ -110,9 +131,11 @@ public partial class HtmlBuilder
         TraverseDirectory(ContentPath, rootCatalog);
         string json = JsonSerializer.Serialize(rootCatalog, _jsonSerializerOptions);
 
-
         string blogData = Path.Combine(DataPath, "blogs.json");
         File.WriteAllText(blogData, json, Encoding.UTF8);
+
+        Console.WriteLine("✅ update blogs.json!");
+
     }
 
     /// <summary>
@@ -141,6 +164,7 @@ public partial class HtmlBuilder
                 .Replace("@{siderbar}", siderBarHtml);
 
             File.WriteAllText(indexPath, indexHtml, Encoding.UTF8);
+            Console.WriteLine("✅ update index.html");
         }
     }
 

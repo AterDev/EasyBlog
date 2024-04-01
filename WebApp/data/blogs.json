@@ -1,6 +1,13 @@
 ﻿{
   "Name": "Root",
-  "Children": [],
+  "Children": [
+    {
+      "Name": "images",
+      "Children": [],
+      "Blogs": [],
+      "Parent": null
+    }
+  ],
   "Blogs": [
     {
       "Title": "introduction",

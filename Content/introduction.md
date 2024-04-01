@@ -1,5 +1,7 @@
 # Blog
 
+![images](./images/index-sample.png)
+
 本博客系统通过构建工具生成`纯静态`的博客网站，借助`GitHub Pages`，你可以在5分钟内免费拥有个人博客。 它具有以下特点
 
 - 使用markdown格式来编写博客内容
@@ -18,7 +20,7 @@
 
 你可以通过根目录下的`webinfo.json`，对博客基础信息进行配置，如下所示：
 
-```json
+```jsonc
 {
   "Name": "Niltor Blog", // 博客名称，显示在主页顶部导航
   "Description": "🗽 for freedom",// 说明，显示在主页顶部中间
