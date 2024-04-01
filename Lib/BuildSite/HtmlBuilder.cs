@@ -127,7 +127,7 @@ public partial class HtmlBuilder
         }
 
         // 获取git历史信息
-        ProcessHelper.RunCommand("git", "fetch --depth=1000", out string _);
+        ProcessHelper.RunCommand("git", "fetch --unshallow", out string _);
 
         // blogs
         var rootCatalog = new Catalog { Name = "Root" };
@@ -258,7 +258,6 @@ public partial class HtmlBuilder
     {
         if (ProcessHelper.RunCommand("git", @$"log --diff-filter=A --format=%aI -- ""{path}""", out string output))
         {
-            Console.WriteLine(output);
             output = output.Split("\n").First();
             return ConvertToDateTimeOffset(output);
         }
