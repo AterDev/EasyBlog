@@ -31,7 +31,7 @@ public class ProcessHelper
         }
         else
         {
-            Console.WriteLine($"❌ {output}");
+            //Console.WriteLine($"❌ {output}");
             return false;
         }
     }

@@ -70,7 +70,7 @@ public partial class HtmlBuilder
             foreach (var file in files)
             {
                 string markdown = File.ReadAllText(file);
-                string html = Markdig.Markdown.ToHtml(markdown, pipeline);
+                string html = Markdown.ToHtml(markdown, pipeline);
                 string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs")).Replace(".md", ".html");
 
                 var title = GetTitleFromMarkdown(markdown);
@@ -86,6 +86,7 @@ public partial class HtmlBuilder
                 File.WriteAllText(relativePath, html, Encoding.UTF8);
             }
             Console.WriteLine("✅ generate blog html!");
+
             foreach (var file in otherFiles)
             {
                 string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs"));
@@ -136,9 +137,7 @@ public partial class HtmlBuilder
 
         string blogData = Path.Combine(DataPath, "blogs.json");
         File.WriteAllText(blogData, json, Encoding.UTF8);
-
         Console.WriteLine("✅ update blogs.json!");
-
     }
 
     /// <summary>
@@ -175,6 +174,8 @@ public partial class HtmlBuilder
     {
         foreach (string subDirectoryPath in Directory.GetDirectories(directoryPath))
         {
+            var existMd = Directory.GetFiles(subDirectoryPath, "*.md").Length > 0;
+            if (!existMd) { continue; }
             var catalog = new Catalog
             {
                 Name = Path.GetFileName(subDirectoryPath),
