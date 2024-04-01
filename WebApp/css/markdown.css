@@ -11,6 +11,10 @@
     color: #dbdd44;
 }
 
+a {
+    color: #569CD6;
+}
+
 h1 {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -99,17 +103,18 @@ h5 {
     height: fit-content;
 }
 
-ul.toc {}
-
-ul.toc li {
-    list-style-type: none;
-    font-size: 1rem;
-    margin: 8px;
+ul.toc {
 }
 
-ul.toc li a {
-    color: #569CD6;
-}
+    ul.toc li {
+        list-style-type: none;
+        font-size: 1rem;
+        margin: 8px;
+    }
+
+        ul.toc li a {
+            color: #569CD6;
+        }
 
 li {
     margin-top: 0.5rem;
@@ -236,13 +241,13 @@ code {
     }
 }
 
-.markdown-alert-important>.markdown-alert-title {
+.markdown-alert-important > .markdown-alert-title {
     --tw-text-opacity: 1;
     color: rgb(124 58 237 / var(--tw-text-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
-    .markdown-alert-important>.markdown-alert-title {
+    .markdown-alert-important > .markdown-alert-title {
         --tw-text-opacity: 1;
         color: rgb(221 214 254 / var(--tw-text-opacity));
     }
@@ -274,13 +279,13 @@ code {
     }
 }
 
-.markdown-alert-warning>.markdown-alert-title {
+.markdown-alert-warning > .markdown-alert-title {
     --tw-text-opacity: 1;
     color: rgb(217 119 6 / var(--tw-text-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
-    .markdown-alert-warning>.markdown-alert-title {
+    .markdown-alert-warning > .markdown-alert-title {
         --tw-text-opacity: 1;
         color: rgb(253 230 138 / var(--tw-text-opacity));
     }
@@ -312,13 +317,13 @@ code {
     }
 }
 
-.markdown-alert-caution>.markdown-alert-title {
+.markdown-alert-caution > .markdown-alert-title {
     --tw-text-opacity: 1;
     color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
-    .markdown-alert-caution>.markdown-alert-title {
+    .markdown-alert-caution > .markdown-alert-title {
         --tw-text-opacity: 1;
         color: rgb(254 202 202 / var(--tw-text-opacity));
     }
@@ -350,13 +355,13 @@ code {
     }
 }
 
-.markdown-alert-tip>.markdown-alert-title {
+.markdown-alert-tip > .markdown-alert-title {
     --tw-text-opacity: 1;
     color: rgb(22 163 74 / var(--tw-text-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
-    .markdown-alert-tip>.markdown-alert-title {
+    .markdown-alert-tip > .markdown-alert-title {
         --tw-text-opacity: 1;
         color: rgb(187 247 208 / var(--tw-text-opacity));
     }
@@ -388,13 +393,13 @@ code {
     }
 }
 
-.markdown-alert-note>.markdown-alert-title {
+.markdown-alert-note > .markdown-alert-title {
     --tw-text-opacity: 1;
     color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
-    .markdown-alert-note>.markdown-alert-title {
+    .markdown-alert-note > .markdown-alert-title {
         --tw-text-opacity: 1;
         color: rgb(191 219 254 / var(--tw-text-opacity));
     }
@@ -416,9 +421,9 @@ code {
     align-items: center;
 }
 
-.markdown-alert-title svg {
-    margin-right: 5px;
-}
+    .markdown-alert-title svg {
+        margin-right: 5px;
+    }
 
 p {
     margin-bottom: 0.5rem;
@@ -496,19 +501,19 @@ div[class*="language-"] {
     text-shadow: none;
     font-family: 'Cascadia Code PL', 'Cascadia Code', 'Consolas', Menlo, Monaco, 'Courier New', Courier, monospace;
     padding: 0.5em 1em;
-    margin: 0;
+    margin-bottom: 0.75rem;
     overflow: auto;
     background: #222224;
     border-radius: 4px;
 }
 
-pre[class*="language-"]::selection,
-div[class*="language-"]::selection,
-pre[class*="language-"] *::selection,
-div[class*="language-"] *::selection {
-    text-shadow: none;
-    background: #264F78;
-}
+    pre[class*="language-"]::selection,
+    div[class*="language-"]::selection,
+    pre[class*="language-"] *::selection,
+    div[class*="language-"] *::selection {
+        text-shadow: none;
+        background: #264F78;
+    }
 
 @media print {
 
@@ -518,7 +523,7 @@ div[class*="language-"] *::selection {
     }
 }
 
-:not(div[class*="language-"])>pre {
+:not(div[class*="language-"]) > pre {
     padding: .1em .3em;
     border-radius: .3em;
     color: #db4c69;
@@ -530,198 +535,206 @@ div[class*="language-"] *::selection {
 }
 
 pre {
-    &>.doctype {
-        &>.doctype-tag {
-            color: #569CD6;
-        }
+    &>.doctype
 
-        &>.name {
-            color: #9cdcfe;
-        }
+{
+    &>.doctype-tag
 
-    }
+{
+    color: #569CD6;
+}
 
-    &>.xmlDocTag,
-    &>.xmlComment {
-        color: #608b4e;
-    }
+& > .name {
+    color: #9cdcfe;
+}
 
-    &>.comment,
-    &>.prolog,
-    >.xmlDocComment {
-        color: #6a9955;
-    }
+}
 
-    &>.punctuation,
-    .language-html .language-css &>.punctuation,
-    .language-html .language-javascript &>.punctuation {
-        color: #d4d4d4;
-    }
+& > .xmlDocTag,
+& > .xmlComment {
+    color: #608b4e;
+}
 
-    &>.property,
-    &>.tag,
-    &>.boolean,
-    &>.number,
-    &>.constant,
-    &>.symbol,
-    &>.powershellParameter,
-    &>.inserted,
-    &>.unit {
-        color: #b5cea8;
-    }
+& > .comment,
+& > .prolog,
+> .xmlDocComment {
+    color: #6a9955;
+}
 
-    &>.selector,
-    &>.attr-name,
-    &>.string,
-    &>.jsonString,
-    &>.char,
-    &>.builtin,
-    &>.deleted {
-        color: #ce9178;
-    }
+& > .punctuation,
+.language-html .language-css & > .punctuation,
+.language-html .language-javascript & > .punctuation {
+    color: #d4d4d4;
+}
 
-    .language-css &>.string.url {
-        text-decoration: underline;
-    }
+& > .property,
+& > .tag,
+& > .boolean,
+& > .number,
+& > .constant,
+& > .symbol,
+& > .powershellParameter,
+& > .inserted,
+& > .unit {
+    color: #b5cea8;
+}
 
-    &>.operator,
-    &>.entity {
-        color: #d4d4d4;
-    }
+& > .selector,
+& > .attr-name,
+& > .string,
+& > .jsonString,
+& > .char,
+& > .builtin,
+& > .deleted {
+    color: #ce9178;
+}
 
-    &>.operator.arrow {
+.language-css & > .string.url {
+    text-decoration: underline;
+}
+
+& > .operator,
+& > .entity {
+    color: #d4d4d4;
+}
+
+    & > .operator.arrow {
         color: #569CD6;
     }
 
-    &>.atrule {
-        color: #ce9178;
+& > .atrule {
+    color: #ce9178;
+    &>.rule
 
-        &>.rule {
-            color: #c586c0;
-        }
+{
+    color: #c586c0;
+}
 
-        &>.url {
-            color: #9cdcfe;
+& > .url {
+    color: #9cdcfe;
+    &>.function
 
-            &>.function {
-                color: #dcdcaa;
-            }
+{
+    color: #dcdcaa;
+}
 
-            &>.punctuation {
-                color: #d4d4d4;
-            }
+& > .punctuation {
+    color: #d4d4d4;
+}
 
-        }
-    }
+}
+}
 
-    &>.keyword,
-    &>.jsonKey {
-        color: #569CD6;
-    }
+& > .keyword,
+& > .jsonKey {
+    color: #569CD6;
+}
 
-    &>.module,
-    &>.controlKeyword,
-    &>.control-flow {
-        color: #c586c0;
-    }
+& > .module,
+& > .controlKeyword,
+& > .control-flow {
+    color: #c586c0;
+}
 
-    &>.function,
-    &>.function .maybe-class-name {
-        color: #dcdcaa;
-    }
+& > .function,
+& > .function .maybe-class-name {
+    color: #dcdcaa;
+}
 
-    &>.regex {
-        color: #d16969;
-    }
+& > .regex {
+    color: #d16969;
+}
 
-    &>.important {
-        color: #569cd6;
-    }
+& > .important {
+    color: #569cd6;
+}
 
-    &>.italic {
-        font-style: italic;
-    }
+& > .italic {
+    font-style: italic;
+}
 
-    &>.constant {
-        color: #9cdcfe;
-    }
+& > .constant {
+    color: #9cdcfe;
+}
 
-    &>.className,
-    &>.class-name {
-        color: #4ec9b0;
-    }
+& > .className,
+& > .class-name {
+    color: #4ec9b0;
+}
 
-    &>.console {
-        color: #9cdcfe;
-    }
+& > .console {
+    color: #9cdcfe;
+}
 
-    &>.parameter {
-        color: #9cdcfe;
-    }
+& > .parameter {
+    color: #9cdcfe;
+}
 
-    &>.interpolation {
-        color: #9cdcfe;
-    }
+& > .interpolation {
+    color: #9cdcfe;
+}
 
-    &>.punctuation.interpolation-punctuation {
-        color: #569cd6;
-    }
+& > .punctuation.interpolation-punctuation {
+    color: #569cd6;
+}
 
-    &>.boolean {
-        color: #569cd6;
-    }
+& > .boolean {
+    color: #569cd6;
+}
 
-    &>.property,
-    &>.variable,
-    .imports &>.maybe-class-name,
-    .exports &>.maybe-class-name {
-        color: #9cdcfe;
-    }
+& > .property,
+& > .variable,
+.imports & > .maybe-class-name,
+.exports & > .maybe-class-name {
+    color: #9cdcfe;
+}
 
-    &>.delimiter,
-    &>.powershellOperator,
-    &>.selector {
-        color: #d7ba7d;
-    }
+& > .delimiter,
+& > .powershellOperator,
+& > .selector {
+    color: #d7ba7d;
+}
 
-    &>.escape {
-        color: #d7ba7d;
-    }
+& > .escape {
+    color: #d7ba7d;
+}
 
-    &>.tag {
-        color: #569cd6;
+& > .tag {
+    color: #569cd6;
+    &>.punctuation
 
-        &>.punctuation {
-            color: #808080;
-        }
+{
+    color: #808080;
+}
 
-    }
+}
 
-    &>.cdata {
-        color: #808080;
-    }
+& > .cdata {
+    color: #808080;
+}
 
-    &>.attr-name {
-        color: #9cdcfe;
-    }
+& > .attr-name {
+    color: #9cdcfe;
+}
 
-    &>.attr-value,
-    &>.attr-value .punctuation {
-        color: #ce9178;
+& > .attr-value,
+& > .attr-value .punctuation {
+    color: #ce9178;
+    &>.attr-equals
 
-        &>.attr-equals {
-            color: #d4d4d4;
-        }
+{
+    color: #d4d4d4;
+}
 
-    }
+}
 
-    &>.entity {
-        color: #569cd6;
-    }
+& > .entity {
+    color: #569cd6;
+}
 
-    &>.namespace {
-        color: #4ec9b0;
-    }
+& > .namespace {
+    color: #4ec9b0;
+}
 
 }
 
@@ -759,7 +772,7 @@ div[class*="language-html"] {
 }
 
 
-div[class*="language-"]>pre {
+div[class*="language-"] > pre {
     position: relative;
     z-index: 1;
 }

@@ -22,7 +22,7 @@ internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
             return;
         }
         var languageString = fencedCodeBlock.Info?.Replace(parser.InfoPrefix!, string.Empty);
-        var language = Languages.FindById(languageString);
+        var language = Languages.FindById(string.IsNullOrWhiteSpace(languageString) ? "md" : languageString);
         if (language == null)
         {
             _underlyingRenderer.Write(renderer, obj);

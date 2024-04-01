@@ -4,9 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
-
 using BuildSite.MarkdownExtension;
-
 using Markdig;
 
 using Models;
@@ -48,13 +46,16 @@ public partial class HtmlBuilder
     {
         // 配置markdown管道
         MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
-            .UsePipeTables()
-            .UseAutoIdentifiers(Markdig.Extensions.AutoIdentifiers.AutoIdentifierOptions.GitHub)
-            .UseTaskLists()
             .UseAlertBlocks()
-            .UseEmojiAndSmiley()
+            .UseFigures()
             .UseMathematics()
             .UseMediaLinks()
+            .UseListExtras()
+            .UseTaskLists()
+            .UseDiagrams()
+            .UseAutoLinks()
+            .UseAutoIdentifiers(Markdig.Extensions.AutoIdentifiers.AutoIdentifierOptions.GitHub)
+            .UsePipeTables()
             .UseBetterCodeBlock()
             .Build();
 
@@ -276,13 +277,13 @@ public partial class HtmlBuilder
         return null;
     }
 
-    private static DateTimeOffset ConvertToDateTimeOffset(string output)
+    private static DateTimeOffset? ConvertToDateTimeOffset(string output)
     {
         var dateString = output.Trim();
-
         string format = "yyyy-MM-ddTHH:mm:sszzz"; // 定义日期时间格式
-        DateTimeOffset dateTimeOffset = DateTimeOffset.ParseExact(dateString, format, System.Globalization.CultureInfo.InvariantCulture);
-        return dateTimeOffset;
+        if (DateTimeOffset.TryParseExact(dateString, format, null, System.Globalization.DateTimeStyles.None, out var result)) { return result; }
+
+        return null;
     }
 
     /// <summary>
@@ -373,8 +374,10 @@ public partial class HtmlBuilder
     }
     private string? GetTOC(string markdown)
     {
-        string heading2Pattern = @"^##\s+(.+)$";
+        markdown = Regex.Replace(markdown, @"```.*?```", "", RegexOptions.Singleline);
+        markdown = Regex.Replace(markdown, @"`.*?`", "", RegexOptions.Singleline);
 
+        string heading2Pattern = @"^##\s+(.+)$";
         MatchCollection matches = Regex.Matches(markdown, heading2Pattern, RegexOptions.Multiline);
 
         if (matches.Count > 0)

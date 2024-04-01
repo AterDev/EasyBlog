@@ -21,7 +21,7 @@ public class SimpleText : ILanguage
 
     public string FirstLinePattern
     {
-        get { return null; }    
+        get { return null; }
     }
 
     public IList<LanguageRule> Rules
@@ -66,7 +66,7 @@ public class SimpleText : ILanguage
     {
         return lang.ToLower() switch
         {
-            "nginx" or "conf" => true,
+            "nginx" or "conf" or "" => true,
             _ => false,
         };
     }
