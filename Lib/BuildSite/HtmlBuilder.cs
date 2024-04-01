@@ -7,8 +7,6 @@ using System.Text.Unicode;
 
 using BuildSite.MarkdownExtension;
 
-using Humanizer;
-
 using Markdig;
 
 using Models;
@@ -278,7 +276,7 @@ public partial class HtmlBuilder
                            <p class="text-neutral-700 text-base dark:text-neutral-300">
                                👨‍💻 {webInfo?.AuthorName}
                                &nbsp;&nbsp;
-                               ⏱️ {blog.PublishTime.ToString("yyyy-MM-dd")}
+                               ⏱️ <span class="publish-time" data-time="{blog.PublishTime:yyyy-MM-ddThh:mm:sszzz}"></span> 
                            </p>
                        </div>
                    </div>
@@ -367,16 +365,8 @@ public partial class HtmlBuilder
         return null;
     }
 
-    private string FormatDatetime(DateTimeOffset dateTime)
-    {
-        TimeSpan timeDifference = DateTimeOffset.Now - dateTime;
-        return timeDifference.Humanize();
-    }
     private string BuildBlogPath(string path)
     {
         return BaseUrl + "blogs" + path;
     }
-
-
-
 }
