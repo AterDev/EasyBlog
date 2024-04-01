@@ -69,4 +69,6 @@ public class ScopeName
     public const string Brackets = "Brackets";
     public const string Continuation = "Continuation";
     public const string Variable = "Variable";
+    public const string Function = "Function";
+    public const string Symbol = "Symbol";
 }

@@ -72,6 +72,49 @@ public class CSharp : ILanguage
                         { 2, ScopeName.ClassName }
                     }),
 
+                new LanguageRule(@"[\(\)\[\]\{\}]",
+                    new Dictionary<int, string>
+                        {
+                            { 0, ScopeName.ControlKeyword },
+                        }),
+                new LanguageRule(@"\b([A-Z][a-z0-9A-Z]*)<([A-Z][a-z0-9A-Z]*)>",
+                    new Dictionary<int, string>
+                        {
+                            { 1, ScopeName.ClassName },
+                            { 2, ScopeName.Symbol},
+                        }),
+                new LanguageRule(@" +\b([A-Z][a-z0-9A-Z]*) +([a-z][a-z0-9A-Z]*)\b +=",
+                    new Dictionary<int, string>
+                        {
+                            { 1, ScopeName.ClassName },
+                            { 2, ScopeName.Variable},
+                        }),
+                new LanguageRule(@"([A-Z][a-z0-9A-Z]*)\.([A-Z][a-z0-9A-Z]*)[; +]",
+                    new Dictionary<int, string>
+                        {
+                            { 1, ScopeName.ClassName },
+                            { 2, ScopeName.Variable},
+                        }),
+                new LanguageRule(@"\b([A-Z][a-z0-9A-Z]*)\.([A-Z][a-z0-9A-Z]*)(\()",
+                    new Dictionary<int, string>
+                        {
+                            { 1, ScopeName.ClassName },
+                            { 2, ScopeName.Function},
+                            { 3, ScopeName.ControlKeyword },
+                        }),
+                new LanguageRule(@"\b([a-z][a-z0-9A-Z]*)\.([A-Z][a-z0-9A-Z]*)(\()",
+                    new Dictionary<int, string>
+                        {
+                            { 1, ScopeName.Variable },
+                            { 2, ScopeName.Function },
+                            { 3, ScopeName.ControlKeyword },
+                        }),
+                new LanguageRule(@"\.([A-Z][a-z0-9A-Z]*)(\()",
+                    new Dictionary<int, string>
+                        {
+                            { 1, ScopeName.Function },
+                            { 2, ScopeName.ControlKeyword },
+                        }),
                 new LanguageRule(
                     @"\b(int|string|float|double|bool|object|var)\s+([a-zA-Z_][a-zA-Z0-9_]*)\b",
                     new Dictionary<int, string>
@@ -82,6 +125,12 @@ public class CSharp : ILanguage
 
                 new LanguageRule(
                     @"\b([a-z0-9]+)\.\b",
+                    new Dictionary<int, string>
+                    {
+                        { 1, ScopeName.Variable }
+                    }),
+                new LanguageRule(
+                    @"\b([A-Z][a-zA-Z0-0]*)\b =",
                     new Dictionary<int, string>
                     {
                         { 1, ScopeName.Variable }
@@ -105,6 +154,12 @@ public class CSharp : ILanguage
                         { 1, ScopeName.Keyword },
                         { 2, ScopeName.ClassName },
                     }),
+                new LanguageRule(@" +([A-Z][a-z0-9A-Z]*)[<\w+>]*(\()",
+                    new Dictionary<int, string>
+                    {
+                        { 1, ScopeName.Function },
+                        { 2, ScopeName.ControlKeyword },
+                    }),
                 new LanguageRule(
                     @"\b(abstract|as|ascending|base|bool|break|by|byte|case|catch|char|checked|class|const|continue|decimal|default|delegate|descending|do|double|dynamic|else|enum|equals|event|explicit|extern|false|finally|fixed|float|for|foreach|from|get|goto|group|if|implicit|in|int|into|interface|internal|is|join|let|lock|long|namespace|new|null|object|on|operator|orderby|out|override|params|partial|private|protected|public|readonly|ref|return|sbyte|sealed|select|set|short|sizeof|stackalloc|static|string|struct|switch|this|throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|var|virtual|void|volatile|where|while|yield|async|await|warning|disable)\b",
                     new Dictionary<int, string>
@@ -112,11 +167,6 @@ public class CSharp : ILanguage
                             { 0, ScopeName.Keyword }
                         }),
 
-                new LanguageRule(@"[\(\)\[\]\{\}]",
-                    new Dictionary<int, string>
-                        {
-                            { 0, ScopeName.ControlKeyword },
-                        }),
 
                 new LanguageRule(
                     @"(?s)(""[^\n]*?(?<!\\)"")",
