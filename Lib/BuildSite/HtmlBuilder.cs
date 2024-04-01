@@ -255,6 +255,7 @@ public partial class HtmlBuilder
     {
         if (ProcessHelper.RunCommand("git", @$"log --diff-filter=A --format=%aI -- ""{path}""", out string output))
         {
+            Console.WriteLine(output);
             output = output.Split("\n").First();
             return ConvertToDateTimeOffset(output);
         }
