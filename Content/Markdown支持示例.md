@@ -13,6 +13,10 @@ just some markdown.  **123**
 
 ```
 
+## LongText
+
+This is a long text:Currently focusing on using Cloud-Native technologies such as .NET Aspire, Radius, Dapr, AI and so on to improve development and delivery efficiency.
+
 ## mermaid
 
 ```mermaid

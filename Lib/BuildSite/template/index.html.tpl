@@ -8,7 +8,7 @@
     <base href="/" />
     <link rel="stylesheet" href="@{BaseUrl}css/app.css" />
     <link rel="stylesheet" href="@{BaseUrl}css/markdown.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/png" href="@{BaseUrl}favicon.ico" />
     <script>const baseUrl = '@{BaseUrl}';</script>
     <script src="@{BaseUrl}js/index.js"></script>
 </head>
