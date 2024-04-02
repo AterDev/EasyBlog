@@ -81,12 +81,15 @@
 
 fork之后，你将拥有所有的自定义权限，因为所有的源代码都已经在你自己的仓库中。
 
-核心项目为`BuildSite`，该项目是用来生成数据文件的，其中包括将markdown文件转换成html文件。
+核心项目为`BuildSite`，用来生成静态文件，其中包括将markdown文件转换成html文件。
 
-你需要准备以下内容以便进行二次开发
+### 开发环境
 
-- .NET SDK 8.0，以便运行 `BuildSite`项目
-- tailwindcss，生成css样式内容
+`BuildSite`项目是一个.NET项目，你需要安装.NET SDK 8.0。
+
+此外，你可以安装(可选)
+
+- tailwindcss，用来生成css样式内容
 - http-server，用来启动本地静态内容，以便调试
 
 ### 运行项目
@@ -95,9 +98,9 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
    1. 打开终端，在`WebApp`目录下执行`http-server`，然后在浏览器中打开`http://127.0.0.1:8080`。
 2. 生成静态内容。
    1. 在根目录下执行`dotnet run --project ./Lib/BuildSite ./Content ./WebApp`，以生成最新的静态内容。
-   2. 或者在
+   2. 或者直接运行`build.ps1`脚本。
 
-如果你使用`tailwindcss`，请在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`
+如果你使用`tailwindcss`，可在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`。
 
 ### 自定义主页内容
 
