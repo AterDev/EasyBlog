@@ -142,15 +142,18 @@ function timeAgo(date) {
       if (unit === '年') {
         // show year and month
         const month = Math.floor((seconds - counter * intervals[unit]) / intervals['月']);
-        return `${counter}${unit}${month}月前`;
+        month = month > 0 ? month + '月' : '';
+        return `${counter}${unit}${month}前`;
       }
       if (unit === '月') {
         const day = Math.floor((seconds - counter * intervals[unit]) / intervals['天']);
-        return `${counter}${unit}${day}天前`;
+        day = day > 0 ? day + '天' : '';
+        return `${counter}${unit}${day}前`;
       }
       if (unit === '天') {
         const hour = Math.floor((seconds - counter * intervals[unit]) / intervals['小时']);
-        return `${counter}${unit}${hour}小时前`;
+        hour = hour > 0 ? hour + '小时' : '';
+        return `${counter}${unit}${hour}前`;
       }
       return `${counter}${unit}前`;
     }

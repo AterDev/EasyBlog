@@ -23,8 +23,8 @@
 
 ### Fork并配置GitHub Page
 
-1. 点击`Fork`按钮，并创建自己的仓库。
-2. 进入自己的仓库，点击`Actions`，启用workflows。
+1. 点击`Fork`按钮，并创建自己的仓库。 并取消选择 Copy the main branch only。
+2. 进入自己的GitHub仓库，点击`Actions`，启用workflows。
 3. 点击`Settings`，找到Pages配置，在Build and deployment 选项中选择`GitHub Actions`.
 
 ### 配置
