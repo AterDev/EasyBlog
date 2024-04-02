@@ -69,7 +69,7 @@ function filterBlogs(catalogName, date) {
     blogs = catalog.Blogs;
   } else if (date != 'all') {
 
-    blogs = allBlogs.filter(blog => blog.PublishTime.split('T')[0] == date);
+    blogs = allBlogs.filter(blog => blog.PublishTime.substr(0, 7) == date);
   } else {
     blogs = allBlogs.slice(0, 50);
 
@@ -103,12 +103,12 @@ function renderBlogs() {
     blogLink.href = './blogs' + blog.Path;
     blogLink.target = '_blank';
     blogLink.className = 'block text-lg py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100';
-    blogLink.innerText = blog.Title;
+    blogLink.innerText = "📑 " + blog.Title;
     blogTitleDiv.appendChild(blogLink);
     blogInnerDiv.appendChild(blogTitleDiv);
     let blogInfoP = document.createElement('p');
     blogInfoP.className = 'text-neutral-700 text-base dark:text-neutral-300';
-    blogInfoP.innerHTML = `👨‍💻 ${webInfo.Name} &nbsp;&nbsp; ⏱️ ${blog.DisplayDate}`;
+    blogInfoP.innerHTML = `👨‍💻 ${webInfo.AuthorName} &nbsp;&nbsp; ⏱️ ${timeAgo(new Date(blog.PublishTime))}`;
     blogInnerDiv.appendChild(blogInfoP);
     blogDiv.appendChild(blogInnerDiv);
     blogList.appendChild(blogDiv);
@@ -116,7 +116,6 @@ function renderBlogs() {
 }
 
 function timeAgo(date) {
-  console.log(date);
   const seconds = Math.floor((new Date() - date) / 1000);
   const intervals = {
     '年': 31536000,
@@ -159,9 +158,3 @@ function timeAgo(date) {
 
   return '刚刚';
 }
-
-const date1 = new Date('2024-03-31T12:00:00');
-console.log(timeAgo(date1));  // 输出: 1天前
-
-const date2 = new Date('2023-01-01T00:00:00');
-console.log(timeAgo(date2));  // 输出: 1年3个月前

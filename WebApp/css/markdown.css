@@ -111,6 +111,7 @@ h5 {
     border-radius: 5px;
     padding: 8px;
     height: fit-content;
+    min-width: 240px;
 }
 
 

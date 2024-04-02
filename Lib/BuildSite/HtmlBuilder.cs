@@ -332,7 +332,7 @@ public partial class HtmlBuilder
                            <p class="text-neutral-700 text-base dark:text-neutral-300">
                                👨‍💻 {webInfo?.AuthorName}
                                &nbsp;&nbsp;
-                               ⏱️ <span class="publish-time" data-time="{blog.PublishTime:yyyy-MM-ddThh:mm:sszzz}"></span> 
+                               ⏱️ <span class="publish-time" data-time="{blog.PublishTime:yyyy-MM-ddTHH:mm:sszzz}"></span> 
                            </p>
                        </div>
                    </div>
@@ -354,7 +354,7 @@ public partial class HtmlBuilder
         var allBlogs = data?.GetAllBlogs().OrderByDescending(b => b.PublishTime).ToList() ?? [];
         var dates = allBlogs!.Select(b => b.PublishTime)
             .OrderByDescending(b => b)
-            .DistinctBy(b => b.Date)
+            .DistinctBy(b => b.ToString("yyyy-MM"))
             .ToList();
 
         sb.AppendLine("<div id=\"catalog-list\" class=\"rounded-lg shadow-md p-4 dark:bg-neutral-800\">");
@@ -385,10 +385,10 @@ public partial class HtmlBuilder
             """);
         foreach (var date in dates)
         {
-            var count = allBlogs.Count(b => b.PublishTime.Date == date.Date);
+            var count = allBlogs.Count(b => b.PublishTime.Year == date.Year && b.PublishTime.Month == date.Month);
             var html = $"""
-                <span data-date="{date:yyyy-MM-dd}" class="filter-item text-lg block py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100">
-                    {date:yyyy-MM-dd} [{count}]
+                <span data-date="{date:yyyy-MM}" class="filter-item text-lg block py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100">
+                    {date:yyyy-MM} [{count}]
                 </span>
                 """;
             sb.AppendLine(html);
