@@ -151,7 +151,7 @@ function timeAgo(date) {
         return `${counter}${unit}${day}前`;
       }
       if (unit === '天') {
-        lethour = Math.floor((seconds - counter * intervals[unit]) / intervals['小时']);
+        let hour = Math.floor((seconds - counter * intervals[unit]) / intervals['小时']);
         hour = hour > 0 ? hour + '小时' : '';
         return `${counter}${unit}${hour}前`;
       }
