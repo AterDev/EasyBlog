@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
     // Enable latest features
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "target": "ESNext",
     "module": "ESNext",
     "outDir": "./js",
     "rootDir": "./ts",
-    "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "removeComments": true
   }
 }
