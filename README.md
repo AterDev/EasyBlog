@@ -23,8 +23,8 @@
 
 ### Fork并配置GitHub Page
 
-1. 点击`Fork`按钮，并创建自己的仓库。
-2. 进入自己的仓库，点击`Actions`，启用workflows。
+1. 点击`Fork`按钮，并创建自己的仓库。 并取消选择 Copy the main branch only。
+2. 进入自己的GitHub仓库，点击`Actions`，启用workflows。
 3. 点击`Settings`，找到Pages配置，在Build and deployment 选项中选择`GitHub Actions`.
 
 ### 配置
@@ -66,7 +66,7 @@
 `BuildSite`项目是用来将markdown转换成html的，请在根目录执行:
 
 ```pwsh
- dotnet run --project .\Lib\BuildSite\ .\Content .\WebApp Production
+ dotnet run --project .\src\BuildSite\ .\Content .\WebApp Production
 ```
 
 其中`.\Content`是你的markdown存储目录，`.\WebApp`是生成的静态站点目录。
