@@ -1,169 +1,170 @@
 # Blog
 
-本博客系统通过构建工具生成`纯静态`的博客网站，借助`GitHub Pages`，你可以在5分钟内免费拥有个人博客。 它具有以下特点
+📘[Englisth](./README.md)   📘[中文](./README_cn.md)
 
-- 生成纯静态网站，访问速度极快
-- 使用markdown格式来编写博客内容
-- 基于git代码管理来存储你的博客
-- 使用CI工具来自动化部署你的博客站点
+This blog system generates a **pure static** blog website through build tools. With the help of **GitHub Pages**, you can have a personal blog for free in 5 minutes. It has the following features:
 
-效果展示：[NilTor's Blog](https://blog.dusi.dev/)
+- Generate pure static websites for extremely fast access speed
+- Use markdown format to write blog content
+- Use git code management to store your blog
+- Use CI tools to automatically deploy your blog site
 
-## 🎖️功能
+**Demo:** NilTor's Blog: [https://blog.dusi.dev/](https://blog.dusi.dev/)
 
-- 主页博客列表，支持搜索和分类和存档筛选
-- 自定义网站名称和说明
-- 随系统变化的Light和Dark主题
-- 移动端的自适应显示
-- TOC支持
-- mermaid,nomnoml,Math的渲染支持
-- 代码高亮及复制支持
+## 🎖️Features
 
-## 使用Github Page部署
+- Blog list on the homepage, supporting search, category and archive filtering
+- Customize website name and description
+- Light and Dark themes that change with the system
+- Adaptive display for mobile devices
+- TOC support
+- mermaid, nomnoml, Math rendering support
+- Code highlighting and copy support
 
-### Fork并配置GitHub Page
+## Deploy with Github Page
 
-1. 点击`Fork`按钮，并创建自己的仓库。 并取消选择 Copy the main branch only。
-2. 进入自己的GitHub仓库，点击`Actions`，启用workflows。
-3. 点击`Settings`，找到Pages配置，在Build and deployment 选项中选择`GitHub Actions`.
+### Fork and configure GitHub Page
 
-### 配置
+1. Click the **Fork** button and create your own repository. Uncheck **Copy the main branch only**.
+2. Go to your own GitHub repository, click **Actions**, and enable workflows.
+3. Click **Settings**, find Pages configuration, and select **GitHub Actions** in Build and deployment.
 
-你可以通过根目录下的`webinfo.json`，对博客基础信息进行配置，如下所示：
+### Configuration
+
+You can configure the basic information of the blog through `webinfo.json` in the root directory, as shown below:
 
 ```json
 {
-  "Name": "Niltor Blog", // 博客名称，显示在主页顶部导航
-  "Description": "🗽 for freedom",// 说明，显示在主页顶部中间
-  "AuthorName": "Ater", // 作者名称，显示在博客列表
-  "BaseHref": "/blazor-blog/", // 子目录
-  "Domain": "https://aterdev.github.io" // 域名，生成sitemap使用，不生成则留空
+  "Name": "Niltor Blog", // Blog name, displayed at the top navigation of the homepage
+  "Description": " for freedom",// Description, displayed in the middle of the top of the homepage
+  "AuthorName": "Ater", // Author name, displayed in the blog list
+  "BaseHref": "/blazor-blog/", // Subdirectory
+  "Domain": "https://aterdev.github.io" // Domain name, used for generating sitemap, leave blank if not generated
 }
 ```
 
-当你使用Github Page或使用IIS子应用部署时，需要调整`BaseHref`。通常是你的**项目名称**或**子目录名**。
+When you use Github Page or deploy using IIS sub-application, you need to adjust `BaseHref`. It is usually your **project name** or **subdirectory name**.
 
 > [!IMPORTANT]
-> 注意，`BaseHref`尾部的`/`是必需的。
+> Note that the `/` at the end of `BaseHref` is required.
 >
-> 如果你配置了自定义域名，并且没有使用子目录，请将BaseHref设置为`/`。
+> If you have configured a custom domain name and are not using a subdirectory, set BaseHref to `/`.
 
-修改后提交代码，GitHub会触发Action自动构建。
+After modification, commit the code, GitHub will trigger Action to automatically build.
 
-### 编写博客
+### Write a blog
 
-请使用任何你习惯的markdown编辑器编写博客,唯一的要求是将博客内容放到`Content`目录下。你可以在该目录下创建多级目录。
+Please use any markdown editor you are used to write a blog, the only requirement is to put the blog content in the `Content` directory. You can create multi-level directories under this directory.
 
-### 发布博客
+### Publish a blog
 
-你只需要正常提交代码即可，github action会自动构建并最终发布你的博客，发布成功后可打开您的 GitHub Page 查看。
+You only need to commit the code normally, github action will automatically build and finally publish your blog. After the publication is successful, you can open your GitHub Page to view.
 
-## 部署到其他服务
+## Deploy to other services
 
-如果你不使用Github Page，那么你也可以轻松的部署到其他服务。核心的步骤只需要两步。
+If you don't use Github Page, you can also easily deploy it to other services. The core steps only require two steps.
 
-### 生成静态内容
+### Generate static content
 
-`BuildSite`项目是用来将markdown转换成html的，请在根目录执行:
+The `BuildSite` project is used to convert markdown to html. Please execute in the root directory:
 
 ```pwsh
- dotnet run --project .\src\BuildSite\ .\Content .\WebApp Production
+ dotnet run --project .\src\BuildSite\ .\Content .\WebApp Production
 ```
 
-其中`.\Content`是你的markdown存储目录，`.\WebApp`是生成的静态站点目录。
+Where `.\Content` is your markdown storage directory and `.\WebApp` is the generated static site directory.
 
-### 上传到你的服务器
+### Upload to your server
 
-将`WebApp`中的所有文件复制到你的服务器即可。
-
-> [!TIP]
-> 根目录下的`publishToLocal.ps1`脚本可以自动完成构建和生成的操作，最终内容将在根目录下`WebApp`目录中。
->
-> 如果你使用自动化部署，可参考.github/workflows中的脚本。
-
-## 更新
-
-上游代码的更新以`dev`分支为准，你可以将`dev`分支合并到你的`dev`分支，以获取最新的代码更新。
-
-`main`作为默认的构建发布的分支，请不要合并到你的`main`分支。
-
-建议您使用`dev`或其他自己的分支来编写博客和自定义内容，然后再合并到`main`分支以触发自动构建。
-
-## 二次开发
-
-fork之后，你将拥有所有的自定义权限，因为所有的源代码都已经在你自己的仓库中。
-
-核心项目为`BuildSite`，用来生成静态文件，其中包括将markdown文件转换成html文件。
-
-> [!NOTE]
-> 建议创建自己的分支来自定义开发内容，方便后续的合并。
-
-### 开发环境
-
-`BuildSite`项目是一个.NET项目，你需要安装.NET SDK 8.0。
-
-此外，你可以安装(可选)
-
-- http-server，用来启动本地静态内容，以便调试。
-- tailwindcss，用来生成css样式内容。
-- typescript，以便使用`tsc`命令。
-
-### 运行项目
-
-1. 预览项目
-   1. 打开终端，在`WebApp`目录下执行`http-server`，然后在浏览器中打开`http://127.0.0.1:8080`。
-2. 生成静态内容。
-   1. 在根目录下执行`dotnet run --project ./src/BuildSite ./Content ./WebApp`，以生成最新的静态内容。
-   2. 或者直接运行根目录下的`build.ps1`脚本。
-3. 刷新浏览器，可看到最新生成的内容。
+Copy all files in `WebApp` to your server.
 
 > [!TIP]
-> 如果你使用`Tailwindcss`，可在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`。
+> The `publishToLocal.ps1` script in the root directory can automatically complete the build and generate operations. The final content will be in the `WebApp` directory in the root directory.
 >
-> 如果你使用`Typescript`，可在`WebApp`下执行`tsc -w`。
+> If you use automated deployment, please refer to the scripts in .github/workflows.
 
-### 自定义主页内容
+## Update
 
-主页内容模板位于`src\BuildSite\template\index.html.tpl`，其中包括以下变量：
+The upstream code update is based on the `dev` branch. You can merge the `dev` branch into your `dev` branch to get the latest code updates.
 
-|模板变量  |说明  |
-|---------|---------|
-|@{BaseUrl}   |  基础路径       |
-|@{Name} |       博客名称  |
-|@{Description} |    描述     |
-|@{blogList} |    博客列表     |
-|@{siderbar} |    侧边栏内容:分类和存档    |
+`main` is the default branch for building and publishing. Please do not merge it into your `main` branch.
 
-你可以按照自己的想法修改主页的布局和样式。
+It is recommended to use `dev` or your own branch to write blogs and customize content, and then merge it to the `main` branch to trigger automatic build.
+
+## Custom Develop
+
+After forking, you will have all the custom permissions, because all the source codes are already in your own repository.
+
+The core project is `BuildSite`, which is used to generate static files, including converting markdown files to html files.
 
 > [!NOTE]
-> 请注意标签中的`id`属性，`js`脚本将依赖于这些id标识，如果你修改了这些标识，同时要修改`js`脚本。
+> It is recommended to create your own branch for custom development content, which is convenient for subsequent merging.
 
-主页内容包括博客的搜索和分类筛选功能，其功能代码在`WebApp\js\index.js`中。
+### Development Environment
 
-关于博客列表和分类列表的自定义，你可以参考`BuildSite`项目中`HtmlBuilder.cs`文件中的`GenBlogListHtml`和`GenSiderBar`方法。
+The `BuildSite` project is a .NET project. You need to install .NET SDK 8.0.
 
-后续我们会提供更灵活的自定义方式。
+Additionally, you can install (optional):
 
-### 自定义博客展示页
+- **http-server**: To start local static content for debugging.
+- **tailwindcss**: To generate CSS style content.
+- **typescript**: To use the `tsc` command.
 
-博客页内容模板位于`src\BuildSite\template\blog.html.tpl`，其中包括以下变量：
+### Running the Project
 
-|模板变量  |说明  |
-|---------|---------|
-|@{BaseUrl}   |  基础路径       |
-|@{Title} |      页面标题  |
-|@{content} |    博客内容     |
-|@{toc} |   二级标题TOC    |
+1. **Preview the project:**
+    1. Open the terminal, execute `http-server` in the `WebApp` directory, and then open `http://127.0.0.1:8080` in your browser.
+2. **Generate static content:**
+    1. Execute `dotnet run --project ./src/BuildSite ./Content ./WebApp` in the root directory to generate the latest static content.
+    2. Alternatively, run the `build.ps1` script in the root directory.
+3. **Refresh the browser** to see the latest generated content.
 
-关于博客展示页的内容，你可以通过`WebApp/css/markdown.css`来修改样式，以及`WebApp/js/markdown.js`来定义逻辑。
+>[!TIP]
+> If you use `Tailwindcss`, you can execute `npx tailwindcss -o ./css/app.css --watch` in the `WebApp` directory.
+> If you use `Typescript`, you can execute `tsc -w` in the `WebApp` directory.
 
-### 自定义代码高亮
+### Customizing the Homepage Content
 
-本项目使用`ColorCode`来格式化markdown中的代码内容，`ColorCode`使用正则来匹配代码内容。如果你需要对代码高亮进行定义，你需要：
+The homepage content template is located at `src\BuildSite\template\index.html.tpl`. It includes the following variables:
 
-- 添加或修改正则规则，你将在`ColorCode.Core/Compilation/Languages`目录下找到相应的语言定义，如果不存在，你可以添加新的语言支持。
-- 如果是新添加的语言，需要在`ColorCode.Core/Languages.cs`中加载该语言。
+| Template Variable | Description |
+|---|---|
+| @{BaseUrl} | Base path |
+| @{Name} | Blog name |
+| @{Description} | Description |
+| @{blogList} | Blog list |
+| @{siderbar} | Sidebar content: categories and archives |
+
+You can modify the layout and style of the homepage according to your own ideas.
+
+> [!NOTE]
+> Pay attention to the `id` attributes in the tags. The `js` script relies on these `id` identifiers. If you modify these identifiers, you must also modify the `js` script.
+
+The homepage content includes the search and category filtering functions of the blog. The functional code is in `WebApp\js\index.js`.
+
+For customizing the blog list and category list, you can refer to the `GenBlogListHtml` and `GenSiderBar` methods in the `HtmlBuilder.cs` file in the `BuildSite` project.
+
+We will provide more flexible customization methods in the future.
+
+### Customizing the Blog Post Page
+
+The blog post content template is located at `src\BuildSite\template\blog.html.tpl`. It includes the following variables:
+
+| Template Variable | Description |
+|---|---|
+| @{BaseUrl} | Base path |
+| @{Title} | Page title |
+| @{content} | Blog content |
+| @{toc} | Table of contents for secondary titles |
+
+You can modify the style of the blog post page through `WebApp/css/markdown.css` and define the logic through `WebApp/js/markdown.js`.
+
+### Customizing Code Highlighting
+
+This project uses `ColorCode` to format the code content in markdown. `ColorCode` uses regular expressions to match the code content. If you need to define code highlighting, you need to:
+
+1. Add or modify regular expression rules. You can find the corresponding language definition in the `ColorCode.Core/Compilation/Languages` directory. If it does not exist, you can add new language support.
+2. If it is a newly added language, you need to load it in `ColorCode.Core/Languages.cs`.
 
 > [!IMPORTANT]
-> 如果你修改了`BuildSite`项目上中的代码，需要重新生成静态网站，才能看到最新效果。
+> If you modify the code in the `BuildSite` project, you need to regenerate the static website to see the latest.
