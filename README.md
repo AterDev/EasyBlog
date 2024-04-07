@@ -103,23 +103,27 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
 
 此外，你可以安装(可选)
 
-- tailwindcss，用来生成css样式内容
-- http-server，用来启动本地静态内容，以便调试
+- http-server，用来启动本地静态内容，以便调试。
+- tailwindcss，用来生成css样式内容。
+- typescript，以便使用`tsc`命令。
 
 ### 运行项目
 
 1. 预览项目
    1. 打开终端，在`WebApp`目录下执行`http-server`，然后在浏览器中打开`http://127.0.0.1:8080`。
 2. 生成静态内容。
-   1. 在根目录下执行`dotnet run --project ./Lib/BuildSite ./Content ./WebApp`，以生成最新的静态内容。
+   1. 在根目录下执行`dotnet run --project ./src/BuildSite ./Content ./WebApp`，以生成最新的静态内容。
    2. 或者直接运行根目录下的`build.ps1`脚本。
 3. 刷新浏览器，可看到最新生成的内容。
 
-如果你使用`tailwindcss`，可在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`。
+> [!TIP]
+> 如果你使用`Tailwindcss`，可在`WebApp`下执行`npx tailwindcss -o ./css/app.css --watch`。
+>
+> 如果你使用`Typescript`，可在`WebApp`下执行`tsc -w`。
 
 ### 自定义主页内容
 
-主页内容模板位于`Lib\BuildSite\template\index.html.tpl`，其中包括以下变量：
+主页内容模板位于`src\BuildSite\template\index.html.tpl`，其中包括以下变量：
 
 |模板变量  |说明  |
 |---------|---------|
@@ -142,7 +146,7 @@ fork之后，你将拥有所有的自定义权限，因为所有的源代码都�
 
 ### 自定义博客展示页
 
-博客页内容模板位于`Lib\BuildSite\template\blog.html.tpl`，其中包括以下变量：
+博客页内容模板位于`src\BuildSite\template\blog.html.tpl`，其中包括以下变量：
 
 |模板变量  |说明  |
 |---------|---------|

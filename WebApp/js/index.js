@@ -5,6 +5,11 @@ class Index {
     catalogs = [];
     webInfo;
     constructor() {
+        document.addEventListener('DOMContentLoaded', () => this.init());
+    }
+    init() {
+        this.getData();
+        this.addEvent();
     }
     getData() {
         fetch(BaseUrl + 'data/blogs.json')
@@ -151,8 +156,4 @@ class Index {
         return '刚刚';
     }
 }
-const index = new Index();
-document.addEventListener('DOMContentLoaded', function () {
-    index.getData();
-    index.addEvent();
-});
+new Index();

@@ -23,6 +23,12 @@ class Index {
   catalogs: Catalog[] = [];
   webInfo!: WebInfo;
   constructor() {
+    document.addEventListener('DOMContentLoaded', () => this.init());
+  }
+
+  init(){
+    this.getData();
+    this.addEvent();
   }
 
   getData(): void {
@@ -184,8 +190,4 @@ class Index {
   }
 }
 
-const index = new Index();
-document.addEventListener('DOMContentLoaded', function () {
-  index.getData();
-  index.addEvent();
-});
+new Index();
