@@ -18,6 +18,8 @@ public partial class HtmlBuilder
     public string DataPath { get; init; }
     public string BaseUrl { get; set; } = "/";
 
+    public WebInfo WebInfo { get; init; }
+
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         ReferenceHandler = ReferenceHandler.IgnoreCycles,
@@ -27,9 +29,20 @@ public partial class HtmlBuilder
 
     public HtmlBuilder(string input, string output)
     {
-        Output = Path.Combine(output);
+        Output = output;
         ContentPath = input.EndsWith(Path.DirectorySeparatorChar) ? input[0..^1] : input;
         DataPath = Path.Combine(Output, BlogConst.DataPath);
+
+        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
+        if (File.Exists(webInfoPath))
+        {
+            var content = File.ReadAllText(webInfoPath);
+            WebInfo = JsonSerializer.Deserialize<WebInfo>(content) ?? new WebInfo();
+        }
+        else
+        {
+            WebInfo = new WebInfo();
+        }
     }
 
     public void BuildWebSite()
@@ -134,7 +147,7 @@ public partial class HtmlBuilder
         // 获取git历史信息
         ProcessHelper.RunCommand("git", "fetch --unshallow", out string _);
 
-        // blogs
+        // create blogs.json
         var rootCatalog = new Catalog { Name = "Root" };
         TraverseDirectory(ContentPath, rootCatalog);
         string json = JsonSerializer.Serialize(rootCatalog, _jsonSerializerOptions);
@@ -142,6 +155,10 @@ public partial class HtmlBuilder
         string blogData = Path.Combine(DataPath, "blogs.json");
         File.WriteAllText(blogData, json, Encoding.UTF8);
         Console.WriteLine("✅ update blogs.json!");
+
+        // create sitemap.xml
+        var blogs = rootCatalog.GetAllBlogs();
+        BuildSitemap(blogs);
     }
 
     /// <summary>
@@ -151,21 +168,18 @@ public partial class HtmlBuilder
     {
         var indexPath = Path.Combine(Output, "index.html");
         var indexHtml = TemplateHelper.GetTplContent("index.html");
-        var webInfoPath = Path.Combine(DataPath, "webinfo.json");
-        var content = File.ReadAllText(webInfoPath);
-        var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
         var blogData = Path.Combine(DataPath, "blogs.json");
         var blogContent = File.ReadAllText(blogData);
         var rootCatalog = JsonSerializer.Deserialize<Catalog>(blogContent);
 
-        if (rootCatalog != null && webInfo != null)
+        if (rootCatalog != null && WebInfo != null)
         {
-            var blogHtml = GenBlogListHtml(rootCatalog, webInfo);
+            var blogHtml = GenBlogListHtml(rootCatalog, WebInfo);
             var siderBarHtml = GenSiderBar(rootCatalog);
 
-            indexHtml = indexHtml.Replace("@{Name}", webInfo.Name)
+            indexHtml = indexHtml.Replace("@{Name}", WebInfo.Name)
                 .Replace("@{BaseUrl}", BaseUrl)
-                .Replace("@{Description}", webInfo.Description)
+                .Replace("@{Description}", WebInfo.Description)
                 .Replace("@{blogList}", blogHtml)
                 .Replace("@{siderbar}", siderBarHtml);
 
@@ -223,13 +237,7 @@ public partial class HtmlBuilder
     }
     public void EnableBaseUrl()
     {
-        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
-        if (File.Exists(webInfoPath))
-        {
-            var content = File.ReadAllText(webInfoPath);
-            var webInfo = JsonSerializer.Deserialize<WebInfo>(content);
-            BaseUrl = webInfo?.BaseHref ?? "/";
-        }
+        BaseUrl = WebInfo?.BaseHref ?? "/";
     }
 
     /// <summary>
@@ -278,6 +286,33 @@ public partial class HtmlBuilder
             .Replace("@{toc}", toc)
             .Replace("@{content}", content);
         return tplContent;
+    }
+
+
+    /// <summary>
+    /// 创建sitemap.xml
+    /// </summary>
+    private void BuildSitemap(List<Blog> blogs)
+    {
+        if (!string.IsNullOrWhiteSpace(WebInfo.Domain) && blogs.Count > 0)
+        {
+            var sitemaps = new List<Sitemap>();
+            var domain = WebInfo.Domain.EndsWith('/') ? WebInfo.Domain[..^1] : WebInfo.Domain;
+            foreach (var blog in blogs)
+            {
+                var sitemap = new Sitemap
+                {
+                    Loc = domain + BuildBlogPath(blog.Path),
+                    Lastmod = blog.PublishTime.ToString("yyyy-MM-dd")
+                };
+                sitemaps.Add(sitemap);
+            }
+
+            var sitemapXml = Sitemap.GetSitemaps(sitemaps);
+            var sitemapPath = Path.Combine(Output, "sitemap.xml");
+            File.WriteAllText(sitemapPath, sitemapXml, Encoding.UTF8);
+            Console.WriteLine("✅ update sitemap.xml");
+        }
     }
 
     [GeneratedRegex(@"^# (.*)$", RegexOptions.Multiline)]

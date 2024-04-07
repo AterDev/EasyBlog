@@ -36,7 +36,8 @@
   "Name": "Niltor Blog", // 博客名称，显示在主页顶部导航
   "Description": "🗽 for freedom",// 说明，显示在主页顶部中间
   "AuthorName": "Ater", // 作者名称，显示在博客列表
-  "BaseHref": "/blazor-blog/" // 子目录
+  "BaseHref": "/blazor-blog/", // 子目录
+  "Domain": "https://aterdev.github.io" // 域名，生成sitemap使用，不生成则留空
 }
 ```
 
