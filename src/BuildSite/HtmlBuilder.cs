@@ -82,11 +82,13 @@ public partial class HtmlBuilder
         List<string> otherFiles = Directory.EnumerateFiles(ContentPath, "*", SearchOption.AllDirectories)
             .Where(f => !f.EndsWith(".md"))
             .ToList();
-        try
+
+        foreach (var file in files)
         {
-            foreach (var file in files)
+            try
             {
                 string markdown = File.ReadAllText(file);
+
                 string html = Markdown.ToHtml(markdown, pipeline);
                 string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs")).Replace(".md", ".html");
 
@@ -102,27 +104,29 @@ public partial class HtmlBuilder
 
                 File.WriteAllText(relativePath, html, Encoding.UTF8);
             }
-            Console.WriteLine("✅ generate blog html!");
-
-            foreach (var file in otherFiles)
+            catch (Exception e)
             {
-                string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs"));
-                string? dir = Path.GetDirectoryName(relativePath);
-
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir!);
-                }
-
-                File.Copy(file, relativePath, true);
+                Console.WriteLine($"❌ parse markdown error: {file}" + e.Message + e.StackTrace);
             }
-            Console.WriteLine("✅ copy blog other files!");
+
         }
-        catch (Exception e)
+        Console.WriteLine("✅ generate blog html!");
+
+        foreach (var file in otherFiles)
         {
-            Console.WriteLine("HtmlBuilder:BuildBlogs:" + e.Message);
-            throw;
+            string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs"));
+            string? dir = Path.GetDirectoryName(relativePath);
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir!);
+            }
+
+            File.Copy(file, relativePath, true);
         }
+        Console.WriteLine("✅ copy blog other files!");
+
+
     }
 
     /// <summary>
