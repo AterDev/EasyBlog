@@ -16,7 +16,7 @@ internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
 
     protected override void Write(HtmlRenderer renderer, CodeBlock obj)
     {
-        if (obj is not FencedCodeBlock fencedCodeBlock || obj.Parser is not FencedCodeBlockParser parser)
+        if (obj is not FencedCodeBlock fencedCodeBlock || obj.Parser is not FencedCodeBlockParser parser || obj is null)
         {
             _underlyingRenderer.Write(renderer, obj);
             return;
@@ -29,22 +29,32 @@ internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
             return;
         }
 
-        var code = GetCode(obj).Trim();
+        var code = GetCode(obj)?.Trim();
 
-        var formatter = new HtmlClassFormatter();
-
-        var html = formatter.GetHtmlString(code, language);
-        renderer.WriteLine(html);
+        if (code != null)
+        {
+            var formatter = new HtmlClassFormatter();
+            var html = formatter.GetHtmlString(code, language);
+            renderer.WriteLine(html);
+            return;
+        }
+        _underlyingRenderer.Write(renderer, obj);
+        return;
     }
 
-    private static string GetCode(LeafBlock obj)
+
+    private static string? GetCode(LeafBlock obj)
     {
         var str = new StringBuilder();
-        foreach (var line in obj.Lines.Lines)
+        if (obj.Lines.Count > 0)
         {
-            if (!string.IsNullOrWhiteSpace(line.Slice.ToString().Trim()))
-                str.AppendLine(line.Slice.ToString());
+            foreach (var line in obj.Lines.Lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line.Slice.ToString().Trim()))
+                    str.AppendLine(line.Slice.ToString());
+            }
+            return str.ToString();
         }
-        return str.ToString();
+        return null;
     }
 }
