@@ -1,7 +1,7 @@
 {
-  "Name": "EasyBlog",
+  "Name": "Lanwah Blog",
   "Description": "\uD83D\uDDFDto be a human",
-  "AuthorName": "NilTor",
-  "BaseHref": "/EasyBlog/",
-  "Domain": "https://aterdev.github.io/EasyBlog/"
+  "AuthorName": "lanwah",
+  "BaseHref": "/Blogs/",
+  "Domain": "https://aterdev.github.io/LanwahBlog/"
 }
