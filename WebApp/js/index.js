@@ -92,6 +92,7 @@ class Index {
     renderBlogs() {
         let blogList = document.getElementById('blogList');
         if (blogList) {
+            const pathName = window.location.pathname;
             blogList.innerHTML = '';
             this.blogs.forEach(blog => {
                 let blogDiv = document.createElement('div');
@@ -101,7 +102,7 @@ class Index {
                 let blogTitleDiv = document.createElement('div');
                 blogTitleDiv.className = 'font-bold text-xl mb-2';
                 let blogLink = document.createElement('a');
-                blogLink.href = './blogs' + blog.Path;
+                blogLink.href = pathName + 'blogs' + blog.Path;
                 blogLink.target = '_blank';
                 blogLink.className = 'block text-lg py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100';
                 blogLink.innerText = "📑 " + blog.Title;
