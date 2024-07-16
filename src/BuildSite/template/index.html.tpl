@@ -19,7 +19,7 @@
         <a href="@{BaseUrl}" class="text-2xl font-semibold hidden sm:block">@{Name}</a>
         <span class="hidden sm:block">@{Description}</span>
         <div class="flex items-center">
-        <input id="searchText" placeholder="博客标题" class="px-4 py-2 border border-gray-600 rounded-lg dark:bg-neutral-800 text-white focus:outline-none" />
+        <input id="searchText" placeholder="博客标题" class="px-4 py-2 border border-gray-600 rounded-lg dark:bg-neutral-800 text-black dark:text-white focus:outline-none" />
         <button id="searchBtn" class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
             搜索
         </button>
@@ -48,7 +48,7 @@
     <div class="container mx-auto text-center">
         <p class="text-neutral-600 dark:text-neutral-300">
         @{Name}
-        <a class="text-blue-600" target="_blank" href="https://github.com/AterDev/blazor-blog">Powered by Ater Blog</a>
+        <a class="text-blue-600" target="_blank" href="https://github.com/AterDev/EasyBlog">Powered by Ater Blog</a>
         </p>
     </div>
     </div>
