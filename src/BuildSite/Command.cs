@@ -23,14 +23,33 @@ public class Command
         LogSuccess(Language.Get("initSuccess") + "➡️" + filePath);
     }
 
+    public static void Build(string contentPath, string outputPath)
+    {
+        var webInfoPath = Path.Combine("./webinfo.json");
+        var webInfo = new WebInfo();
+        if (File.Exists(webInfoPath))
+        {
+            var json = File.ReadAllText(webInfoPath);
+            webInfo = JsonSerializer.Deserialize<WebInfo>(json);
+        }
+        else
+        {
+            LogInfo(Language.Get("notExistWebInfo"));
+        }
+        var builder = new HtmlBuilder(contentPath, outputPath, webInfo!);
+        builder.BuildWebSite();
+    }
 
+    public static void LogInfo(string msg)
+    {
+        AnsiConsole.MarkupLine($"ℹ️ {msg}");
+    }
 
-
-    private static void LogError(string msg)
+    public static void LogError(string msg)
     {
         AnsiConsole.MarkupLine($"❌ [red]{msg}[/]");
     }
-    private static void LogSuccess(string msg)
+    public static void LogSuccess(string msg)
     {
         AnsiConsole.MarkupLine($"✅ [green]{msg}[/]");
     }

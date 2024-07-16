@@ -27,11 +27,12 @@ public partial class HtmlBuilder
         WriteIndented = true
     };
 
-    public HtmlBuilder(string input, string output)
+    public HtmlBuilder(string input, string output, WebInfo webinfo)
     {
         Output = output;
         ContentPath = input.EndsWith(Path.DirectorySeparatorChar) ? input[0..^1] : input;
         DataPath = Path.Combine(Output, BlogConst.DataPath);
+        WebInfo = webinfo;
 
         var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
         if (File.Exists(webInfoPath))
@@ -47,13 +48,20 @@ public partial class HtmlBuilder
 
     public void BuildWebSite()
     {
+        ExtractWebAssets();
         BuildData();
         BuildBlogs();
         BuildIndex();
     }
 
+    /// <summary>
+    /// 解压基础资源
+    /// </summary>
     public void ExtractWebAssets()
     {
+        var stream = TemplateHelper.GetZipFileStream("web.zip");
+        // TODO:解压到输出目录
+
 
     }
 

@@ -9,39 +9,28 @@ switch (command)
 {
     case "init":
         var path = args.Skip(1).FirstOrDefault() ?? Directory.GetCurrentDirectory();
-
         Command.Init(path);
         break;
 
     case "build":
+        var contentPath = args.Skip(1).FirstOrDefault();
+        var outputPath = args.Skip(2).FirstOrDefault();
+
+        if (!string.IsNullOrWhiteSpace(contentPath) && !string.IsNullOrWhiteSpace(outputPath))
+        {
+            var builder = new HtmlBuilder(contentPath, outputPath);
+            builder.BuildWebSite();
+        }
+        else
+        {
+            Command.LogError(Language.Get("buildRequired"));
+        }
         break;
     default:
         ShowHelp();
         break;
 }
 
-
-//var environment = args.Skip(2).FirstOrDefault() ?? "Development";
-
-//if (!string.IsNullOrWhiteSpace(input) && !string.IsNullOrWhiteSpace(output))
-//{
-//    var builder = new HtmlBuilder(input, output);
-
-//    try
-//    {
-//        if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
-//        {
-//            builder.EnableBaseUrl();
-//        }
-
-//        builder.BuildWebSite();
-//    }
-//    catch (Exception e)
-//    {
-//        Console.WriteLine(e.Message + e.StackTrace);
-//        Console.WriteLine("请尝试在根目录下运行本项目");
-//    }
-//}
 static void ShowHelp()
 {
     var helpContent = """
@@ -62,10 +51,9 @@ static void ShowHelp()
 static void ShowLogo()
 {
     var logo = """
-            EasyBlog
-            The Static Web Builder!
-
+            EasyBlog : The Static Web Builder!
                —→ for freedom 🗽 ←—
+
             """;
 
     Console.WriteLine(logo);
