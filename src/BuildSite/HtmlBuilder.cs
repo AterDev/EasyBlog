@@ -52,6 +52,11 @@ public partial class HtmlBuilder
         BuildIndex();
     }
 
+    public void ExtractWebAssets()
+    {
+
+    }
+
     /// <summary>
     /// blog html file
     /// </summary>
