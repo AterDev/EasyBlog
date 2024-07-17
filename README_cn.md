@@ -137,6 +137,14 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Dotnet Setup
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+
+      - run: dotnet tool install  -g Ater.EasyBlog --version 1.0.0-beta1
+      - run: ezblog build ./Content ./_site
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
