@@ -27,6 +27,12 @@ internal class TemplateHelper
     public static Stream? GetZipFileStream(string fileName)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        return assembly.GetManifestResourceStream("BuildSite.template." + fileName);
+        var stream = assembly.GetManifestResourceStream("BuildSite.template." + fileName);
+
+        if (stream == null)
+        {
+            Console.WriteLine("  ❌ can't find tpl file:" + fileName);
+        }
+        return stream;
     }
 }

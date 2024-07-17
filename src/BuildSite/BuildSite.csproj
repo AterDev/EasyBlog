@@ -35,11 +35,13 @@
     <ItemGroup>
         <None Remove="template\blog.html.tpl" />
         <None Remove="template\index.html.tpl" />
+        <None Remove="template\web.zip" />
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Include="template\blog.html.tpl" />
         <EmbeddedResource Include="template\index.html.tpl" />
+        <EmbeddedResource Include="template\web.zip" />
     </ItemGroup>
 
 

@@ -18,8 +18,7 @@ switch (command)
 
         if (!string.IsNullOrWhiteSpace(contentPath) && !string.IsNullOrWhiteSpace(outputPath))
         {
-            var builder = new HtmlBuilder(contentPath, outputPath);
-            builder.BuildWebSite();
+            Command.Build(contentPath, outputPath);
         }
         else
         {
