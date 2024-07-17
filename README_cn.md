@@ -86,8 +86,6 @@ ezblog build .\markdown .\WebApp
 
 当你使用Github Page或使用IIS子应用部署时，需要调整`webinfo.json`中的`BaseHref`。通常是你的**项目名称**或**子目录名**。
 
-修改后提交代码，GitHub会触发Action自动构建。
-
 ### 编写博客
 
 我们假设你的md文档都在`markdown`目录下。
@@ -112,6 +110,7 @@ ezblog build .\markdown .\_site
 在仓库的根目录`.github/workflows`目录(没有则手动创建)下创建`build.yml`文件，内容如下：
 
 ```yml
+
 ```
 
 现在只需要推送代码即可，`GitHub Action`会自动构建并最终发布你的博客，发布成功后可打开您的 GitHub Page 查看。
