@@ -5,12 +5,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackAsTool>true</PackAsTool>
-        <ToolCommandName>easyblog</ToolCommandName>
+        <ToolCommandName>ezblog</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>
         <AssemblyVersion>8.0.0</AssemblyVersion>
-        <PackageId>ater.easyblog</PackageId>
-        <Version>1.0.0</Version>
-        <Description>静态博客生成器</Description>
+        <PackageId>Ater.EasyBlog</PackageId>
+        <Version>1.0.0-beta1</Version>
+        <Description>The Static Blog Site Generator!</Description>
         <Authors>NilTor</Authors>
         <Company>Atersoft</Company>
         <Copyright>Atersoft</Copyright>
@@ -20,7 +20,7 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/AterDev/easyblog.git</RepositoryUrl>
         <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-        <PackageReleaseNotes>发布命令行工具</PackageReleaseNotes>
+        <PackageReleaseNotes>Release Command Line Tool</PackageReleaseNotes>
         <PackageIcon>logo.jpg</PackageIcon>
         <ImplicitUsings>enable</ImplicitUsings>
         <AssemblyName>$(MSBuildProjectName)</AssemblyName>

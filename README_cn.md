@@ -1,13 +1,14 @@
-# Blog
+# EasyBlog
 
 📘[Englisth](./README.md)   📘[中文](./README-cn.md)
 
-本博客系统通过构建工具生成`纯静态`的博客网站，借助`GitHub Pages`，你可以在5分钟内免费拥有个人博客。 它具有以下特点
+本工具通过命令将`markdown`文档生成`纯静态`的博客网站，借助`GitHub Pages`，你可以在5分钟内免费拥有个人博客。 它具有以下特点
 
+- 提供命令行工具生成静态网站
 - 生成纯静态网站，访问速度极快
-- 使用markdown格式来编写博客内容
-- 基于git代码管理来存储你的博客
-- 使用CI工具来自动化部署你的博客站点
+- 支持markdown格式编写的内容
+- 支持搜索、分类、存档筛选
+- 自定义网站名称和说明等
 
 效果展示：[NilTor's Blog](https://blog.dusi.dev/)
 
@@ -15,23 +16,38 @@
 
 - 主页博客列表，支持搜索和分类和存档筛选
 - 自定义网站名称和说明
+- 支持文档中本地图片路径
 - 随系统变化的Light和Dark主题
 - 移动端的自适应显示
 - TOC支持
 - mermaid,nomnoml,Math的渲染支持
 - 代码高亮及复制支持
 
-## 使用Github Page部署
+## 🚀快速开始
 
-### Fork并配置GitHub Page
+目前工具已经以`dotnet tool`的形式发布。你可以很方便的安装并使用。
 
-1. 点击`Fork`按钮，并创建自己的仓库。 并取消选择 Copy the main branch only。
-2. 进入自己的GitHub仓库，点击`Actions`，启用workflows。
-3. 点击`Settings`，找到Pages配置，在Build and deployment 选项中选择`GitHub Actions`.
+### 安装工具
 
-### 配置
+首先确认你们已经安装了`dotnet sdk`8.0或以上版本，然后在命令行中安装:
 
-你可以通过根目录下的`webinfo.json`，对博客基础信息进行配置，如下所示：
+```dotnetcli
+dotnet tool install -g Ater.EasyBlog --preview
+```
+
+安装完成后，你可以使用`ezblog`命令来操作。
+
+### 使用工具
+
+我们假设，你已经有一些markdown文档，它在`markdown`目录下。
+
+现在我们使用命令:
+
+```pwsh
+ezblog init
+```
+
+初始化一个`webinfo.json`文件，用来配置你的博客基本信息，该文件在后续生成时可重复使用。该文件内容如下:
 
 ```json
 {
@@ -43,53 +59,78 @@
 }
 ```
 
-当你使用Github Page或使用IIS子应用部署时，需要调整`BaseHref`。通常是你的**项目名称**或**子目录名**。
-
 > [!IMPORTANT]
 > 注意，`BaseHref`尾部的`/`是必需的。
 >
 > 如果你配置了自定义域名，并且没有使用子目录，请将BaseHref设置为`/`。
 
+然后我们使用命令
+
+```pwsh
+ezblog build .\markdown .\WebApp
+```
+
+该命令将会把`markdown`目录下的所有markdown文件转换成html文件，并生成到`WebApp`目录下。
+
+你可以使用`http-server`命令来启动一个本地服务器，查看生成的内容。
+
+`WebApp`目录下就是静态网站需要的一切，你可以将它自由的部署到你需要的地方。
+
+## 使用Github Page部署
+
+### 配置GitHub Page
+
+1. 在Github上创建自己的仓库。
+2. 进入自己的GitHub仓库，点击`Actions`，启用workflows。
+3. 点击`Settings`，找到Pages配置，在Build and deployment 选项中选择`GitHub Actions`.
+
+当你使用Github Page或使用IIS子应用部署时，需要调整`webinfo.json`中的`BaseHref`。通常是你的**项目名称**或**子目录名**。
+
 修改后提交代码，GitHub会触发Action自动构建。
 
 ### 编写博客
 
-请使用任何你习惯的markdown编辑器编写博客,唯一的要求是将博客内容放到`Content`目录下。你可以在该目录下创建多级目录。
+我们假设你的md文档都在`markdown`目录下。
+
+请使用任何你习惯的markdown编辑器编写博客，你可以在`markdown`目录下创建多级目录，以对md文档进行分类。
+
+### 生成静态内容
+
+使用build命令，如：
+
+```pwsh
+ezblog build .\markdown .\_site
+```
+
+> [!NOTE]
+> `.\markdown`是你存放md文件的目录，可根据实际情况自由修改。`.\_site`是生成后的静态网站目录。
 
 ### 发布博客
 
-你只需要正常提交代码即可，github action会自动构建并最终发布你的博客，发布成功后可打开您的 GitHub Page 查看。
+使用`GitHub Action`来自动化部署你的博客站点。
+
+在仓库的根目录`.github/workflows`目录(没有则手动创建)下创建`build.yml`文件，内容如下：
+
+```yml
+```
+
+现在只需要推送代码即可，`GitHub Action`会自动构建并最终发布你的博客，发布成功后可打开您的 GitHub Page 查看。
 
 ## 部署到其他服务
 
 如果你不使用Github Page，那么你也可以轻松的部署到其他服务。核心的步骤只需要两步。
 
-### 生成静态内容
+### 生成静态网站
 
-`BuildSite`项目是用来将markdown转换成html的，请在根目录执行:
+我们假设你的文档都位于`markdown`目录下。
 
-```pwsh
- dotnet run --project .\src\BuildSite\ .\Content .\WebApp Production
-```
+先使用`ezblog init`命令生成`webinfo.json`配置文件，并根据实际需求修改。
 
-其中`.\Content`是你的markdown存储目录，`.\WebApp`是生成的静态站点目录。
+然后执行`ezblog build ./markdown ./wwwroot`命令。
 
 ### 上传到你的服务器
 
-将`WebApp`中的所有文件复制到你的服务器即可。
-
-> [!TIP]
-> 根目录下的`publishToLocal.ps1`脚本可以自动完成构建和生成的操作，最终内容将在根目录下`WebApp`目录中。
->
-> 如果你使用自动化部署，可参考.github/workflows中的脚本。
-
-## 更新
-
-上游代码的更新以`dev`分支为准，你可以将`dev`分支合并到你的`dev`分支，以获取最新的代码更新。
-
-`main`作为默认的构建发布的分支，请不要合并到你的`main`分支。
-
-建议您使用`dev`或其他自己的分支来编写博客和自定义内容，然后再合并到`main`分支以触发自动构建。
+将`wwwroot`中的所有文件复制到你的服务器即可。
 
 ## 二次开发
 
