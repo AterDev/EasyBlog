@@ -110,7 +110,41 @@ ezblog build .\markdown .\_site
 在仓库的根目录`.github/workflows`目录(没有则手动创建)下创建`build.yml`文件，内容如下：
 
 ```yml
+name: Deploy static content to Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site/'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 ```
 
 现在只需要推送代码即可，`GitHub Action`会自动构建并最终发布你的博客，发布成功后可打开您的 GitHub Page 查看。

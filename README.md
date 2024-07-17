@@ -107,7 +107,41 @@ Use GitHub Actions to automate the deployment of your blog site.
 Create a `build.yml` file in the root directory of the repository, under the `.github/workflows` directory (if it doesn't exist, create it manually). The content should be as follows:
 
 ```yml
- 
+ name: Deploy static content to Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site/'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 ```
 
 Now you only need to push the code, and GitHub Action will automatically build and finally publish your blog. After the successful publishing, you can open your GitHub Page to view it.
