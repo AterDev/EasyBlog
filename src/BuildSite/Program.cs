@@ -1,24 +1,59 @@
 ﻿using BuildSite;
+using Spectre.Console;
 
 
-var input = args.FirstOrDefault() ?? "./";
-var output = args.Skip(1).FirstOrDefault() ?? "./_site";
-var environment = args.Skip(2).FirstOrDefault() ?? "Development";
+ShowLogo();
+string? command = args.FirstOrDefault();
 
-
-var builder = new HtmlBuilder(input, output);
-
-try
+switch (command)
 {
-    if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
-    {
-        builder.EnableBaseUrl();
-    }
+    case "init":
+        var path = args.Skip(1).FirstOrDefault() ?? Directory.GetCurrentDirectory();
+        Command.Init(path);
+        break;
 
-    builder.BuildWebSite();
+    case "build":
+        var contentPath = args.Skip(1).FirstOrDefault();
+        var outputPath = args.Skip(2).FirstOrDefault();
+
+        if (!string.IsNullOrWhiteSpace(contentPath) && !string.IsNullOrWhiteSpace(outputPath))
+        {
+            Command.Build(contentPath, outputPath);
+        }
+        else
+        {
+            Command.LogError(Language.Get("buildRequired"));
+        }
+        break;
+    default:
+        ShowHelp();
+        break;
 }
-catch (Exception e)
+
+static void ShowHelp()
 {
-    Console.WriteLine(e.Message + e.StackTrace);
-    Console.WriteLine("请尝试在根目录下运行本项目");
+    var helpContent = """
+
+    {0}:
+    easyblog init [path]
+        {1}
+
+    easyblog build [contentPath] [outputPath]
+        {2}
+    """;
+    AnsiConsole.Write(helpContent,
+        Language.Get("Command"),
+        Language.Get("init"),
+        Language.Get("build")
+        );
+}
+static void ShowLogo()
+{
+    var logo = """
+            EasyBlog : The Static Web Builder!
+               —→ for freedom 🗽 ←—
+
+            """;
+
+    Console.WriteLine(logo);
 }

@@ -1,31 +1,72 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>ezblog</ToolCommandName>
+        <PackageOutputPath>./nupkg</PackageOutputPath>
+        <AssemblyVersion>8.0.0</AssemblyVersion>
+        <PackageId>Ater.EasyBlog</PackageId>
+        <Version>1.0.0-beta1</Version>
+        <Description>The Static Blog Site Generator!</Description>
+        <Authors>NilTor</Authors>
+        <Company>Atersoft</Company>
+        <Copyright>Atersoft</Copyright>
+        <SatelliteResourceLanguages>en,zh-cn</SatelliteResourceLanguages>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/AterDev/easyblog</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/AterDev/easyblog.git</RepositoryUrl>
+        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+        <PackageReleaseNotes>Release Command Line Tool</PackageReleaseNotes>
+        <PackageIcon>logo.jpg</PackageIcon>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>ater;cli;code generate;angular;webapi;asp.net core</PackageTags>
+        <Nullable>enable</Nullable>
+        <Title>Ater.Dry</Title>
+        <SatelliteResourceLanguages>None</SatelliteResourceLanguages>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <ItemGroup>
+        <None Remove="template\blog.html.tpl" />
+        <None Remove="template\index.html.tpl" />
+        <None Remove="template\web.zip" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="template\blog.html.tpl" />
-    <None Remove="template\index.html.tpl" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="template\blog.html.tpl" />
-    <EmbeddedResource Include="template\index.html.tpl" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="template\blog.html.tpl" />
+        <EmbeddedResource Include="template\index.html.tpl" />
+        <EmbeddedResource Include="template\web.zip" />
+    </ItemGroup>
 
 
-	<ItemGroup>
-		<PackageReference Include="Markdig" Version="0.36.2" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Markdig" Version="0.36.2" />
+        <PackageReference Include="Spectre.Console" Version="0.49.1" />
+        <PackageReference Include="Spectre.Console.Cli" Version="0.49.1" />
+    </ItemGroup>
 
 
-	<ItemGroup>
-	  <ProjectReference Include="..\ColorCode.HTML\ColorCode.HTML.csproj" />
-	  <ProjectReference Include="..\Models\Models.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\ColorCode.HTML\ColorCode.HTML.csproj" />
+        <ProjectReference Include="..\Models\Models.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <None Update="logo.jpg">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 
 </Project>

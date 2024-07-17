@@ -22,4 +22,17 @@ internal class TemplateHelper
         using StreamReader reader = new(stream);
         return reader.ReadToEnd();
     }
+
+
+    public static Stream? GetZipFileStream(string fileName)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var stream = assembly.GetManifestResourceStream("BuildSite.template." + fileName);
+
+        if (stream == null)
+        {
+            Console.WriteLine("  ❌ can't find tpl file:" + fileName);
+        }
+        return stream;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO.Compression;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -27,29 +28,33 @@ public partial class HtmlBuilder
         WriteIndented = true
     };
 
-    public HtmlBuilder(string input, string output)
+    public HtmlBuilder(string input, string output, WebInfo webinfo)
     {
         Output = output;
         ContentPath = input.EndsWith(Path.DirectorySeparatorChar) ? input[0..^1] : input;
         DataPath = Path.Combine(Output, BlogConst.DataPath);
-
-        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
-        if (File.Exists(webInfoPath))
-        {
-            var content = File.ReadAllText(webInfoPath);
-            WebInfo = JsonSerializer.Deserialize<WebInfo>(content) ?? new WebInfo();
-        }
-        else
-        {
-            WebInfo = new WebInfo();
-        }
+        WebInfo = webinfo;
     }
 
     public void BuildWebSite()
     {
+        ExtractWebAssets();
         BuildData();
         BuildBlogs();
         BuildIndex();
+    }
+
+    /// <summary>
+    /// 解压基础资源
+    /// </summary>
+    public void ExtractWebAssets()
+    {
+        var stream = TemplateHelper.GetZipFileStream("web.zip");
+        // TODO:解压到输出目录
+        using (ZipArchive archive = new ZipArchive(stream, ZipArchiveMode.Read))
+        {
+            archive.ExtractToDirectory(Output, true);
+        }
     }
 
     /// <summary>
@@ -112,8 +117,12 @@ public partial class HtmlBuilder
         }
         Console.WriteLine("✅ generate blog html!");
 
+        string[] extensions = [".jpg", ".png", ".jpeg", ".gif", ".svg"];
         foreach (var file in otherFiles)
         {
+            var extension = Path.GetExtension(file);
+            if (!extensions.Contains(extension)) { continue; }
+
             string relativePath = file.Replace(ContentPath, Path.Combine(Output, "blogs"));
             string? dir = Path.GetDirectoryName(relativePath);
 
@@ -125,8 +134,6 @@ public partial class HtmlBuilder
             File.Copy(file, relativePath, true);
         }
         Console.WriteLine("✅ copy blog other files!");
-
-
     }
 
     /// <summary>
@@ -139,14 +146,8 @@ public partial class HtmlBuilder
             Directory.CreateDirectory(DataPath);
         }
 
-        // copy webinfo.json
-        var webInfoPath = Path.Combine(Environment.CurrentDirectory, "webinfo.json");
-        if (File.Exists(webInfoPath))
-        {
-            File.Copy(webInfoPath, Path.Combine(DataPath, "webinfo.json"), true);
-
-            Console.WriteLine("✅ copy webinfo.json!");
-        }
+        var webInfoContent = JsonSerializer.Serialize(WebInfo, _jsonSerializerOptions);
+        File.WriteAllText(Path.Combine(DataPath, "webinfo.json"), webInfoContent, Encoding.UTF8);
 
         // 获取git历史信息
         ProcessHelper.RunCommand("git", "fetch --unshallow", out string _);

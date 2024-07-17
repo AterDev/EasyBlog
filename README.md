@@ -2,12 +2,13 @@
 
 📘[Englisth](./README.md)   📘[中文](./README_cn.md)
 
-This blog system generates a **pure static** blog website through build tools. With the help of **GitHub Pages**, you can have a personal blog for free in 5 minutes. It has the following features:
+This tool generates a `pure static` blog website from a `markdown` document through commands. With the help of `GitHub Pages`, you can have a personal blog for free in 5 minutes.It has the following characteristics
 
-- Generate pure static websites for extremely fast access speed
-- Use markdown format to write blog content
-- Use git code management to store your blog
-- Use CI tools to automatically deploy your blog site
+- Provide command line tools to generate static websites
+- Generate a pure static website with extremely fast access speed
+- Support for content written in markdown format
+- Support search, classification, archiving and screening
+- Customize website name and description, etc
 
 **Demo:** NilTor's Blog: [https://blog.dusi.dev/](https://blog.dusi.dev/)
 
@@ -21,75 +22,143 @@ This blog system generates a **pure static** blog website through build tools. W
 - mermaid, nomnoml, Math rendering support
 - Code highlighting and copy support
 
+## 🚀Quick Start
+
+Currently, the tool has been released in the form of 'dotnet tool'.You can easily install and use it.
+
+### Install Tool
+
+First, confirm that you have installed the `dotnet sdk` version 8.0 or higher, and then proceed to install it on the command line
+
+```dotnetcli
+dotnet tool install -g Ater.EasyBlog --preview
+```
+
+After installation, you can use the `ezblog` command to operate.
+
+### Using tools
+
+We assume that you already have some markdown documents in the `markdown` directory.
+
+Now we use the command:
+
+```pwsh
+ezblog init
+```
+
+Initialize a 'webinfo.json' file to configure the basic information of your blog. This file can be reused during subsequent generation.The document reads as follows:
+
+```json
+{
+  "Name": "Niltor Blog", // blog name, displayed at the top of the homepage navigation
+  "Description": "🗽 for freedom",// description, displayed in the middle of the top of the homepage
+  "AuthorName": "Ater", // Author name, displayed in the blog list
+  "BaseHref": "/blazor-blog/", // sub directory
+  "Domain": "https://aterdev.github.io" // Domain name, used for generating a sitemap. Leave it blank if not needed
+}
+```
+
+> [!IMPORTANT]
+Please note that the trailing `/` in `BaseHref` is mandatory.
+>
+If you have configured a custom domain name and are not using a subdirectory, set BaseHref to '/'.
+
+Then we use the command
+
+```pwsh
+ezblog build .\markdown .\WebApp
+```
+
+This command will convert all markdown files in the 'markdown' directory into html files and generate them into the 'WebApp' directory.
+
+You can use the `http-server` command to start a local server and view the generated content.
+
+The 'WebApp' directory contains everything you need for a static website, and you can freely deploy it wherever you need.
+
 ## Deploy with Github Page
 
 ### Fork and configure GitHub Page
 
-1. Click the **Fork** button and create your own repository. Uncheck **Copy the main branch only**.
+1. Create a new respository.
 2. Go to your own GitHub repository, click **Actions**, and enable workflows.
 3. Click **Settings**, find Pages configuration, and select **GitHub Actions** in Build and deployment.
 
-### Configuration
+### Writing a blog
 
-You can configure the basic information of the blog through `webinfo.json` in the root directory, as shown below:
+We assume that your md documents are all in the 'markdown' directory.
 
-```json
-{
-  "Name": "Niltor Blog", // Blog name, displayed at the top navigation of the homepage
-  "Description": " for freedom",// Description, displayed in the middle of the top of the homepage
-  "AuthorName": "Ater", // Author name, displayed in the blog list
-  "BaseHref": "/blazor-blog/", // Subdirectory
-  "Domain": "https://aterdev.github.io" // Domain name, used for generating sitemap, leave blank if not generated
-}
-```
-
-When you use Github Page or deploy using IIS sub-application, you need to adjust `BaseHref`. It is usually your **project name** or **subdirectory name**.
-
-> [!IMPORTANT]
-> Note that the `/` at the end of `BaseHref` is required.
->
-> If you have configured a custom domain name and are not using a subdirectory, set BaseHref to `/`.
-
-After modification, commit the code, GitHub will trigger Action to automatically build.
-
-### Write a blog
-
-Please use any markdown editor you are used to write a blog, the only requirement is to put the blog content in the `Content` directory. You can create multi-level directories under this directory.
-
-### Publish a blog
-
-You only need to commit the code normally, github action will automatically build and finally publish your blog. After the publication is successful, you can open your GitHub Page to view.
-
-## Deploy to other services
-
-If you don't use Github Page, you can also easily deploy it to other services. The core steps only require two steps.
+Please use any markdown editor you are used to writing blogs. You can create multiple levels of directories under the 'markdown' directory to categorize md documents.
 
 ### Generate static content
 
-The `BuildSite` project is used to convert markdown to html. Please execute in the root directory:
+Use the build command, such as:
 
 ```pwsh
- dotnet run --project .\src\BuildSite\ .\Content .\WebApp Production
+ezblog build .\markdown .\_site
 ```
 
-Where `.\Content` is your markdown storage directory and `.\WebApp` is the generated static site directory.
+> [!NOTE]
+> `.\markdown` is the directory where you store md files, and you can freely modify it according to your actual situation. `.\_site` is the generated static website directory.
+
+### Publish blog
+
+Use GitHub Actions to automate the deployment of your blog site.
+
+Create a `build.yml` file in the root directory of the repository, under the `.github/workflows` directory (if it doesn't exist, create it manually). The content should be as follows:
+
+```yml
+ name: Deploy static content to Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site/'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+Now you only need to push the code, and GitHub Action will automatically build and finally publish your blog. After the successful publishing, you can open your GitHub Page to view it.
+
+## Deploy to other services
+
+If you don't use Github Page, you can easily deploy to other services as well. The core steps only require two steps.
+
+### Generate static website
+
+We assume that your documents are all located in the 'markdown' directory.
+First, use the 'ezblog init' command to generate the 'webinfo. json' configuration file, and modify it according to actual needs.
+Then execute 'ezblog build'/ The markdown./wwroot ` command.
 
 ### Upload to your server
 
-Copy all files in `WebApp` to your server.
-
-> [!TIP]
-> The `publishToLocal.ps1` script in the root directory can automatically complete the build and generate operations. The final content will be in the `WebApp` directory in the root directory.
->
-> If you use automated deployment, please refer to the scripts in .github/workflows.
-
-## Update
-
-The upstream code update is based on the `dev` branch. You can merge the `dev` branch into your `dev` branch to get the latest code updates.
-
-`main` is the default branch for building and publishing. Please do not merge it into your `main` branch.
-
-It is recommended to use `dev` or your own branch to write blogs and customize content, and then merge it to the `main` branch to trigger automatic build.
+Copy all files from 'wwwroot' to your server.
 
 ## Custom Develop
 
