@@ -2,6 +2,6 @@
   "Name": "Ater Blog",
   "Description": "My Blog - Powered by Ater Blog",
   "AuthorName": "Ater",
-  "BaseHref": "/",
+  "BaseHref": "/EasyBlog/",
   "Domain": null
 }

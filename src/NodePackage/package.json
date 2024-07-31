@@ -1,0 +1,11 @@
+{
+  "name": "ater.ezblog",
+  "version": "0.1.0",
+  "description": "Generates a pure static blog website from a markdown document through commands",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NilTor",
+  "license": "MIT"
+}
