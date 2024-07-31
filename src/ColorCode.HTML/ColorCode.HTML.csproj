@@ -1,8 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <RootNamespace>ColorCode</RootNamespace>
-        <AssemblyName>ColorCode.HTML</AssemblyName>
         <Title>ColorCode.HTML</Title>
         <Description>Contains the HtmlFormatter, and the HtmlClassFormatter, for rendering Html from the Colorized Code.</Description>
         <PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting HTML SyntaxToHTML HTMLFormatting Formatting</PackageTags>

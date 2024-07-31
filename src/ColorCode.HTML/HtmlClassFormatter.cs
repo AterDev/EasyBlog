@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using ColorCode.Common;
-using ColorCode.Parsing;
-using ColorCode.Styling;
+using ColorCode.Core;
+using ColorCode.Core.Common;
+using ColorCode.Core.Parsing;
+using ColorCode.Core.Styling;
+using ColorCode.HTML.Common;
 
-namespace ColorCode;
+namespace ColorCode.HTML;
 
 /// <summary>
 /// Creates a <see cref="HtmlClassFormatter"/>, for creating HTML to display Syntax Highlighted code.

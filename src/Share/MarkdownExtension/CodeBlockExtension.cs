@@ -2,7 +2,7 @@
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 
-namespace BuildSite.MarkdownExtension;
+namespace Share.MarkdownExtension;
 internal class CodeBlockExtension : IMarkdownExtension
 {
     public void Setup(MarkdownPipelineBuilder pipeline)

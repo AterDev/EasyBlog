@@ -1,16 +1,13 @@
 ﻿using System.IO.Compression;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
-using BuildSite.MarkdownExtension;
 using Markdig;
+using Share.MarkdownExtension;
 
-using Models;
-
-namespace BuildSite;
+namespace Share;
 
 public partial class HtmlBuilder
 {
@@ -39,23 +36,33 @@ public partial class HtmlBuilder
     public void BuildWebSite()
     {
         EnableBaseUrl();
-        ExtractWebAssets();
-        BuildData();
-        BuildBlogs();
-        BuildIndex();
+        if (ExtractWebAssets())
+        {
+            BuildData();
+            BuildBlogs();
+            BuildIndex();
+        }
+        else
+        {
+            Command.LogError("缺少基础模板文件!");
+        }
     }
 
     /// <summary>
     /// 解压基础资源
     /// </summary>
-    public void ExtractWebAssets()
+    public bool ExtractWebAssets()
     {
         var stream = TemplateHelper.GetZipFileStream("web.zip");
-        // TODO:解压到输出目录
+        if (stream == null)
+        {
+            return false;
+        }
         using (ZipArchive archive = new ZipArchive(stream, ZipArchiveMode.Read))
         {
             archive.ExtractToDirectory(Output, true);
         }
+        return true;
     }
 
     /// <summary>
@@ -359,7 +366,11 @@ public partial class HtmlBuilder
     private string GenBlogListHtml(Catalog rootCatalog, WebInfo webInfo)
     {
         var sb = new StringBuilder();
-        if (rootCatalog == null) return string.Empty;
+        if (rootCatalog == null)
+        {
+            return string.Empty;
+        }
+
         var blogs = rootCatalog.GetAllBlogs().OrderByDescending(b => b.PublishTime).ToList() ?? [];
 
         foreach (var blog in blogs)

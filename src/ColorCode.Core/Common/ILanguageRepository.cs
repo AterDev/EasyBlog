@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace ColorCode.Common;
+namespace ColorCode.Core.Common;
 
 public interface ILanguageRepository
 {

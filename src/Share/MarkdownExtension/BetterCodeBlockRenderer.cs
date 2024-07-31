@@ -1,11 +1,10 @@
 ﻿using System.Text;
-using ColorCode;
 using Markdig.Parsers;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 
-namespace BuildSite.MarkdownExtension;
+namespace Share.MarkdownExtension;
 internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
 {
     private readonly CodeBlockRenderer _underlyingRenderer;
@@ -51,7 +50,9 @@ internal class BetterCodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
             foreach (var line in obj.Lines.Lines)
             {
                 if (!string.IsNullOrWhiteSpace(line.Slice.ToString().Trim()))
+                {
                     str.AppendLine(line.Slice.ToString());
+                }
             }
             return str.ToString();
         }

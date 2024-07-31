@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<RootNamespace>ColorCode</RootNamespace>
-		<AssemblyName>ColorCode.Core</AssemblyName>
-		<Title>ColorCode-Universal</Title>
-		<Description>The Core Library, containing the Parser, and the classes to create your own formatter.</Description>
-		<PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting</PackageTags>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Title>ColorCode-Universal</Title>
+        <Description>The Core Library, containing the Parser, and the classes to create your own formatter.</Description>
+        <PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting</PackageTags>
+    </PropertyGroup>
 
 </Project>

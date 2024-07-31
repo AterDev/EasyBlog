@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using ColorCode.Common;
+using ColorCode.Core.Common;
 
-namespace ColorCode.Compilation;
+namespace ColorCode.Core.Compilation;
 
 public class LanguageCompiler : ILanguageCompiler
 {

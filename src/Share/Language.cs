@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace BuildSite;
+namespace Share;
 public class Language
 {
     public static Dictionary<string, string> CN { get; set; } = new Dictionary<string, string>

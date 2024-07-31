@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace BuildSite;
+namespace Share;
 internal class TemplateHelper
 {
     /// <summary>
@@ -10,7 +10,7 @@ internal class TemplateHelper
     /// <returns></returns>
     public static string GetTplContent(string tplName)
     {
-        tplName = "BuildSite.template." + tplName + ".tpl";
+        tplName = "Share.template." + tplName + ".tpl";
         // 读取模板文件
         Assembly assembly = Assembly.GetExecutingAssembly();
         using Stream? stream = assembly.GetManifestResourceStream(tplName);
@@ -27,7 +27,7 @@ internal class TemplateHelper
     public static Stream? GetZipFileStream(string fileName)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        var stream = assembly.GetManifestResourceStream("BuildSite.template." + fileName);
+        var stream = assembly.GetManifestResourceStream("Share.template." + fileName);
 
         if (stream == null)
         {

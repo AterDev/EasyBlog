@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ColorCode.Common;
+using ColorCode.Core.Common;
 
-namespace ColorCode.Compilation.Languages;
+namespace ColorCode.Core.Compilation.Languages;
 public class Yml : ILanguage
 {
     public string Id

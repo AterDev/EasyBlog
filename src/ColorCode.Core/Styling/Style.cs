@@ -2,9 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using ColorCode.Common;
 
-namespace ColorCode.Styling;
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using ColorCode.Core.Common;
+
+namespace ColorCode.Core.Styling;
 
 /// <summary>
 /// Defines the styling for a given scope.
@@ -59,10 +64,10 @@ public class Style
     public bool Bold { get; set; }
 
     /// <summary>
-    /// Returns a <see cref="System.String"/> that represents this instance.
+    /// Returns a <see cref="string"/> that represents this instance.
     /// </summary>
     /// <returns>
-    /// A <see cref="System.String"/> that represents this instance.
+    /// A <see cref="string"/> that represents this instance.
     /// </returns>
     /// <remarks>
     /// Returns the scope name if specified, or String.Empty otherwise.

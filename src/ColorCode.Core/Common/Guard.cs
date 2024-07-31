@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ColorCode.Common;
+namespace ColorCode.Core.Common;
 
 public static class Guard
 {

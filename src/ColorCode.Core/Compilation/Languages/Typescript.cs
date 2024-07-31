@@ -3,9 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
-using ColorCode.Common;
+using ColorCode.Core;
+using ColorCode.Core.Common;
 
-namespace ColorCode.Compilation.Languages;
+namespace ColorCode.Core.Compilation.Languages;
 
 public class Typescript : ILanguage
 {

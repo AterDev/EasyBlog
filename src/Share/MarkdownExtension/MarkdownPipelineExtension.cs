@@ -1,6 +1,6 @@
 ﻿using Markdig;
 
-namespace BuildSite.MarkdownExtension;
+namespace Share.MarkdownExtension;
 public static class MarkdownPipelineExtension
 {
     public static MarkdownPipelineBuilder UseBetterCodeBlock(this MarkdownPipelineBuilder pipeline)

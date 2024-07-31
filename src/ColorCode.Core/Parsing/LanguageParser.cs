@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ColorCode.Common;
-using ColorCode.Compilation;
+using ColorCode.Core.Common;
+using ColorCode.Core.Compilation;
 
-namespace ColorCode.Parsing;
+namespace ColorCode.Core.Parsing;
 
 public class LanguageParser : ILanguageParser
 {
@@ -96,7 +96,7 @@ public class LanguageParser : ILanguageParser
                                                ref Scope currentScope,
                                                ICollection<Scope> capturedStyleTree)
     {
-        if (scope.Index >= currentScope.Index && (scope.Index + scope.Length <= currentScope.Index + currentScope.Length))
+        if (scope.Index >= currentScope.Index && scope.Index + scope.Length <= currentScope.Index + currentScope.Length)
         {
             currentScope.AddChild(scope);
             currentScope = scope;
@@ -125,7 +125,7 @@ public class LanguageParser : ILanguageParser
             if (regexGroup.Length > 0 && i < compiledLanguage.Captures.Count)
             {  //note: i can be >= Captures.Count due to named groups; these do capture a group but always get added after all non-named groups (which is why we do not count them in numberOfCaptures)
                 string styleName = compiledLanguage.Captures[i];
-                if (!String.IsNullOrEmpty(styleName))
+                if (!string.IsNullOrEmpty(styleName))
                 {
                     foreach (Capture regexCapture in regexGroup.Captures)
                         AppendCapturedStylesForRegexCapture(regexCapture, currentIndex, styleName, capturedStyles);

@@ -1,8 +1,4 @@
-﻿using System.Text.Json;
-using Models;
-using Spectre.Console;
-
-namespace BuildSite;
+﻿namespace Share;
 public class Command
 {
     public static void Init(string path)

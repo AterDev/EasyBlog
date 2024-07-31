@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ColorCode.Parsing;
+namespace ColorCode.Core.Parsing;
 
 public interface ILanguageParser
 {

@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using ColorCode.Common;
+using ColorCode.Core.Common;
 
-namespace ColorCode.Parsing;
+namespace ColorCode.Core.Parsing;
 
 public class Scope
 {

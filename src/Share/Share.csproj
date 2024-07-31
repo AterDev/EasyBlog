@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="template\blog.html.tpl" />
+        <None Remove="template\index.html.tpl" />
+        <None Remove="template\web.zip" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="template\blog.html.tpl" />
+        <EmbeddedResource Include="template\index.html.tpl" />
+        <EmbeddedResource Include="template\web.zip" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Markdig" Version="0.36.2" />
+        <PackageReference Include="Spectre.Console" Version="0.49.1" />
+        <PackageReference Include="Spectre.Console.Cli" Version="0.49.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ColorCode.HTML\ColorCode.HTML.csproj" />
+        <ProjectReference Include="..\Models\Models.csproj" />
+    </ItemGroup>
+
+</Project>

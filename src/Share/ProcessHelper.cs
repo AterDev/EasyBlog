@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace BuildSite;
+namespace Share;
 /// <summary>
 /// 调用帮助类
 /// </summary>

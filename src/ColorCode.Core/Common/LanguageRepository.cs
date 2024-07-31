@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace ColorCode.Common;
+namespace ColorCode.Core.Common;
 
 public class LanguageRepository : ILanguageRepository
 {
@@ -38,8 +38,8 @@ public class LanguageRepository : ILanguageRepository
             // If we have a matching name for the language then use it
             // otherwise check if any languages have that string as an
             // alias. For example: "js" is an alias for Javascript.
-            language = loadedLanguages.FirstOrDefault(x => (x.Key.ToLower() == languageId.ToLower()) ||
-                                                           (x.Value.HasAlias(languageId))).Value;
+            language = loadedLanguages.FirstOrDefault(x => x.Key.ToLower() == languageId.ToLower() ||
+                                                           x.Value.HasAlias(languageId)).Value;
         }
         finally
         {

@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 import dotnet from 'node-api-dotnet';
 import { Command } from "commander";
-import "./bin/BuildSite.js";
+import "./bin/Share.js";
+import './bin/Models.js';
+import './bin/Spectre.Console.js';
+import './bin/ColorCode.HTML.js';
+import './bin/ColorCode.Core.js';
 
-
-const Cmd = dotnet.BuildSite.Command;
+const Cmd = dotnet.Share.Command;
 
 const program = new Command();
 
@@ -22,7 +25,7 @@ program.command('init')
     });
 
 
-program.command('build <source> <output>')
+program.command('build')
     .description('生成静态博客站点')
     .argument('<source>', 'markdown文件目录')
     .argument('<output>', '站点输出目录')
