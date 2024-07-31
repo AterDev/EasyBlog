@@ -139,7 +139,7 @@ jobs:
         with:
           dotnet-version: 8.x
 
-      - run: dotnet tool install  -g Ater.EasyBlog --version 1.0.0-beta1
+      - run: dotnet tool install  -g Ater.EasyBlog --version 1.0.0
       - run: ezblog build ./Content ./_site
       
       - name: Upload artifact
