@@ -2,6 +2,6 @@
   "Name": "EasyBlog",
   "Description": "\uD83D\uDDFDto be a human",
   "AuthorName": "NilTor",
-  "BaseHref": "/",
+  "BaseHref": "/EasyBlog/",
   "Domain": "https://aterdev.github.io/EasyBlog/"
 }

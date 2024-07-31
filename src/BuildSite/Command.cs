@@ -36,6 +36,7 @@ public class Command
         {
             LogInfo(Language.Get("notExistWebInfo"));
         }
+
         var builder = new HtmlBuilder(contentPath, outputPath, webInfo!);
         builder.BuildWebSite();
     }

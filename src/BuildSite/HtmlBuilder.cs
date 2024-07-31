@@ -38,6 +38,7 @@ public partial class HtmlBuilder
 
     public void BuildWebSite()
     {
+        EnableBaseUrl();
         ExtractWebAssets();
         BuildData();
         BuildBlogs();
