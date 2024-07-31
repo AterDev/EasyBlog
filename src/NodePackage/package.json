@@ -17,6 +17,7 @@
   "readme": "README.md",
   "author": "NilTor",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "commander": "^12.1.0",
     "node-api-dotnet": "^0.7.34"

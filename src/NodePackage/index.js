@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 import dotnet from 'node-api-dotnet';
 import { Command } from "commander";
+import "./bin/BuildSite.js";
 
+
+const Cmd = dotnet.BuildSite.Command;
 
 const program = new Command();
 
@@ -9,9 +12,13 @@ program.name('ezblog')
     .description('Generates a pure static blog website from a markdown document');
 
 program.command('init')
-    .description('')
-    .action(() => {
-        console.log('init');
+    .description('初始化webinfo.json配置文件')
+    .argument('[path]', '目录')
+    .action((path) => {
+        if (path == null) {
+            path = ''
+        }
+        Cmd.Init(path);
     });
 
 
@@ -20,7 +27,7 @@ program.command('build <source> <output>')
     .argument('<source>', 'markdown文件目录')
     .argument('<output>', '站点输出目录')
     .action((source, output) => {
-
+        Cmd.Build(source, output);
     });
 
 program
