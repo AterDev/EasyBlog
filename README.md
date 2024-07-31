@@ -107,7 +107,7 @@ Use GitHub Actions to automate the deployment of your blog site.
 Create a `build.yml` file in the root directory of the repository, under the `.github/workflows` directory (if it doesn't exist, create it manually). The content should be as follows:
 
 ```yml
- name: Deploy static content to Pages
+name: Deploy static content to Pages
 on:
   push:
     branches: ["main"]
@@ -134,6 +134,14 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Dotnet Setup
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+
+      - run: dotnet tool install  -g Ater.EasyBlog --version 1.0.0-beta1
+      - run: ezblog build ./Content ./_site
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
