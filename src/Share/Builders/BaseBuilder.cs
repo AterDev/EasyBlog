@@ -171,15 +171,18 @@ public partial class BaseBuilder
 
             foreach (Match match in matches)
             {
-                string headingText = match.Groups[1].Value;
+                string headingText = match.Groups[1].Value.Trim();
                 string headingId = NormalizeGitHub(headingText);
 
                 // 去除表情符号
                 headingId = Regex.Replace(headingId, @"[\uD800-\uDBFF][\uDC00-\uDFFF]", "");
 
+                var encodedHeadingId = System.Net.WebUtility.HtmlEncode(headingId);
+                var encodedHeadingText = System.Net.WebUtility.HtmlEncode(headingText);
+
                 tocBuilder.AppendLine($"""
                     <li>
-                      <a href="javascript:void(0);" onclick="window.location.href=window.location.href.split('#')[0]+'#{headingId}'">{headingText}</a>
+                      <a href="#{encodedHeadingId}">{encodedHeadingText}</a>
                     </li>
                     """);
             }

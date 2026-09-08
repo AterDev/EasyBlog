@@ -8,6 +8,14 @@ This small docs tree keeps the homepage Docs section populated while the product
 
 ![Architecture](assets/architecture.svg?version=1#diagram)
 
+## Architecture details
+
+This section gives the documentation page a second navigable chapter.
+
+## Release notes
+
+The second chapter is used to verify TOC selection state.
+
 ```mermaid
 flowchart LR
     Docs[Doc detail] --> Chart[Mermaid chart]

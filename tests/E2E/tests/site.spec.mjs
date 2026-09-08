@@ -228,6 +228,31 @@ test.describe('generated EasyDocs product site', () => {
     await expect(page.locator('#versionSelect').nth(0)).toHaveValue('2.0');
     await expect(page.locator('#versionSelect').nth(1)).toHaveValue('2.0');
   });
+
+  test('documentation and blog TOCs navigate and highlight the current section', async ({ page }) => {
+    for (const detailPage of [docsDetail, blogDetail]) {
+      await page.goto(detailPage);
+
+      const toc = page.locator('.doc-toc:visible, .blog-detail-toc:visible');
+      const links = toc.locator('ul.toc > li > a');
+      await expect(links).toHaveCount(2);
+      await expect(links.nth(0)).toHaveAttribute('aria-current', 'location');
+
+      const secondLink = links.nth(1);
+      const secondHref = await secondLink.getAttribute('href');
+      expect(secondHref).toMatch(/^#[^#]+$/);
+
+      await secondLink.click();
+
+      if (!secondHref) {
+        throw new Error('The second TOC link has no fragment href.');
+      }
+      await expect(page).toHaveURL(new RegExp(`${escapeRegExp(detailPage)}${escapeRegExp(secondHref)}$`));
+      await expect(page.locator(`[id="${secondHref.slice(1)}"]`)).toBeInViewport();
+      await expect(secondLink).toHaveAttribute('aria-current', 'location');
+      await expect(links.nth(0)).not.toHaveAttribute('aria-current', 'location');
+    }
+  });
 });
 
 function escapeRegExp(value) {

@@ -29,9 +29,103 @@ class MarkdownHandler {
         }
     }
     init() {
+        this.initToc();
         this.initMermaid();
         this.initCodeCopy();
         this.initNomnoml();
+    }
+    initToc() {
+        const tocLinks = Array.from(document.querySelectorAll(
+            '.doc-toc .toc-block ul.toc a[href^="#"], .blog-detail-toc .toc-block ul.toc a[href^="#"]'));
+        if (tocLinks.length === 0) {
+            return;
+        }
+
+        const headingForLink = new Map();
+        const headings = [];
+        tocLinks.forEach(link => {
+            const targetId = link.getAttribute('href')?.slice(1);
+            const heading = targetId ? document.getElementById(targetId) : null;
+            if (heading) {
+                headingForLink.set(link, heading);
+                headings.push(heading);
+            }
+        });
+
+        if (headings.length === 0) {
+            return;
+        }
+
+        const setActiveHeading = activeHeading => {
+            tocLinks.forEach(link => {
+                const tocItem = link.closest('li');
+                const isActive = headingForLink.get(link) === activeHeading;
+                tocItem?.classList.toggle('active', isActive);
+                if (isActive) {
+                    link.setAttribute('aria-current', 'location');
+                }
+                else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        };
+
+        const getHash = () => {
+            const hash = window.location.hash.slice(1);
+            try {
+                return decodeURIComponent(hash);
+            }
+            catch {
+                return hash;
+            }
+        };
+
+        const setActiveFromViewport = () => {
+            const activationOffset = 96;
+            let activeHeading = headings[0];
+            headings.forEach(heading => {
+                if (heading.getBoundingClientRect().top <= activationOffset) {
+                    activeHeading = heading;
+                }
+            });
+            setActiveHeading(activeHeading);
+        };
+
+        const setActiveFromHash = () => {
+            const hash = getHash();
+            const activeHeading = headings.find(heading => heading.id === hash);
+            if (activeHeading) {
+                setActiveHeading(activeHeading);
+            }
+            else {
+                setActiveFromViewport();
+            }
+        };
+
+        let frameId = 0;
+        const scheduleViewportUpdate = () => {
+            if (frameId) {
+                return;
+            }
+            frameId = window.requestAnimationFrame(() => {
+                frameId = 0;
+                setActiveFromViewport();
+            });
+        };
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const heading = headingForLink.get(link);
+                if (heading) {
+                    setActiveHeading(heading);
+                }
+            });
+        });
+
+        window.addEventListener('hashchange', setActiveFromHash);
+        window.addEventListener('scroll', scheduleViewportUpdate, { passive: true });
+        window.addEventListener('resize', scheduleViewportUpdate);
+        setActiveFromHash();
     }
     initMermaid() {
         const mermaidBlocks = document.querySelectorAll('pre.mermaid');
